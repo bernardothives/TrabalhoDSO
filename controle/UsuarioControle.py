@@ -1,9 +1,10 @@
-from Entidade import UsuarioEntidade
+from entidade.usuario_entidade import UsuarioEntidade
 
 
 class UsuarioControle:
     def __init__(self):
         self.__usuarios = []
+
 
     def inclui_usuario(self, nome, usuario_id):
         novo_usuario = UsuarioEntidade(nome, usuario_id)

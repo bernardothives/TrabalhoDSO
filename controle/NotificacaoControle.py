@@ -1,4 +1,4 @@
-from Entidade import NotificacaoEntidade
+from entidade.notificacao_entidade import NotificacaoEntidade
 
 
 class NotificacaoControle:

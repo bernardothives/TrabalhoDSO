@@ -10,7 +10,7 @@ class UsuarioEntidade:
     
     @nome.setter
     def nome(self, nome):
-        self.__nome == nome
+        self.__nome = nome
 
     @property
     def usuario_id(self):

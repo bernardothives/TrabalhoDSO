@@ -18,4 +18,3 @@ class NotificacaoEntidade:
     @status.setter
     def status(self, status):
         self.__status = status
-        
