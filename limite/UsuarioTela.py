@@ -5,3 +5,4 @@ class UsuarioTela:
         pass
 
     def pega_dados(self):
+        pass
