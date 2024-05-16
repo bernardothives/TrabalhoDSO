@@ -3,6 +3,7 @@ from entidade.notificacao_entidade import NotificacaoEntidade
 
 class NotificacaoControle:
     def __init__(self):
+        self.__tela_notificacao = None
         self.__notificacoes = []
 
     def inclui_notificacao(self, tipo_notificacao, status):
