@@ -1,5 +1,6 @@
 from entidade.usuario_entidade import UsuarioEntidade
-from UsuarioTela import UsuarioTela
+from limite.usuario_tela import UsuarioTela
+
 
 class UsuarioControle:
     def __init__(self):
@@ -29,4 +30,3 @@ class UsuarioControle:
     @property
     def listar_usuarios(self):
         return self.__usuarios
-    

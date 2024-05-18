@@ -1,4 +1,4 @@
-from clima_entidade_abstrata import ClimaEntidadeAbstrata
+from entidade.clima_entidade_abstrata import ClimaEntidadeAbstrata
 
 
 class ClimaAtualEntidade(ClimaEntidadeAbstrata):

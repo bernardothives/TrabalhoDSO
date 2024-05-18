@@ -1,7 +1,7 @@
-class TelaSistema:
+class SistemaTela:
     #fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
     def tela_opcoes(self):
-        print("-------- SisLivros ---------")
+        print("-------- ClimaCo ---------")
         print("Escolha sua opcao")
         print("1 - Usuário")
         print("2 - Localização")
