@@ -1,15 +1,20 @@
 from entidade.usuario_entidade import UsuarioEntidade
-
+from UsuarioTela import UsuarioTela
 
 class UsuarioControle:
     def __init__(self):
         self.__usuarios = []
-
+        self.__tela_usuario = UsuarioTela()
 
     def inclui_usuario(self, nome, usuario_id):
         novo_usuario = UsuarioEntidade(nome, usuario_id)
         if novo_usuario not in self.__usuarios:
             self.__usuarios.append(novo_usuario)
+
+    def alterar_usuario(self, nome, novonome):
+        for usuario in self.__usuarios:
+            if usuario.nome == nome:
+                usuario.nome(novonome)
 
     def remove_usuario(self, usuario: UsuarioEntidade):
         if isinstance(usuario, UsuarioEntidade):

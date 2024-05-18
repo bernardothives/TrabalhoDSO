@@ -17,3 +17,4 @@ class TelaAbstrata(ABC):
 
     @abstractmethod
     def mostra_msg(self):
+        ...
