@@ -1,4 +1,4 @@
-from AbstractTela import TelaAbstrata
+from tela_abstrata import TelaAbstrata
 from UsuarioControle import UsuarioControle
 
 

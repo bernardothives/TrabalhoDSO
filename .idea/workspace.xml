@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="afa5bba6-5fa2-43fa-8f63-bc63f7bbbea0" name="Changes" comment="aaa">
-      <change afterPath="$PROJECT_DIR$/controle/clima_atual_controle.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/limite/clima_atual_tela.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controle/sistema.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/limite/sistema_tela.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
