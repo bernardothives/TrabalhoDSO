@@ -33,7 +33,8 @@ class Sistema:
     def opcoes_notificacao(self):
         self.__controlador_notificacao.abre_tela()
 
-    def encerra_sistema(self):
+    @staticmethod
+    def encerra_sistema():
         exit(0)
 
     def abre_tela(self):
