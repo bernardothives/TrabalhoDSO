@@ -46,6 +46,7 @@ class UsuarioControle:
         lista_opcoes = {1: self.inclui_usuario,
                         2: self.alterar_usuario,
                         3: self.listar_usuarios,
+                        4: self.remove_usuario,
                         0: self.retornar}
 
         while True:
