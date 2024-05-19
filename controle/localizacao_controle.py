@@ -15,7 +15,7 @@ class LocalizacaoControle:
 
     def inclui_localizacao(self):
         dados_localizacao = self.__tela_localizacao.pega_dados_localizacaoe()
-        localizacao = Localizacao(dados_localizacao)
+        localizacao = Localizacao(dados_localizacao["cidade"], dados_localizacao["estado"], dados_localizacao["pais"])
         self.__localizacoes.append(localizacao)
 
     def altera_localizacao(self):

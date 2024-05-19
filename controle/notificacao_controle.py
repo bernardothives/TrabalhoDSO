@@ -8,12 +8,12 @@ class NotificacaoControle:
         self.__tela_notificacao = NotificacaoTela()
         self.__notificacoes = []
 
-    def inclui_notificacao(self, tipo_notificacao, status):
+    def inclui_notificacao(self):
         dados_notificacao = self.__tela_notificacao.pega_dados_notificacao()
         notificacao = NotificacaoEntidade(dados_notificacao["tipo_notificacao"], dados_notificacao["status"])
         self.__notificacoes.append(notificacao)
 
-    def remove_notificacao(self, notificacao):
+    def remove_notificacao(self):
         self.listar_notificacoes()
         tipo = self.__tela_notificacao.seleciona_notificacao()
         notificacao = self.procura_notificacao_por_tipo(tipo)
@@ -21,7 +21,7 @@ class NotificacaoControle:
             self.__notificacoes.remove(notificacao)
             self.listar_notificacoes()
     
-    def altera_notificacao(self, notificacao, tipo_notificacao, status):
+    def altera_notificacao(self):
         self.listar_notificacoes()
         tipo_notificacao = self.__tela_notificacao.seleciona_notificacao()
         notificacao = self.procura_notificacao_por_tipo(tipo_notificacao)

@@ -8,6 +8,7 @@ class UsuarioTela:
         print("2- Alterar nome de usuario.")
         print("3- Listar Usuários")
         print("4- Remove Usuário")
+        print("0- Retornar")
         opcao = int(input("Digite a opção desejada"))
         return opcao
 
