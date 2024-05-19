@@ -1,3 +1,5 @@
+
+
 class ClimaPrevisaoTela:
     def tela_opcoes(self):
         print("-------- Clima Atual ----------")

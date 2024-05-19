@@ -1,8 +1,8 @@
 
 class UsuarioEntidade:
-    def __init__(self, nome: str, usuario_id: int):
+    def __init__(self, nome: str, cpf: int):
         self.__nome = nome
-        self.__usuario_id = usuario_id
+        self.__cpf = cpf
 
     @property
     def nome(self):
@@ -13,11 +13,9 @@ class UsuarioEntidade:
         self.__nome = nome
 
     @property
-    def usuario_id(self):
-        return self.__usuario_id
-    
-    @usuario_id.setter
-    def usuario_id(self, usuario_id):
-        self.__usuario_id = usuario_id
-        
-        
+    def cpf(self):
+        return self.__cpf
+
+    @cpf.setter
+    def cpf(self, cpf):
+        self.__cpf = cpf
