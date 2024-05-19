@@ -16,6 +16,8 @@ class UsuarioTela:
         nome = input("Nome de Usuário:")
         cpf = input("CPF: ")
 
+        return {"cpf": cpf, "nome": nome}
+
     def mostra_usuario(self, dados_usuario):
         print("NOME DO USUÁRIO: ", dados_usuario["nome"])
         print("CPF: ", dados_usuario["cpf"])
