@@ -1,5 +1,7 @@
-class SistemaTela:
-    #fazer aqui tratamento dos dados, caso a entrada seja diferente do esperado
+from limite.tela_abstrata import TelaAbstrata
+
+
+class SistemaTela(TelaAbstrata):
     def tela_opcoes(self):
         print("-------- ClimaCo ---------")
         print("Escolha sua opcao")
@@ -9,5 +11,5 @@ class SistemaTela:
         print("4 - Previsão do Clima")
         print("5 - Notificação")
         print("0 - Finalizar sistema")
-        opcao = int(input("Escolha a opcao:"))
+        opcao = self.le_inteiro("Escolha a opcao: ", [1, 2, 3, 4, 5, 0])
         return opcao

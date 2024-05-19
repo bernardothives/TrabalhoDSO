@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from datetime import datetime
 
 
 class ClimaControleAbstrato(ABC):
@@ -18,6 +19,7 @@ class ClimaControleAbstrato(ABC):
     def localizacao_menos_chuvosa(self):
         pass
 
+    @abstractmethod
     def procura_log_por_cpf(self):
         pass
 
