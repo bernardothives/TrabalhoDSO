@@ -2,7 +2,8 @@
 
 class LocalizacaoTela:
 
-    def tela_opcoes(self):
+    @staticmethod
+    def tela_opcoes():
         print("-=-=-=-=- LOCALIZACAO -=-=-=-=-")
         print("1- Incluir Localizacao")
         print("2- Alterar Localizacao")
@@ -12,16 +13,23 @@ class LocalizacaoTela:
         opcao = int(input("Digite a opcao desejada:"))
         return opcao
 
-    def pergunta_cidade(self):
-        print("-=-=-=-=-Digite sua cidade abaixo -=-=-=-=-")
+    @staticmethod
+    def pega_dados_localizacaoe():
+        print("-=-=-=-=-DADOS LOCALIZACAO -=-=-=-=-")
         cidade = input("Cidade:")
-        return cidade
+        estado = input("Estado:")
+        pais = input("País:")
+        return {"cidade": cidade, "estado": estado, "pais": pais}
 
-    def mostra_cidades(self, dados_localizacao):
+    @staticmethod
+    def mostra_dados_localizacao( dados_localizacao):
         print("Cidade: ", dados_localizacao["cidade"])
+        print("Estado: ", dados_localizacao["estado"])
+        print("País: ", dados_localizacao["pais"])
         print("\n")
 
-    def seleciona_cidade(self):
+    @staticmethod
+    def seleciona_cidade():
         cidade = input("Nome da cidade que deseja selecionar:")
         return cidade
 

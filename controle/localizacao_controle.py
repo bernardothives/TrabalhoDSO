@@ -14,7 +14,7 @@ class LocalizacaoControle:
                 return localizacao
 
     def inclui_localizacao(self):
-        dados_localizacao = self.__tela_localizacao.pergunta_cidade()
+        dados_localizacao = self.__tela_localizacao.pega_dados_localizacaoe()
         localizacao = Localizacao(dados_localizacao)
         self.__localizacoes.append(localizacao)
 
@@ -23,8 +23,10 @@ class LocalizacaoControle:
         cidade = self.__tela_localizacao.seleciona_cidade()
         localizacao = self.procura_localizacao_por_cidade(cidade)
         if localizacao is not None:
-            novos_dados_localizacao = self.__tela_localizacao.pergunta_cidade()
-            localizacao.cidade = novos_dados_localizacao
+            novos_dados_localizacao = self.__tela_localizacao.pega_dados_localizacaoe()
+            localizacao.cidade = novos_dados_localizacao["cidade"]
+            localizacao.estado = novos_dados_localizacao["estado"]
+            localizacao.pais = novos_dados_localizacao["pais"]
 
     def remove_localizacao(self):
         self.listar_localizacoes()
@@ -36,7 +38,9 @@ class LocalizacaoControle:
 
     def listar_localizacoes(self):
         for localizacao in self.__localizacoes:
-            self.__tela_localizacao.mostra_cidades({"cidade": localizacao.cidade})
+            self.__tela_localizacao.mostra_dados_localizacao({"cidade": localizacao.cidade,
+                                                              "estado": localizacao.estado,
+                                                              "pais": localizacao.pais})
 
     def retornar(self):
         self.__sistema.abre_tela()
@@ -47,3 +51,6 @@ class LocalizacaoControle:
                         3: self.listar_localizacoes,
                         4: self.remove_localizacao,
                         0: self.retornar}
+
+        while True:
+            lista_opcoes[self.__tela_localizacao.tela_opcoes()]()

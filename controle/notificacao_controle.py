@@ -1,6 +1,7 @@
 from entidade.notificacao_entidade import NotificacaoEntidade
 from limite.notificacao_tela import NotificacaoTela
 
+
 class NotificacaoControle:
     def __init__(self, sistema):
         self.__sistema = sistema
@@ -26,7 +27,7 @@ class NotificacaoControle:
         notificacao = self.procura_notificacao_por_tipo(tipo_notificacao)
         if notificacao is not None:
             novos_dados_notificacao = self.__tela_notificacao.pega_dados_notificacao()
-            notificacao.tipo_notificacao = novos_dados_notificacao["tipo"]
+            notificacao.tipo_notificacao = novos_dados_notificacao["tipo_notificacao"]
             notificacao.status = novos_dados_notificacao["status"]
 
     def procura_notificacao_por_tipo(self, tipo):
@@ -38,6 +39,7 @@ class NotificacaoControle:
         for notifficacao in self.__notificacoes:
             self.__tela_notificacao.mostra_notificacao({"tipo": notifficacao.tipo_notificacao,
                                                         "status": notifficacao.status})
+
     def retornar(self):
         self.__sistema.abre_tela()
 
@@ -47,3 +49,5 @@ class NotificacaoControle:
                         3: self.altera_notificacao,
                         4: self.remove_notificacao,
                         0: self.retornar}
+
+        lista_opcoes[self.__tela_notificacao.tela_opcoes()]()
