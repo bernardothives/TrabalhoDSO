@@ -12,6 +12,9 @@ class ClimaAtualControle(ClimaControleAbstrato):
     def ver_dados_climaticos(self):
         pass
 
+    def procura_log_por_cpf(self):
+        pass
+
     def adiciona_log(self):
         pass
 
