@@ -3,7 +3,8 @@ from entidade.alerta_entidade import Alerta
 
 class AlertaControle:
 
-    def __init__(self):
+    def __init__(self, sistema):
+        self.__sistema = sistema
         self.__tela_alerta = None
         self.__alertas = []
 

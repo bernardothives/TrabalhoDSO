@@ -48,5 +48,7 @@ class UsuarioControle:
                         3: self.listar_usuarios,
                         0: self.retornar}
 
+        while True:
+            lista_opcoes[self.__tela_usuario.tela_opcoes()]()
 
 
