@@ -3,6 +3,7 @@ from limite.clima_atual_tela import ClimaAtualTela
 
 
 class ClimaAtualControle:
-    def __init__(self):
+    def __init__(self, sistema):
+        self.__sistema = sistema
         self.__log_atual = []
         self.__clima_atual_tela = ClimaAtualTela()
