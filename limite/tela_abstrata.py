@@ -15,6 +15,5 @@ class TelaAbstrata(ABC):
     def le_inteiro(self):
         ...
 
-    @abstractmethod
-    def mostra_msg(self):
-        ...
+    def mostra_msg(self, mensagem):
+        print(mensagem)

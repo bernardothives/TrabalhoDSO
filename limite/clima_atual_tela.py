@@ -1,3 +1,5 @@
+
+
 class ClimaAtualTela:
     @staticmethod
     def tela_opcoes():
