@@ -5,9 +5,7 @@ from datetime import datetime
 
 class ClimaEntidadeAbstrata(ABC):
     @abstractmethod
-    def __init__(self, temperatura: int, humidade: int,
-                 velocidade_vento: int, volume_chuva: int,
-                 visibilidade: int, sensacao_termica: int, data: str):
+    def __init__(self):
         self.dados_climaticos = DadosClimaticos()
         self.__temperatura = self.dados_climaticos.pega_temperatura()
         self.__humidade = self.dados_climaticos.pega_humidade()
@@ -15,8 +13,7 @@ class ClimaEntidadeAbstrata(ABC):
         self.__volume_chuva = self.dados_climaticos.pega_volume_chuva()
         self.__visibilidade = self.dados_climaticos.pega_visibilidade()
         self.__sensacao_termica = self.dados_climaticos.pega_sensacao_termica()
-        if isinstance(data, str):
-            self.__data = data  #fazer com o date time
+        self.__data = datetime.now().strftime('%d-%m-%Y')
 
     @property
     def temperatura(self):
