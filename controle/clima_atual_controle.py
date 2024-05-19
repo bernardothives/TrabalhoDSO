@@ -6,7 +6,7 @@ from controle.clima_controle_abstrato import ClimaControleAbstrato
 class ClimaAtualControle(ClimaControleAbstrato):
     def __init__(self, sistema):
         super().__init__(sistema)
-        self.__log_atual = []
+        self.__log = []
         self.__clima_atual_tela = ClimaAtualTela()
 
     def ver_dados_climaticos(self):

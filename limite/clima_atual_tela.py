@@ -1,8 +1,8 @@
+from limite.tela_abstrata import TelaAbstrata
 
 
-class ClimaAtualTela:
-    @staticmethod
-    def tela_opcoes():
+class ClimaAtualTela(TelaAbstrata):
+    def tela_opcoes(self):
         print("-------- Clima Atual ----------")
         print("Escolha a opcao")
         print("1 - Ver Dados Climáticos")
@@ -10,8 +10,7 @@ class ClimaAtualTela:
         print("3 - Apagar Todo o Histórico de Registro")
         print("4 - Apagar Registro de Clima Especifico")
         print("0 - Retornar")
-
-        opcao = int(input("Escolha a opcao: "))
+        opcao = self.le_inteiro("Escolha a opcao: ", [1, 2, 3, 4, 0])
         return opcao
 
     @staticmethod

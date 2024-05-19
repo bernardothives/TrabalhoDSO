@@ -8,11 +8,11 @@ from controle.notificacao_controle import NotificacaoControle
 
 class Sistema:
     def __init__(self):
-        self.__controlador_clima_atual = ClimaAtualControle()
-        self.__controlador_clima_previsao = ClimaPrevisaoControle()
-        self.__controlador_localizacao = LocalizacaoControle()
-        self.__controlador_usuario = UsuarioControle()
-        self.__controlador_notificacao = NotificacaoControle()
+        self.__controlador_clima_atual = ClimaAtualControle(self)
+        self.__controlador_clima_previsao = ClimaPrevisaoControle(self)
+        self.__controlador_localizacao = LocalizacaoControle(self)
+        self.__controlador_usuario = UsuarioControle(self)
+        self.__controlador_notificacao = NotificacaoControle(self)
         self.__sistema_tela = SistemaTela()
 
     def inicializa_sistema(self):
