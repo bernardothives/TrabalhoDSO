@@ -1,10 +1,9 @@
 from limite.tela_abstrata import TelaAbstrata
-from termcolor import colored
 
 
 class AlertaTela(TelaAbstrata):
     def tela_opcoes(self):
-        print(colored("-------- Alertas ----------", "red"))
+        print("-------- Alertas ----------")
         print("Escolha a opcao")
         print("1 - Alertas com Baixa Severidade")
         print("2 - Alertas com Média Severidade")
@@ -12,4 +11,3 @@ class AlertaTela(TelaAbstrata):
         print("0 - Retornar")
         opcao = self.le_inteiro("Escolha a opcao: ", [1, 2, 3, 0])
         return opcao
-
