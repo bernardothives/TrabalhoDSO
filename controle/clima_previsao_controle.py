@@ -20,7 +20,7 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
         localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(dados["cidade"])
         if usuario is not None and localizacao is not None:
             clima = ClimaPrevisaoEntidade(usuario, localizacao)
-            self.adiciona_log()
+            self.adiciona_log(dados["cpf"], dados["cidade"])
             self.__clima_previsao_tela.mostra_clima({"temperatura": clima.temperatura,
                                                      "humidade": clima.humidade,
                                                      "velocidade_vento": clima.velocidade_vento,
@@ -39,10 +39,9 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
             return logs_do_cpf
         return None
 
-    def adiciona_log(self):
-        dados = self.__clima_previsao_tela.pega_dados_ver_clima()
+    def adiciona_log(self, cpf: str, cidade: str):
         hora = datetime.now().strftime('%H:%M:%S')
-        self.__log.append([dados["cpf"], dados["cidade"], hora])
+        self.__log.append([cpf, cidade, hora])
 
     def lista_log(self):
         for log in self.__log:
