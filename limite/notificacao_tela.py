@@ -46,6 +46,13 @@ class NotificacaoTela(TelaAbstrata):
             return False
         print("Valores validos: 'Sim' e 'Nao'")
 
+    def pega_dados_especifico(self):
+        print("-=-=-=-=- DADOS NOTIFICACAO -=-=-=-=-")
+        tipo = self.le_tipo()
+        status = self.le_boolean()
+        cpf = input("Digite o cpf do usuario notificado:")
+        return {"tipo_notificacao": tipo, "status": status, "cpf": cpf}
+
     @staticmethod
     def le_tipo():
         tipos_validos = ["banner", "central", "tela de bloqueio"]

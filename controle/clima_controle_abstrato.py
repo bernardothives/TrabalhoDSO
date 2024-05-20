@@ -27,7 +27,7 @@ class ClimaControleAbstrato(ABC):
         pass
 
     @abstractmethod
-    def adiciona_log(self):
+    def adiciona_log(self, cpf: str, cidade: str):
         pass
 
     @abstractmethod
