@@ -11,7 +11,8 @@ class NotificacaoControle:
     def inclui_notificacao(self):
         dados_notificacao = self.__tela_notificacao.pega_dados_notificacao()
         notificacao = NotificacaoEntidade(dados_notificacao["tipo_notificacao"], dados_notificacao["status"])
-        self.__notificacoes.append(notificacao)
+        if dados_notificacao["status"] != None:
+            self.__notificacoes.append(notificacao)
 
     def remove_notificacao(self):
         self.listar_notificacoes()
