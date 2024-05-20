@@ -11,15 +11,16 @@ class UsuarioControle:
     def inclui_usuario(self):
         dados_usuario = self.__tela_usuario.pega_dados_usuario()
         if self.validar_cpf(dados_usuario["cpf"]):
-            usuario = UsuarioEntidade(dados_usuario["nome"], dados_usuario["cpf"])
+            novo_usuario = UsuarioEntidade(dados_usuario["nome"], dados_usuario["cpf"])
             if self.__usuarios:
                 for usuario in self.__usuarios:
                     if str(usuario.cpf) == dados_usuario["cpf"]:
                         self.__tela_usuario.mostra_msg("Usuário já cadastrado, tente novamente")
                         break
-                self.__usuarios.append(usuario)
+                else:
+                    self.__usuarios.append(novo_usuario)
             else:
-                self.__usuarios.append(usuario)
+                self.__usuarios.append(novo_usuario)
         else:
             self.__tela_usuario.mostra_msg("Cpf inválido, tente novamente")
 
@@ -51,8 +52,11 @@ class UsuarioControle:
                 return usuario
 
     def listar_usuarios(self):
-        for usuario in self.__usuarios:
-            self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "cpf": usuario.cpf})
+        if self.__usuarios:
+            for usuario in self.__usuarios:
+                self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "cpf": usuario.cpf})
+        else:
+            self.__tela_usuario.mostra_msg("A lista de usuarios está vazia :(")
 
     @staticmethod
     def validar_cpf(cpf_usuario):

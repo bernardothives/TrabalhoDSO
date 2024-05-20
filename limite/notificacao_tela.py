@@ -15,14 +15,21 @@ class NotificacaoTela(TelaAbstrata):
 
     def pega_dados_notificacao(self):
         print("-=-=-=-=- DADOS NOTIFICACAO -=-=-=-=-")
-        tipo = input("Digite o tipo de notificacao: ")
+        tipo = self.le_tipo()
         status = self.le_boolean()
-        return {"tipo_notificacao": tipo, "status": status}
+        cpf = input("Digite o cpf do usuario notificado:")
+        nome_usuario = input("Digite o nome do usuario notificado:")
+        return {"tipo_notificacao": tipo, "status": status, "cpf": cpf, "nome_usuario": nome_usuario}
 
     @staticmethod
     def mostra_notificacao(dados_notificacao):
-        print("TIPO: ", dados_notificacao["tipo"])
-        print("STATUS: ", dados_notificacao["status"])
+        print("TIPO: ", dados_notificacao["tipo_notificacao"])
+        print("USUÁRIO: ", dados_notificacao["nome_usuario"])
+        print("CPF: ", dados_notificacao["cpf"])
+        if dados_notificacao["status"] is True:
+            print("STATUS: ATIVO")
+        else:
+            print("STATUS: INATIVO")
         print("\n")
 
     @staticmethod
@@ -38,3 +45,14 @@ class NotificacaoTela(TelaAbstrata):
         if status_lido.lower() == "nao":
             return False
         print("Valores validos: 'Sim' e 'Nao'")
+
+    @staticmethod
+    def le_tipo():
+        tipos_validos = ["banner", "central", "tela de bloqueio"]
+        tipo_lido = input("Digite o tipo de notificacao: (ex: Banner, Central ou Tela de Bloqueio)")
+        if tipo_lido.lower() not in tipos_validos:
+            print("Tipo inválido, tente novamente")
+            return None
+        else:
+            tipo = tipo_lido
+            return tipo
