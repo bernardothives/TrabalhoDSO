@@ -1,4 +1,3 @@
-from entidade.alerta_entidade import Alerta
 from limite.alerta_tela import AlertaTela
 
 
@@ -7,41 +6,26 @@ class AlertaControle:
     def __init__(self, controlador_previsao):
         self.__controlador_previsao = controlador_previsao
         self.__alerta_tela = AlertaTela()
-        self.__alertas = []
 
-    def inclui_alerta(self, tipo_alerta, severidade):
-        novoalerta = Alerta(tipo_alerta, severidade)
-        if novoalerta not in self.__alertas:
-            self.__alertas.append(novoalerta)
-
-    def altera_alerta(self, alerta, tipo_alerta, severidade):
-        if isinstance(alerta, Alerta):
-            if alerta in self.__alertas:
-                alerta.tipo_alerta = tipo_alerta
-                alerta.severidade = severidade
-
-    def remove_alerta(self, alerta):
-        if isinstance(alerta, Alerta):
-            if alerta in self.__alertas:
-                self.__alertas.remove(alerta)
-
-    @property
-    def listar_alertas(self):
-        return self.__alertas
-
-    def procura_alerta_por_tipo(self, tipo_alerta):
-        lista_por_tipos = []
-        for alerta in self.__alertas:
-            if alerta.tipo_alerta == tipo_alerta:
-                lista_por_tipos.append(alerta)
-        return lista_por_tipos
+    def ver_alerta(self):
+        self.__controlador_previsao.sistema.controlador_localizacao.listar_localizacoes()
+        cidade = self.__alerta_tela.seleciona_cidade()
+        localizacao = self.__controlador_previsao.sistema.controlador_localizacao.procura_localizacao_por_cidade(cidade)
+        clima = self.__controlador_previsao.procura_clima_previsao_por_localizacao(localizacao)
+        if clima.velocidade_vento > 80:
+            self.__alerta_tela.mostra_msg("CUIDADO: O vento nesta localizacao esta muito forte!")
+        if clima.volume_chuva > 50:
+            self.__alerta_tela.mostra_msg("CUIDADO: O volume de chuva nesta localizacao esta muito alto!")
+        if clima.temperatura > 40:
+            self.__alerta_tela.mostra_msg("CUIDADO: A temperatura nesta localizacao esta muito alta!")
+        if clima.temperatura < -20:
+            self.__alerta_tela.mostra_msg("CUIDADO: O temperatura nesta localizacao esta muito baixa!")
 
     def retornar(self):
         self.__controlador_previsao.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.inclui_alerta, 2: self.altera_alerta,
-                        3: self.remove_alerta, 0: self.retornar}
+        lista_opcoes = {1: self.ver_alerta, 0: self.retornar}
 
         while True:
             opcao_escolhida = self.__alerta_tela.tela_opcoes()

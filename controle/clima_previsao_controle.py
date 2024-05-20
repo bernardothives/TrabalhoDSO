@@ -2,6 +2,7 @@ from entidade.clima_previsao_entidade import ClimaPrevisaoEntidade
 from limite.clima_previsao_tela import ClimaPrevisaoTela
 from controle.clima_controle_abstrato import ClimaControleAbstrato
 from controle.alerta_controle import AlertaControle
+from entidade.localizacao_entidade import Localizacao
 from datetime import datetime
 
 
@@ -9,8 +10,13 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
     def __init__(self, sistema):
         self.__sistema = sistema
         self.__log = []
+        self.__previsoes_clima = []
         self.__clima_previsao_tela = ClimaPrevisaoTela()
         self.__controlador_alerta = AlertaControle(self)
+
+    @property
+    def sistema(self):
+        return self.__sistema
 
     def ver_dados_climaticos(self):
         self.__sistema.controlador_usuario.listar_usuarios()
@@ -20,6 +26,7 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
         localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(dados["cidade"])
         if usuario is not None and localizacao is not None:
             clima = ClimaPrevisaoEntidade(usuario, localizacao)
+            self.__previsoes_clima.append(clima)
             self.adiciona_log(dados["cpf"], dados["cidade"])
             self.__clima_previsao_tela.mostra_clima({"temperatura": clima.temperatura,
                                                      "humidade": clima.humidade,
@@ -30,6 +37,13 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
                                                      "data": clima.data})
         else:
             self.__clima_previsao_tela.mostra_msg("Dados Invalidos")
+
+    def procura_clima_previsao_por_localizacao(self, localizacao: Localizacao):
+        if isinstance(localizacao, Localizacao):
+            for previsao in self.__previsoes_clima:
+                if previsao.localizacao == localizacao:
+                    return previsao
+            return None
 
     def procura_log_por_cpf(self, cpf: str):
         logs_do_cpf = []

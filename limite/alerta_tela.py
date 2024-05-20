@@ -5,9 +5,12 @@ class AlertaTela(TelaAbstrata):
     def tela_opcoes(self):
         print("-------- Alertas ----------")
         print("Escolha a opcao")
-        print("1 - Alertas com Baixa Severidade")
-        print("2 - Alertas com Média Severidade")
-        print("3 - Alertas com Alta Severidade")
+        print("1 - Ver Alerta")
         print("0 - Retornar")
-        opcao = self.le_inteiro("Escolha a opcao: ", [1, 2, 3, 0])
+        opcao = self.le_inteiro("Escolha a opcao: ", [1, 0])
         return opcao
+
+    @staticmethod
+    def seleciona_cidade():
+        cidade = input("Cidade que deseja verificar o alerta: ")
+        return cidade
