@@ -2,7 +2,6 @@ from entidade.notificacao_entidade import NotificacaoEntidade
 from limite.notificacao_tela import NotificacaoTela
 
 
-
 class NotificacaoControle:
     def __init__(self, sistema):
         self.__sistema = sistema
@@ -13,7 +12,10 @@ class NotificacaoControle:
         dados_notificacao = self.__tela_notificacao.pega_dados_notificacao()
         if dados_notificacao["status"] is not None and dados_notificacao["tipo_notificacao"] is not None:
             if self.__sistema.controlador_usuario.validar_cpf(dados_notificacao["cpf"]):
-                nova_notificacao = NotificacaoEntidade(dados_notificacao["tipo_notificacao"], dados_notificacao["status"], self.__sistema.controlador_usuario.procurar_usuario_por_cpf(dados_notificacao["cpf"]))
+                nova_notificacao = NotificacaoEntidade(dados_notificacao["tipo_notificacao"],
+                                                       dados_notificacao["status"],
+                                                       self.__sistema.controlador_usuario.procurar_usuario_por_cpf(
+                                                           dados_notificacao["cpf"]))
                 if self.__notificacoes:
                     for notificacao in self.__notificacoes:
                         if notificacao.tipo_notificacao == dados_notificacao["tipo_notificacao"]:
@@ -35,7 +37,7 @@ class NotificacaoControle:
         if notificacao is not None:
             self.__notificacoes.remove(notificacao)
             self.listar_notificacoes()
-    
+
     def altera_notificacao(self):
         self.listar_notificacoes()
         tipo_notificacao = self.__tela_notificacao.seleciona_notificacao()

@@ -27,8 +27,7 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
                                                      "volume_chuva": clima.volume_chuva,
                                                      "visibilidade": clima.visibilidade,
                                                      "sensacao_termica": clima.sensacao_termica,
-                                                     "data": clima.data,
-                                                     "descricao": clima.descricao})
+                                                     "data": clima.data})
         else:
             self.__clima_previsao_tela.mostra_msg("Dados Invalidos")
 

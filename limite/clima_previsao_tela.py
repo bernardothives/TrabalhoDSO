@@ -16,7 +16,7 @@ class ClimaPrevisaoTela(TelaAbstrata):
 
     @staticmethod
     def pega_dados_ver_clima():
-        print("-------- DADOS PARA VER A PREVISÃO ----------")
+        print("-=-=-=-=- DADOS PARA VER A PREVISÃO -=-=-=-=-")
         cpf = input("Digite o CPF: ")
         cidade = input("Digite a Cidade: ")
 
@@ -31,7 +31,6 @@ class ClimaPrevisaoTela(TelaAbstrata):
         print("Visibilidade:", dados_clima["visibilidade"])
         print("Sensacao Termica:", dados_clima["sensacao_termica"])
         print("Data:", dados_clima["data"])
-        print("Descricao:", dados_clima["descricao"])
         print("\n")
 
     @staticmethod
@@ -41,5 +40,5 @@ class ClimaPrevisaoTela(TelaAbstrata):
 
     @staticmethod
     def mostra_log(dados_log):
-        print("CPF: ", dados_log["cpf"], "CIDADE: ", dados_log["cidade"], "HORA: ", dados_log["hora"])
+        print("CPF:", dados_log["cpf"], "CIDADE:", dados_log["cidade"], "HORA:", dados_log["hora"])
         print("\n")
