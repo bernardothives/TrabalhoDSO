@@ -8,6 +8,7 @@ class ClimaAtualControle(ClimaControleAbstrato):
     def __init__(self, sistema):
         self.__sistema = sistema
         self.__log = []
+        self.__climas = []
         self.__clima_atual_tela = ClimaAtualTela()
 
     def ver_dados_climaticos(self):
@@ -18,6 +19,7 @@ class ClimaAtualControle(ClimaControleAbstrato):
         localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(dados["cidade"])
         if usuario is not None and localizacao is not None:
             clima = ClimaAtualEntidade(usuario, localizacao)
+            self.__climas.append(clima)
             self.adiciona_log(dados["cpf"], dados["cidade"])
             self.__clima_atual_tela.mostra_clima({"temperatura": clima.temperatura,
                                                   "humidade": clima.humidade,
@@ -64,6 +66,12 @@ class ClimaAtualControle(ClimaControleAbstrato):
 
     def retornar(self):
         self.__sistema.abre_tela()
+
+    def localizacao_mais_quente(self):
+        max_temperatura = 0
+        for clima in self.__climas:
+            if clima.temperatura >= max_temperatura:
+                max_temperatura = clima.temperatura
 
     def abre_tela(self):
         lista_opcoes = {1: self.ver_dados_climaticos, 2: self.lista_log,
