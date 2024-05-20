@@ -2,13 +2,14 @@ from entidade.clima_atual_entidade import ClimaAtualEntidade
 from limite.clima_atual_tela import ClimaAtualTela
 from controle.clima_controle_abstrato import ClimaControleAbstrato
 from datetime import datetime
+from entidade.localizacao_entidade import Localizacao
 
 
 class ClimaAtualControle(ClimaControleAbstrato):
     def __init__(self, sistema):
         self.__sistema = sistema
         self.__log = []
-        self.__climas = []
+        self.__climas_atuais = []
         self.__clima_atual_tela = ClimaAtualTela()
 
     def ver_dados_climaticos(self):
@@ -18,8 +19,10 @@ class ClimaAtualControle(ClimaControleAbstrato):
         usuario = self.__sistema.controlador_usuario.procurar_usuario_por_cpf(dados["cpf"])
         localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(dados["cidade"])
         if usuario is not None and localizacao is not None:
-            clima = ClimaAtualEntidade(usuario, localizacao)
-            self.__climas.append(clima)
+            clima = self.procura_clima_atual_por_localizacao(localizacao)
+            if clima is None:
+                clima = ClimaAtualEntidade(usuario, localizacao)
+                self.__climas_atuais.append(clima)
             self.adiciona_log(dados["cpf"], dados["cidade"])
             self.__clima_atual_tela.mostra_clima({"temperatura": clima.temperatura,
                                                   "humidade": clima.humidade,
@@ -31,6 +34,13 @@ class ClimaAtualControle(ClimaControleAbstrato):
                                                   "horario": clima.horario})
         else:
             self.__clima_atual_tela.mostra_msg("Dados Invalidos")
+
+    def procura_clima_atual_por_localizacao(self, localizacao: Localizacao):
+        if isinstance(localizacao, Localizacao):
+            for clima_atual in self.__climas_atuais:
+                if clima_atual.localizacao == localizacao:
+                    return clima_atual
+            return None
 
     def procura_log_por_cpf(self, cpf: str):
         logs_do_cpf = []
@@ -67,16 +77,26 @@ class ClimaAtualControle(ClimaControleAbstrato):
     def retornar(self):
         self.__sistema.abre_tela()
 
-    def localizacao_mais_quente(self):
-        max_temperatura = 0
-        for clima in self.__climas:
-            if clima.temperatura >= max_temperatura:
-                max_temperatura = clima.temperatura
+    def temperatura_mais_baixa(self):
+        max_temperatura = 56
+        for clima_atual in self.__climas_atuais:
+            temperatura = clima_atual.temperatura
+            if temperatura <= max_temperatura:
+                max_temperatura = temperatura
+        self.__clima_atual_tela.mostra_temperatura_mais_baixa(max_temperatura)
+
+    def temperatura_mais_alta(self):
+        min_temperatura = -67
+        for clima_atual in self.__climas_atuais:
+            temperatura = clima_atual.temperatura
+            if temperatura >= min_temperatura:
+                min_temperatura = temperatura
+        self.__clima_atual_tela.mostra_temperatura_mais_alta(min_temperatura)
 
     def abre_tela(self):
         lista_opcoes = {1: self.ver_dados_climaticos, 2: self.lista_log,
                         3: self.apaga_log, 4: self.apaga_log_especifico,
-                        0: self.retornar}
+                        5: self.temperatura_mais_alta, 6: self.temperatura_mais_baixa, 0: self.retornar}
 
         while True:
             opcao_escolhida = self.__clima_atual_tela.tela_opcoes()
