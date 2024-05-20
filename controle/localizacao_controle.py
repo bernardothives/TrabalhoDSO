@@ -33,6 +33,10 @@ class LocalizacaoControle:
         localizacao = self.procura_localizacao_por_cidade(cidade)
         if localizacao is not None:
             novos_dados_localizacao = self.__tela_localizacao.pega_dados_localizacaoe()
+            for localizacao in self.__localizacoes:
+                if localizacao.cidade == novos_dados_localizacao["cidade"]:
+                    self.__tela_localizacao.mostra_msg("cidade já cadastrada, tente novamente")
+                    break
             localizacao.cidade = novos_dados_localizacao["cidade"]
             localizacao.estado = novos_dados_localizacao["estado"]
             localizacao.pais = novos_dados_localizacao["pais"]

@@ -31,6 +31,10 @@ class UsuarioControle:
         if usuario is not None:
             novos_dados_usuario = self.__tela_usuario.pega_dados_usuario()
             if self.validar_cpf(novos_dados_usuario["cpf"]):
+                for usuario in self.__usuarios:
+                    if usuario.cpf == novos_dados_usuario["cpf"]:
+                        self.__tela_usuario.mostra_msg("Cpf já cadastrado, tente novamente")
+                        break
                 usuario.nome = novos_dados_usuario["nome"]
                 usuario.cpf = novos_dados_usuario["cpf"]
             else:

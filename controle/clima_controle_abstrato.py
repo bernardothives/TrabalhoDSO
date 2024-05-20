@@ -6,18 +6,6 @@ class ClimaControleAbstrato(ABC):
     def __init__(self, sistema):
         self.__sistema = sistema
 
-    def localizacao_mais_quente(self):
-        pass
-
-    def localizacao_mais_fria(self):
-        pass
-
-    def localizacao_mais_chuvosa(self):
-        pass
-
-    def localizacao_menos_chuvosa(self):
-        pass
-
     @abstractmethod
     def procura_log_por_cpf(self, cpf: str):
         pass
