@@ -1,16 +1,16 @@
+from limite.tela_abstrata import TelaAbstrata
 
 
-class LocalizacaoTela:
+class LocalizacaoTela(TelaAbstrata):
 
-    @staticmethod
-    def tela_opcoes():
+    def tela_opcoes(self):
         print("-=-=-=-=- LOCALIZACAO -=-=-=-=-")
-        print("1- Incluir Localizacao")
-        print("2- Alterar Localizacao")
-        print("3- Listar Localizacoes")
-        print("4- Remover Localizacao")
+        print("1 - Incluir Localizacao")
+        print("2 - Alterar Localizacao")
+        print("3 - Listar Localizacoes")
+        print("4 - Remover Localizacao")
         print("0 - Retornar")
-        opcao = int(input("Digite a opcao desejada:"))
+        opcao = self.le_inteiro("Digite a opcao desejada:", [1, 2, 3, 4, 0])
         return opcao
 
     @staticmethod

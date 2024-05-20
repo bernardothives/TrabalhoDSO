@@ -1,15 +1,16 @@
+from limite.tela_abstrata import TelaAbstrata
 
-class UsuarioTela:
 
-    @staticmethod
-    def tela_opcoes():
+class UsuarioTela(TelaAbstrata):
+
+    def tela_opcoes(self):
         print("-=-=-=-=- USUÁRIO -=-=-=-=-")
         print("1- Incluir usuário.")
         print("2- Alterar nome de usuario.")
         print("3- Listar Usuários")
         print("4- Remove Usuário")
         print("0- Retornar")
-        opcao = int(input("Digite a opção desejada"))
+        opcao = self.le_inteiro("Digite a opção desejada", [1, 2, 3, 4, 0])
         return opcao
 
     @staticmethod
