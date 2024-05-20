@@ -3,7 +3,7 @@ from limite.tela_abstrata import TelaAbstrata
 
 class ClimaPrevisaoTela(TelaAbstrata):
     def tela_opcoes(self):
-        print("-------- Previsao do Clima ----------")
+        print("-=-=-=-=- PREVISAO DO CLIMA -=-=-=-=-")
         print("Escolha a opcao")
         print("1 - Ver Dados Climáticos")
         print("2 - Ver Histórico de Registro de Previsao")
@@ -16,8 +16,8 @@ class ClimaPrevisaoTela(TelaAbstrata):
 
     @staticmethod
     def pega_dados_ver_clima():
-        print("-------- DADOS PARA VER O CLIMA ATUAL ----------")
-        cpf = input("Seu CPF: ")
+        print("-------- DADOS PARA VER A PREVISÃO ----------")
+        cpf = input("Digite o CPF: ")
         cidade = input("Digite a Cidade: ")
 
         return {"cpf": cpf, "cidade": cidade}

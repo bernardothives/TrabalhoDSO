@@ -10,15 +10,15 @@ class LocalizacaoTela(TelaAbstrata):
         print("3 - Listar Localizacoes")
         print("4 - Remover Localizacao")
         print("0 - Retornar")
-        opcao = self.le_inteiro("Digite a opcao desejada:", [1, 2, 3, 4, 0])
+        opcao = self.le_inteiro("Escolha a opcao: ", [1, 2, 3, 4, 0])
         return opcao
 
     @staticmethod
     def pega_dados_localizacaoe():
         print("-=-=-=-=-DADOS LOCALIZACAO -=-=-=-=-")
-        cidade = input("Cidade:")
-        estado = input("Estado:")
-        pais = input("País:")
+        cidade = input("Cidade: ")
+        estado = input("Estado: ")
+        pais = input("País: ")
         return {"cidade": cidade, "estado": estado, "pais": pais}
 
     @staticmethod
@@ -30,8 +30,5 @@ class LocalizacaoTela(TelaAbstrata):
 
     @staticmethod
     def seleciona_cidade():
-        cidade = input("Nome da cidade que deseja selecionar:")
+        cidade = input("Nome da cidade que deseja selecionar: ")
         return cidade
-
-
-

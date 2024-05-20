@@ -3,7 +3,7 @@ from limite.tela_abstrata import TelaAbstrata
 
 class SistemaTela(TelaAbstrata):
     def tela_opcoes(self):
-        print("-------- ClimaCo ---------")
+        print("-=-=-=-=- CLIMACO -=-=-=-=-")
         print("Escolha sua opcao")
         print("1 - Usuário")
         print("2 - Localização")
