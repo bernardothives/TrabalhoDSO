@@ -15,8 +15,17 @@ class LocalizacaoControle:
 
     def inclui_localizacao(self):
         dados_localizacao = self.__tela_localizacao.pega_dados_localizacaoe()
-        localizacao = Localizacao(dados_localizacao["cidade"], dados_localizacao["estado"], dados_localizacao["pais"])
-        self.__localizacoes.append(localizacao)
+        nova_localizacao = Localizacao(dados_localizacao["cidade"], dados_localizacao["estado"], dados_localizacao["pais"])
+        if self.__localizacoes:
+            for localizacao in self.__localizacoes:
+                if localizacao.cidade == dados_localizacao["cidade"]:
+                    self.__tela_localizacao.mostra_msg("Localizacao já cadastrada, tente novamente")
+                    break
+            else:
+                self.__localizacoes.append(nova_localizacao)
+        else:
+            self.__localizacoes.append(nova_localizacao)
+
 
     def altera_localizacao(self):
         self.listar_localizacoes()
@@ -37,11 +46,13 @@ class LocalizacaoControle:
             self.listar_localizacoes()
 
     def listar_localizacoes(self):
-        for localizacao in self.__localizacoes:
-            self.__tela_localizacao.mostra_dados_localizacao({"cidade": localizacao.cidade,
+        if self.__localizacoes:
+            for localizacao in self.__localizacoes:
+                self.__tela_localizacao.mostra_dados_localizacao({"cidade": localizacao.cidade,
                                                               "estado": localizacao.estado,
                                                               "pais": localizacao.pais})
-
+        else:
+            self.__tela_localizacao.mostra_msg("A lista de localizacoes está vazia :(")
     def retornar(self):
         self.__sistema.abre_tela()
 
