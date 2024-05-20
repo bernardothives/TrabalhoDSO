@@ -1,11 +1,12 @@
 from entidade.alerta_entidade import Alerta
+from limite.alerta_tela import AlertaTela
 
 
 class AlertaControle:
 
-    def __init__(self, sistema):
-        self.__sistema = sistema
-        self.__tela_alerta = None
+    def __init__(self, controlador_previsao):
+        self.__controlador_previsao = controlador_previsao
+        self.__alerta_tela = AlertaTela()
         self.__alertas = []
 
     def inclui_alerta(self, tipo_alerta, severidade):
@@ -35,3 +36,14 @@ class AlertaControle:
                 lista_por_tipos.append(alerta)
         return lista_por_tipos
 
+    def retornar(self):
+        self.__controlador_previsao.abre_tela()
+
+    def abre_tela(self):
+        lista_opcoes = {1: self.inclui_alerta, 2: self.altera_alerta,
+                        3: self.remove_alerta, 0: self.retornar}
+
+        while True:
+            opcao_escolhida = self.__alerta_tela.tela_opcoes()
+            funcao_escolhida = lista_opcoes[opcao_escolhida]
+            funcao_escolhida()

@@ -15,6 +15,14 @@ class Sistema:
         self.__controlador_notificacao = NotificacaoControle(self)
         self.__sistema_tela = SistemaTela()
 
+    @property
+    def controlador_usuario(self):
+        return self.__controlador_usuario
+
+    @property
+    def controlador_localizacao(self):
+        return self.__controlador_localizacao
+
     def inicializa_sistema(self):
         self.abre_tela()
 

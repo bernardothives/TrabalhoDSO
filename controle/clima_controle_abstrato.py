@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from datetime import datetime
 
 
 class ClimaControleAbstrato(ABC):
@@ -20,7 +19,7 @@ class ClimaControleAbstrato(ABC):
         pass
 
     @abstractmethod
-    def procura_log_por_cpf(self):
+    def procura_log_por_cpf(self, cpf: str):
         pass
 
     @abstractmethod
@@ -47,5 +46,6 @@ class ClimaControleAbstrato(ABC):
     def abre_tela(self):
         pass
 
+    @abstractmethod
     def retornar(self):
-        self.__sistema.abre_tela()
+        pass

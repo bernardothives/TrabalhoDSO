@@ -15,8 +15,30 @@ class ClimaAtualTela(TelaAbstrata):
 
     @staticmethod
     def pega_dados_ver_clima():
-        print("-------- DADOS PARA VER O CLIMA ----------")
+        print("-------- DADOS PARA VER O CLIMA ATUAL ----------")
         cpf = input("Seu CPF: ")
-        localizacao = input("Localização: ")
+        cidade = input("Digite a Cidade: ")
 
-        return {"cpf": cpf, "codigo": localizacao}
+        return {"cpf": cpf, "cidade": cidade}
+
+    @staticmethod
+    def mostra_clima(dados_clima):
+        print("Temperatura:", dados_clima["temperatura"])
+        print("Humidade:", dados_clima["humidade"])
+        print("Velocidade do Vento:", dados_clima["velocidade_vento"])
+        print("Volume de Chuva:", dados_clima["volume_chuva"])
+        print("Visibilidade:", dados_clima["visibilidade"])
+        print("Sensacao Termica:", dados_clima["sensacao_termica"])
+        print("Data:", dados_clima["data"])
+        print("Horario:", dados_clima["horario"])
+        print("\n")
+
+    @staticmethod
+    def seleciona_cpf():
+        cpf = input("CPF do usuario que deseja apagar o registro: ")
+        return cpf
+
+    @staticmethod
+    def mostra_log(dados_log):
+        print("CPF: ", dados_log["cpf"], "CIDADE: ", dados_log["cidade"], "HORA: ", dados_log["hora"])
+        print("\n")
