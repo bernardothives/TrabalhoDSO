@@ -25,8 +25,10 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
         usuario = self.__sistema.controlador_usuario.procurar_usuario_por_cpf(dados["cpf"])
         localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(dados["cidade"])
         if usuario is not None and localizacao is not None:
-            clima = ClimaPrevisaoEntidade(usuario, localizacao)
-            self.__previsoes_clima.append(clima)
+            clima = self.procura_clima_previsao_por_localizacao(localizacao)
+            if clima is None:
+                clima = ClimaPrevisaoEntidade(usuario, localizacao)
+                self.__previsoes_clima.append(clima)
             self.adiciona_log(dados["cpf"], dados["cidade"])
             self.__clima_previsao_tela.mostra_clima({"temperatura": clima.temperatura,
                                                      "humidade": clima.humidade,

@@ -24,12 +24,12 @@ class ClimaPrevisaoTela(TelaAbstrata):
 
     @staticmethod
     def mostra_clima(dados_clima):
-        print("Temperatura:", dados_clima["temperatura"])
-        print("Humidade:", dados_clima["humidade"])
-        print("Velocidade do Vento:", dados_clima["velocidade_vento"])
-        print("Volume de Chuva:", dados_clima["volume_chuva"])
-        print("Visibilidade:", dados_clima["visibilidade"])
-        print("Sensacao Termica:", dados_clima["sensacao_termica"])
+        print("Temperatura:", dados_clima["temperatura"], "graus celcius")
+        print("Humidade:", dados_clima["humidade"], "porcento")
+        print("Velocidade do Vento:", dados_clima["velocidade_vento"], "quilometros por hora")
+        print("Volume de Chuva:", dados_clima["volume_chuva"], "milimetros")
+        print("Visibilidade:", dados_clima["visibilidade"], "porcento")
+        print("Sensacao Termica:", dados_clima["sensacao_termica"], "graus celcius")
         print("Data:", dados_clima["data"])
         print("\n")
 
