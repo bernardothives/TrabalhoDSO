@@ -92,5 +92,3 @@ class UsuarioControle:
 
         while True:
             lista_opcoes[self.__tela_usuario.tela_opcoes()]()
-
-

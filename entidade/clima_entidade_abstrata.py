@@ -19,7 +19,6 @@ class ClimaEntidadeAbstrata(ABC):
         self.__volume_chuva = self.dados_climaticos.pega_volume_chuva()
         self.__visibilidade = self.dados_climaticos.pega_visibilidade()
         self.__sensacao_termica = self.dados_climaticos.pega_sensacao_termica()
-        self.__data = datetime.now().strftime('%d-%m-%Y')
 
     @property
     def usuario(self):
@@ -62,7 +61,3 @@ class ClimaEntidadeAbstrata(ABC):
     @property
     def sensacao_termica(self):
         return self.__sensacao_termica
-
-    @property
-    def data(self):
-        return self.__data
