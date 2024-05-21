@@ -30,7 +30,6 @@ class UsuarioTela(TelaAbstrata):
         print("CPF:", dados_usuario["cpf"])
         print("\n")
 
-    @staticmethod
-    def seleciona_usuario():
-        cpf = input("Digite o CPF do usuario: ")
-        return cpf.strip()
+    def seleciona_usuario(self):
+        cpf = self.le_e_valida_cpf("Digite o CPF do usuario: ")
+        return cpf

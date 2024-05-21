@@ -28,11 +28,11 @@ class UsuarioControle:
             novo_nome_usuario = self.__tela_usuario.pega_nome_usuario()
             for user in self.__usuarios:
                 if user.nome == novo_nome_usuario["nome"]:
-                    self.__tela_usuario.mostra_msg("Nome ja cadastrado, tente novamente")
+                    self.__tela_usuario.mostra_msg("Nome ja cadastrado, tente novamente.")
                     break
             usuario.nome = novo_nome_usuario["nome"]
         else:
-            self.__tela_usuario.mostra_msg("Ocorreu um erro, selecione um usuario existente")
+            self.__tela_usuario.mostra_msg("Ocorreu um erro, selecione um usuario existente.")
 
     def remove_usuario(self):
         self.listar_usuarios()
@@ -40,7 +40,7 @@ class UsuarioControle:
         usuario = self.procurar_usuario_por_cpf(cpf_usuario)
         if usuario is not None:
             self.__usuarios.remove(usuario)
-            self.listar_usuarios()
+            self.__tela_usuario.mostra_msg("Usuario excluido com sucesso!")
 
     def procurar_usuario_por_cpf(self, cpf):
         for usuario in self.__usuarios:
