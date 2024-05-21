@@ -13,20 +13,24 @@ class UsuarioTela(TelaAbstrata):
         opcao = self.le_inteiro("Escolha a opcao: ", [1, 2, 3, 4, 0])
         return opcao
 
-    @staticmethod
-    def pega_dados_usuario():
+    def pega_dados_usuario(self):
         print("-=-=-=-=- DADOS USUARIO -=-=-=-=-")
-        nome = input("Nome de Usuário: ")
-        cpf = input("CPF: ")
+        nome = self.le_e_valida_nome("Nome de Usuário: ")
+        cpf = self.le_e_valida_cpf("CPF: ")
         return {"cpf": cpf, "nome": nome}
+
+    def pega_nome_usuario(self):
+        print("-=-=-=-=- NOVO NOME -=-=-=-=-")
+        nome = self.le_e_valida_nome("Nome de Usuário: ")
+        return {"nome": nome}
 
     @staticmethod
     def mostra_usuario(dados_usuario):
-        print("NOME DO USUÁRIO: ", dados_usuario["nome"])
-        print("CPF: ", dados_usuario["cpf"])
+        print("NOME DO USUÁRIO:", dados_usuario["nome"])
+        print("CPF:", dados_usuario["cpf"])
         print("\n")
 
     @staticmethod
     def seleciona_usuario():
         cpf = input("Digite o CPF do usuario: ")
-        return cpf
+        return cpf.strip()
