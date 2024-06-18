@@ -24,7 +24,7 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
         dados = self.__clima_previsao_tela.pega_dados_ver_clima()
         usuario = self.__sistema.controlador_usuario.procurar_usuario_por_cpf(dados["cpf"])
         localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(dados["cidade"])
-        if usuario is not None and localizacao is not None:
+        if usuario and localizacao:
             clima = self.procura_clima_previsao_por_localizacao(localizacao)
             if clima is None:
                 clima = ClimaPrevisaoEntidade(usuario, localizacao)
@@ -77,7 +77,7 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
                 self.__log.remove(log)
             self.lista_log()
         else:
-            self.__clima_previsao_tela.mostra_msg("ATENÇÂO: Este cpf nao possui logs")
+            self.__clima_previsao_tela.mostra_msg("ATENÇAO: Este cpf nao possui logs")
 
     def retornar(self):
         self.__sistema.abre_tela()

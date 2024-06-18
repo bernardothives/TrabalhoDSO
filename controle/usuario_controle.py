@@ -14,7 +14,7 @@ class UsuarioControle:
         if self.__usuarios:
             for usuario in self.__usuarios:
                 if str(usuario.cpf) == dados_usuario["cpf"]:
-                    self.__tela_usuario.mostra_msg("Usuário já cadastrado, tente novamente")
+                    self.__tela_usuario.mostra_msg("Usuário já cadastrado \n")
             else:
                 self.__usuarios.append(novo_usuario)
         else:
@@ -24,15 +24,15 @@ class UsuarioControle:
         self.listar_usuarios()
         cpf_usuario = self.__tela_usuario.seleciona_usuario()
         usuario = self.procurar_usuario_por_cpf(cpf_usuario)
-        if usuario is not None:
+        if usuario:
             novo_nome_usuario = self.__tela_usuario.pega_nome_usuario()
             for user in self.__usuarios:
                 if user.nome == novo_nome_usuario["nome"]:
-                    self.__tela_usuario.mostra_msg("Nome ja cadastrado, tente novamente.")
+                    self.__tela_usuario.mostra_msg("Nome ja cadastrado \n")
                     break
             usuario.nome = novo_nome_usuario["nome"]
         else:
-            self.__tela_usuario.mostra_msg("Ocorreu um erro, selecione um usuario existente.")
+            self.__tela_usuario.mostra_msg("Ocorreu um erro, selecione um usuario existente. \n")
 
     def remove_usuario(self):
         self.listar_usuarios()

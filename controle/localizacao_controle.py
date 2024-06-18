@@ -20,7 +20,7 @@ class LocalizacaoControle:
         if self.__localizacoes:
             for localizacao in self.__localizacoes:
                 if localizacao.cidade == dados_localizacao["cidade"]:
-                    self.__tela_localizacao.mostra_msg("Localizacao já cadastrada, tente novamente")
+                    self.__tela_localizacao.mostra_msg("Localizacao ja cadastrada \n")
                     break
             else:
                 self.__localizacoes.append(nova_localizacao)
@@ -31,11 +31,11 @@ class LocalizacaoControle:
         self.listar_localizacoes()
         cidade = self.__tela_localizacao.seleciona_cidade()
         localizacao = self.procura_localizacao_por_cidade(cidade)
-        if localizacao is not None:
+        if localizacao:
             novos_dados_localizacao = self.__tela_localizacao.pega_dados_localizacaoe()
             for localizacao in self.__localizacoes:
                 if localizacao.cidade == novos_dados_localizacao["cidade"]:
-                    self.__tela_localizacao.mostra_msg("cidade já cadastrada, tente novamente")
+                    self.__tela_localizacao.mostra_msg("Cidade ja cadastrada \n")
                     break
             localizacao.cidade = novos_dados_localizacao["cidade"]
             localizacao.estado = novos_dados_localizacao["estado"]
@@ -56,7 +56,7 @@ class LocalizacaoControle:
                                                                   "estado": localizacao.estado,
                                                                   "pais": localizacao.pais})
         else:
-            self.__tela_localizacao.mostra_msg("A lista de localizacoes está vazia :(")
+            self.__tela_localizacao.mostra_msg("A lista de localizacoes está vazia :( \n")
 
     def retornar(self):
         self.__sistema.abre_tela()
