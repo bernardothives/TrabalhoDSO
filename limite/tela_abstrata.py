@@ -28,8 +28,8 @@ class TelaAbstrata(ABC):
                 print("Nome incorreto: O nome não pode estar vazio. Tente novamente.")
                 continue
 
-            if " " in nome or not nome.isalpha():
-                print("Nome incorreto: O nome deve ser uma única palavra contendo apenas letras. Tente novamente.")
+            if not nome.replace(" ", "").isalpha():
+                print("Nome incorreto: O nome deve conter apenas letras. Tente novamente.")
                 continue
 
             return nome.lower()
