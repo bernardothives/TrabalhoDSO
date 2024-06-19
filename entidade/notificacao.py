@@ -1,11 +1,11 @@
-from entidade.usuario_entidade import UsuarioEntidade
+from entidade.usuario import Usuario
 
 
-class NotificacaoEntidade:
-    def __init__(self, tipo_notificacao: str, status: bool, usuario: UsuarioEntidade):
+class Notificacao:
+    def __init__(self, tipo_notificacao: str, status: bool, usuario: Usuario):
         self.__tipo_notificacao = tipo_notificacao
         self.__status = status
-        if isinstance(usuario, UsuarioEntidade):
+        if isinstance(usuario, Usuario):
             self.__usuario = usuario
 
     @property

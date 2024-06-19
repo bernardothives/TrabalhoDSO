@@ -19,7 +19,7 @@ class LocalizacaoTela(TelaAbstrata):
         cidade = input("Cidade: ")
         estado = input("Estado: ")
         pais = input("País: ")
-        return {"cidade": cidade, "estado": estado, "pais": pais}
+        return {"cidade": cidade.title(), "estado": estado.title(), "pais": pais.title()}
 
     @staticmethod
     def mostra_dados_localizacao( dados_localizacao):
@@ -31,4 +31,4 @@ class LocalizacaoTela(TelaAbstrata):
     @staticmethod
     def seleciona_cidade():
         cidade = input("Nome da cidade que deseja selecionar: ")
-        return cidade
+        return cidade.title()

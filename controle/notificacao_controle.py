@@ -1,4 +1,4 @@
-from entidade.notificacao_entidade import NotificacaoEntidade
+from entidade.notificacao import Notificacao
 from limite.notificacao_tela import NotificacaoTela
 
 
@@ -12,9 +12,9 @@ class NotificacaoControle:
         dados_notificacao = self.__tela_notificacao.pega_dados_especifico()
         if dados_notificacao["status"] is not None and dados_notificacao["tipo_notificacao"] is not None:
             if self.__sistema.controlador_usuario.validar_cpf(dados_notificacao["cpf"]):
-                nova_notificacao = NotificacaoEntidade(dados_notificacao["tipo_notificacao"],
-                                                       dados_notificacao["status"],
-                                                       self.__sistema.controlador_usuario.procurar_usuario_por_cpf(
+                nova_notificacao = Notificacao(dados_notificacao["tipo_notificacao"],
+                                               dados_notificacao["status"],
+                                               self.__sistema.controlador_usuario.procurar_usuario_por_cpf(
                                                            dados_notificacao["cpf"]))
                 if self.__notificacoes:
                     for notificacao in self.__notificacoes:

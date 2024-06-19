@@ -21,7 +21,7 @@ class ClimaAtualTela(TelaAbstrata):
         cpf = input("Digite o CPF: ")
         cidade = input("Digite a Cidade: ")
 
-        return {"cpf": cpf, "cidade": cidade}
+        return {"cpf": cpf, "cidade": cidade.title()}
 
     @staticmethod
     def mostra_clima(dados_clima):
@@ -46,9 +46,9 @@ class ClimaAtualTela(TelaAbstrata):
         print("\n")
 
     @staticmethod
-    def mostra_temperatura_mais_alta(temperatura):
-        print("Temperatura mais alta:", temperatura)
+    def mostra_temperatura_mais_alta(temperatura, cidade):
+        print(cidade, "é a cidade mais quente, com", temperatura, "graus celcius")
 
     @staticmethod
-    def mostra_temperatura_mais_baixa(temperatura):
-        print("Temperatura mais baixa:", temperatura)
+    def mostra_temperatura_mais_baixa(temperatura, cidade):
+        print(cidade, "é a cidade mais fria, com", temperatura, "graus celcius")

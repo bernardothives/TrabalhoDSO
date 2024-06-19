@@ -20,7 +20,7 @@ class ClimaPrevisaoTela(TelaAbstrata):
         cpf = input("Digite o CPF: ")
         cidade = input("Digite a Cidade: ")
 
-        return {"cpf": cpf, "cidade": cidade}
+        return {"cpf": cpf, "cidade": cidade.title()}
 
     @staticmethod
     def mostra_clima(dados_clima):

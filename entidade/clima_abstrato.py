@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
 from entidade.dados_climaticos import DadosClimaticos
+from entidade.usuario import Usuario
+from entidade.localizacao import Localizacao
 from datetime import datetime
-from entidade.usuario_entidade import UsuarioEntidade
-from entidade.localizacao_entidade import Localizacao
 
 
-class ClimaEntidadeAbstrata(ABC):
+class ClimaAbstrato(ABC):
     @abstractmethod
-    def __init__(self, usuario: UsuarioEntidade, localizacao: Localizacao):
-        if isinstance(usuario, UsuarioEntidade):
+    def __init__(self, usuario: Usuario, localizacao: Localizacao):
+        if isinstance(usuario, Usuario):
             self.__usuario = usuario
         if isinstance(localizacao, Localizacao):
             self.__localizacao = localizacao
@@ -19,14 +19,15 @@ class ClimaEntidadeAbstrata(ABC):
         self.__volume_chuva = self.dados_climaticos.pega_volume_chuva()
         self.__visibilidade = self.dados_climaticos.pega_visibilidade()
         self.__sensacao_termica = self.dados_climaticos.pega_sensacao_termica()
+        self.__data = datetime.now().strftime('%d/%m/%Y')
 
     @property
     def usuario(self):
         return self.__usuario
 
     @usuario.setter
-    def usuario(self, usuario: UsuarioEntidade):
-        if isinstance(usuario, UsuarioEntidade):
+    def usuario(self, usuario: Usuario):
+        if isinstance(usuario, Usuario):
             self.__usuario = usuario
 
     @property
@@ -61,3 +62,11 @@ class ClimaEntidadeAbstrata(ABC):
     @property
     def sensacao_termica(self):
         return self.__sensacao_termica
+
+    @property
+    def data(self):
+        return self.__data
+
+    @data.setter
+    def data(self, data: str):
+        self.__data = data

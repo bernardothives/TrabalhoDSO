@@ -1,9 +1,9 @@
-from entidade.clima_previsao_entidade import ClimaPrevisaoEntidade
+from entidade.clima_previsao import ClimaPrevisao
 from limite.clima_previsao_tela import ClimaPrevisaoTela
 from controle.clima_controle_abstrato import ClimaControleAbstrato
 from controle.alerta_controle import AlertaControle
-from entidade.localizacao_entidade import Localizacao
-from datetime import datetime
+from entidade.localizacao import Localizacao
+from datetime import datetime, timedelta
 
 
 class ClimaPrevisaoControle(ClimaControleAbstrato):
@@ -27,8 +27,11 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
         if usuario and localizacao:
             clima = self.procura_clima_previsao_por_localizacao(localizacao)
             if clima is None:
-                clima = ClimaPrevisaoEntidade(usuario, localizacao)
+                clima = ClimaPrevisao(usuario, localizacao)
                 self.__previsoes_clima.append(clima)
+            clima.data = datetime.strptime(clima.data, '%d/%m/%Y')
+            data_previsao = clima.data + timedelta(days=1)
+            data_formatada = data_previsao.strftime('%d/%m/%Y')
             self.adiciona_log(dados["cpf"], dados["cidade"])
             self.__clima_previsao_tela.mostra_clima({"temperatura": clima.temperatura,
                                                      "humidade": clima.humidade,
@@ -36,9 +39,16 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
                                                      "volume_chuva": clima.volume_chuva,
                                                      "visibilidade": clima.visibilidade,
                                                      "sensacao_termica": clima.sensacao_termica,
-                                                     "data": clima.data})
+                                                     "data": data_formatada})
         else:
             self.__clima_previsao_tela.mostra_msg("Dados Invalidos")
+
+    '''
+    #quando apagar o log apagar do lista climas tambem
+    def remove_clima_previsao(self, clima_previsao: ClimaPrevisao):
+        if clima_previsao in self.__previsoes_clima:
+            self.__previsoes_clima.remove(clima_previsao)
+    '''
 
     def procura_clima_previsao_por_localizacao(self, localizacao: Localizacao):
         if isinstance(localizacao, Localizacao):
@@ -52,8 +62,10 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
         for log in self.__log:
             if log[0] == cpf:
                 logs_do_cpf.append(log)
+        if logs_do_cpf:
             return logs_do_cpf
-        return None
+        else:
+            return None
 
     def adiciona_log(self, cpf: str, cidade: str):
         hora = datetime.now().strftime('%H:%M:%S')

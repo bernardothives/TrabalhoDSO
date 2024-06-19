@@ -1,8 +1,8 @@
-from entidade.clima_atual_entidade import ClimaAtualEntidade
+from entidade.clima_atual import ClimaAtual
 from limite.clima_atual_tela import ClimaAtualTela
 from controle.clima_controle_abstrato import ClimaControleAbstrato
 from datetime import datetime
-from entidade.localizacao_entidade import Localizacao
+from entidade.localizacao import Localizacao
 
 
 class ClimaAtualControle(ClimaControleAbstrato):
@@ -21,7 +21,7 @@ class ClimaAtualControle(ClimaControleAbstrato):
         if usuario is not None and localizacao is not None:
             clima = self.procura_clima_atual_por_localizacao(localizacao)
             if clima is None:
-                clima = ClimaAtualEntidade(usuario, localizacao)
+                clima = ClimaAtual(usuario, localizacao)
                 self.__climas_atuais.append(clima)
             self.adiciona_log(dados["cpf"], dados["cidade"])
             self.__clima_atual_tela.mostra_clima({"temperatura": clima.temperatura,
@@ -35,6 +35,13 @@ class ClimaAtualControle(ClimaControleAbstrato):
         else:
             self.__clima_atual_tela.mostra_msg("Dados Invalidos")
 
+    '''
+    #quando apagar o log apagar do lista climas tambem
+    def remove_clima_atual(self, clima_atual: ClimaAtual):
+        if clima_atual in self.__climas_atuais:
+            self.__climas_atuais.remove(clima_atual)
+    '''
+
     def procura_clima_atual_por_localizacao(self, localizacao: Localizacao):
         if isinstance(localizacao, Localizacao):
             for clima_atual in self.__climas_atuais:
@@ -47,8 +54,10 @@ class ClimaAtualControle(ClimaControleAbstrato):
         for log in self.__log:
             if log[0] == cpf:
                 logs_do_cpf.append(log)
+        if logs_do_cpf:
             return logs_do_cpf
-        return None
+        else:
+            return None
 
     def adiciona_log(self, cpf: str, cidade: str):
         hora = datetime.now().strftime('%H:%M:%S')
@@ -78,20 +87,22 @@ class ClimaAtualControle(ClimaControleAbstrato):
         self.__sistema.abre_tela()
 
     def temperatura_mais_baixa(self):
-        max_temperatura = 56
+        min_temperatura = 56
         for clima_atual in self.__climas_atuais:
             temperatura = clima_atual.temperatura
-            if temperatura <= max_temperatura:
-                max_temperatura = temperatura
-        self.__clima_atual_tela.mostra_temperatura_mais_baixa(max_temperatura)
+            if temperatura <= min_temperatura:
+                min_temperatura = temperatura
+                cidade_temperatura_mais_baixa = clima_atual.localizacao.cidade
+        self.__clima_atual_tela.mostra_temperatura_mais_baixa(min_temperatura, cidade_temperatura_mais_baixa)
 
     def temperatura_mais_alta(self):
-        min_temperatura = -67
+        max_temperatura = -67
         for clima_atual in self.__climas_atuais:
             temperatura = clima_atual.temperatura
-            if temperatura >= min_temperatura:
-                min_temperatura = temperatura
-        self.__clima_atual_tela.mostra_temperatura_mais_alta(min_temperatura)
+            if temperatura >= max_temperatura:
+                max_temperatura = temperatura
+                cidade_temperatura_mais_alta = clima_atual.localizacao.cidade
+        self.__clima_atual_tela.mostra_temperatura_mais_alta(max_temperatura, cidade_temperatura_mais_alta)
 
     def abre_tela(self):
         lista_opcoes = {1: self.ver_dados_climaticos, 2: self.lista_log,

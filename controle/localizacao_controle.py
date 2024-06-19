@@ -1,4 +1,4 @@
-from entidade.localizacao_entidade import Localizacao
+from entidade.localizacao import Localizacao
 from limite.localizacao_tela import LocalizacaoTela
 
 

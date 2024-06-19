@@ -1,4 +1,4 @@
-from entidade.usuario_entidade import UsuarioEntidade
+from entidade.usuario import Usuario
 from limite.usuario_tela import UsuarioTela
 
 
@@ -10,7 +10,7 @@ class UsuarioControle:
 
     def inclui_usuario(self):
         dados_usuario = self.__tela_usuario.pega_dados_usuario()
-        novo_usuario = UsuarioEntidade(dados_usuario["nome"], dados_usuario["cpf"])
+        novo_usuario = Usuario(dados_usuario["nome"], dados_usuario["cpf"])
         if self.__usuarios:
             for usuario in self.__usuarios:
                 if str(usuario.cpf) == dados_usuario["cpf"]:
