@@ -1,17 +1,44 @@
 from limite.tela_abstrata import TelaAbstrata
+import PySimpleGUI as sg
 
 
 class UsuarioTela(TelaAbstrata):
+    def __init(self):
+        self.__window = None
+        self.init_opcoes()
 
     def tela_opcoes(self):
-        print("-=-=-=-=- USUÁRIO -=-=-=-=-")
-        print("1 - Incluir usuário")
-        print("2 - Alterar nome de usuario")
-        print("3 - Listar Usuários")
-        print("4 - Remove Usuário")
-        print("0 - Retornar")
-        opcao = self.le_inteiro("Escolha a opcao: ", [1, 2, 3, 4, 0])
+        self.init_opcoes()
+        button, values = self.open()
+        opcao = 0
+        if values['1']:
+            opcao = 1
+        if values['2']:
+            opcao = 2
+        if values['3']:
+            opcao = 3
+        if values['4']:
+            opcao = 4
+        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
+        # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
+        if values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.close()
         return opcao
+
+    def init_opcoes(self):
+        sg.ChangeLookAndFeel('LightBlue')
+        layout = [
+            [sg.Text('------ Usuário ------', font=("Helvica", 25))],
+            [sg.Text('Escolha sua opção:', font=("Helvica", 15))],
+            [sg.Radio('Incluir usuário', "RD1", key='1')],
+            [sg.Radio('Alterar usuário', "RD1", key='2')],
+            [sg.Radio('Listar usuários', "RD1", key='3')],
+            [sg.Radio('Excluir usuário', "RD1", key='4')],
+            [sg.Radio('Retornar', "RD1", key='0')],
+            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+        ]
+        self.__window = sg.Window('Clima CO.').Layout(layout)
 
     def pega_dados_usuario(self):
         print("-=-=-=-=- DADOS USUARIO -=-=-=-=-")
@@ -33,3 +60,10 @@ class UsuarioTela(TelaAbstrata):
     def seleciona_usuario(self):
         cpf = self.le_e_valida_cpf("Digite o CPF do usuario: ")
         return cpf
+
+    def open(self):
+        button, values = self.__window.Read()
+        return button, values
+
+    def close(self):
+        self.__window.Close()
