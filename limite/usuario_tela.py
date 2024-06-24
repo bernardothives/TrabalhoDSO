@@ -32,9 +32,9 @@ class UsuarioTela(TelaAbstrata):
         return opcao
 
     def init_opcoes(self):
-        sg.theme('LightBlue2')
+        sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='White')],
             [sg.Text('Escolha sua opção:', font=("Helvetica", 15), pad=(10, 10), text_color='darkblue')],
             [sg.Radio('Incluir usuário', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Alterar usuário', "RD1", key='2', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
@@ -45,7 +45,7 @@ class UsuarioTela(TelaAbstrata):
         self.__window = sg.Window('Clima CO', layout, element_justification='c', finalize=True)
 
     def pega_dados_usuario(self):
-        sg.theme('LightBlue2')
+        sg.theme('LightBlue3')
         layout = [
             [sg.Text('Digite os dados do usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
             [sg.Text('Nome:', font=("Helvetica", 14)), sg.InputText(key='nome')],
@@ -58,11 +58,13 @@ class UsuarioTela(TelaAbstrata):
         dados_usuario = None
         if button == 'Confirmar':
             dados_usuario = {"nome": values['nome'], "cpf": values['cpf']}
+        else:
+            self.close()
         self.close()
         return dados_usuario
 
     def pega_nome_usuario(self):
-        sg.theme('LightBlue2')
+        sg.theme('LightBlue3')
         layout = [
             [sg.Text('Digite o novo nome do usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
             [sg.Text('Nome:', font=("Helvetica", 14)), sg.InputText(key='nome')],
@@ -74,11 +76,13 @@ class UsuarioTela(TelaAbstrata):
         nome = None
         if button == 'Confirmar':
             nome = {"nome": values['nome']}
+        else:
+            self.close()
         self.close()
         return nome
 
     def mostra_usuario(self, dados_usuario):
-        sg.theme('LightBlue2')
+        sg.theme('LightBlue3')
         layout = [
             [sg.Text('Dados do Usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
             [sg.Text(f"Nome: {dados_usuario['nome']}", font=("Helvetica", 14))],
@@ -90,7 +94,7 @@ class UsuarioTela(TelaAbstrata):
         self.close()
 
     def seleciona_usuario(self):
-        sg.theme('LightBlue2')
+        sg.theme('LightBlue3')
         layout = [
             [sg.Text('Selecione o usuário pelo CPF', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
             [sg.Text('CPF:', font=("Helvetica", 14)), sg.InputText(key='cpf')],
@@ -102,6 +106,8 @@ class UsuarioTela(TelaAbstrata):
         cpf = None
         if button == 'Confirmar':
             cpf = values['cpf']
+        else:
+            self.close()
         self.close()
         return cpf
 

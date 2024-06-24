@@ -14,27 +14,29 @@ class LocalizacaoControle:
                 return localizacao
 
     def inclui_localizacao(self):
-        dados_localizacao = self.__tela_localizacao.pega_dados_localizacaoe()
-        nova_localizacao = Localizacao(dados_localizacao["cidade"], dados_localizacao["estado"],
-                                       dados_localizacao["pais"])
-        if self.__localizacoes:
-            for localizacao in self.__localizacoes:
-                if localizacao.cidade == dados_localizacao["cidade"]:
-                    self.__tela_localizacao.mostra_msg("Localizacao ja cadastrada \n")
-                    break
+        dados_localizacao = self.__tela_localizacao.pega_dados_localizacao()
+        if dados_localizacao:
+            nova_localizacao = Localizacao(dados_localizacao["cidade"], dados_localizacao["estado"],
+                                           dados_localizacao["pais"])
+            if self.__localizacoes:
+                for localizacao in self.__localizacoes:
+                    if localizacao.cidade == dados_localizacao["cidade"]:
+                        self.__tela_localizacao.mostra_msg("Localizacao ja cadastrada \n")
+                        break
+                else:
+                    self.__localizacoes.append(nova_localizacao)
             else:
                 self.__localizacoes.append(nova_localizacao)
-        else:
-            self.__localizacoes.append(nova_localizacao)
 
     def altera_localizacao(self):
         self.listar_localizacoes()
-        cidade = self.__tela_localizacao.seleciona_cidade()
+        lista_cidades = [localizacao.cidade for localizacao in self.__localizacoes]
+        cidade = self.__tela_localizacao.seleciona_cidade(lista_cidades)
         localizacao = self.procura_localizacao_por_cidade(cidade)
         if localizacao:
-            novos_dados_localizacao = self.__tela_localizacao.pega_dados_localizacaoe()
-            for localizacao in self.__localizacoes:
-                if localizacao.cidade == novos_dados_localizacao["cidade"]:
+            novos_dados_localizacao = self.__tela_localizacao.pega_dados_localizacao()
+            for loc in self.__localizacoes:
+                if loc.cidade == novos_dados_localizacao["cidade"] and loc != localizacao:
                     self.__tela_localizacao.mostra_msg("Cidade ja cadastrada \n")
                     break
             localizacao.cidade = novos_dados_localizacao["cidade"]
@@ -43,7 +45,8 @@ class LocalizacaoControle:
 
     def remove_localizacao(self):
         self.listar_localizacoes()
-        cidade = self.__tela_localizacao.seleciona_cidade()
+        lista_cidades = [localizacao.cidade for localizacao in self.__localizacoes]
+        cidade = self.__tela_localizacao.seleciona_cidade(lista_cidades)
         localizacao = self.procura_localizacao_por_cidade(cidade)
         if localizacao in self.__localizacoes:
             self.__localizacoes.remove(localizacao)

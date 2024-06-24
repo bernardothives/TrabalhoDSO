@@ -11,7 +11,7 @@ class SistemaTela(TelaAbstrata):
         self.init_components()
         while True:
             event, values = self.__window.read()
-            if event in (None, 'Cancelar'):
+            if event is None:
                 opcao = 0
                 break
             if values['1']:
@@ -36,9 +36,9 @@ class SistemaTela(TelaAbstrata):
         return opcao
 
     def init_components(self):
-        sg.theme('LightBlue2')
+        sg.theme('LightBlue3')
         layout = [
-            [sg.Text('CLIMA CO', font=("Helvetica", 28), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Image('limite/nuvem.png'), sg.Text('Clima CO', font=("Helvetica", 30), justification='center', pad=(10, 20), text_color='White')],
             [sg.Text('Escolha sua opção:', font=("Helvetica", 16), pad=(10, 10), text_color='darkblue')],
             [sg.Radio('Usuário', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Localização', "RD1", key='2', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],

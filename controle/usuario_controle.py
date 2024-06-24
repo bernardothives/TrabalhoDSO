@@ -10,15 +10,16 @@ class UsuarioControle:
 
     def inclui_usuario(self):
         dados_usuario = self.__tela_usuario.pega_dados_usuario()
-        novo_usuario = Usuario(dados_usuario["nome"], dados_usuario["cpf"])
-        if self.__usuarios:
-            for usuario in self.__usuarios:
-                if str(usuario.cpf) == dados_usuario["cpf"]:
-                    self.__tela_usuario.mostra_msg("Usuário já cadastrado \n")
+        if dados_usuario:
+            novo_usuario = Usuario(dados_usuario["nome"], dados_usuario["cpf"])
+            if self.__usuarios:
+                for usuario in self.__usuarios:
+                    if str(usuario.cpf) == dados_usuario["cpf"]:
+                        self.__tela_usuario.mostra_msg("Usuário já cadastrado \n")
+                else:
+                    self.__usuarios.append(novo_usuario)
             else:
                 self.__usuarios.append(novo_usuario)
-        else:
-            self.__usuarios.append(novo_usuario)
 
     def alterar_nome_usuario(self):
         self.listar_usuarios()
