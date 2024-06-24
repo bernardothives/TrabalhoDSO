@@ -1,6 +1,7 @@
 from limite.tela_abstrata import TelaAbstrata
 import PySimpleGUI as sg
 
+
 class LocalizacaoTela(TelaAbstrata):
     def __init__(self):
         self.__window = None
@@ -10,7 +11,7 @@ class LocalizacaoTela(TelaAbstrata):
         opcao = 0
         while True:
             button, values = self.open()
-            if button is None or values is None:  # Handle window close or None events
+            if button is None or values is None:
                 break
             if values['1']:
                 opcao = 1
@@ -82,7 +83,7 @@ class LocalizacaoTela(TelaAbstrata):
             [sg.Text('Selecione a cidade', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
             [sg.Column([[sg.Radio(cidade, "CIDADES", key=cidade)] for cidade in lista_cidades])],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
-             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+             sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
         self.__window = sg.Window('Selecionar Cidade', layout, element_justification='c', finalize=True)
         button, values = self.open()

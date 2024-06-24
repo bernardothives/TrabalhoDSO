@@ -11,7 +11,7 @@ class UsuarioTela(TelaAbstrata):
         opcao = 0
         while True:
             button, values = self.open()
-            if button is None or values is None:  # Handle window close or None events
+            if button is None or values is None:
                 break
             if values['1']:
                 opcao = 1

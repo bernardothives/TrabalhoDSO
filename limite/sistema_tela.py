@@ -9,9 +9,10 @@ class SistemaTela(TelaAbstrata):
 
     def tela_opcoes(self):
         self.init_components()
+        opcao = 0
         while True:
             event, values = self.__window.read()
-            if event is None:
+            if event is None or values is None:
                 opcao = 0
                 break
             if values['1']:
