@@ -8,9 +8,9 @@ class SistemaTela(TelaAbstrata):
         self.init_components()
 
     def tela_opcoes(self):
+        self.init_components()
         while True:
             event, values = self.__window.read()
-            opcao = 0
             if event in (None, 'Cancelar'):
                 opcao = 0
                 break
@@ -36,7 +36,7 @@ class SistemaTela(TelaAbstrata):
         return opcao
 
     def init_components(self):
-        sg.theme('LightBlue2')  # Tema mais claro e suave
+        sg.theme('LightBlue2')
         layout = [
             [sg.Text('CLIMA CO', font=("Helvetica", 28), justification='center', pad=(10, 20), text_color='navy')],
             [sg.Text('Escolha sua opção:', font=("Helvetica", 16), pad=(10, 10), text_color='darkblue')],
@@ -47,7 +47,7 @@ class SistemaTela(TelaAbstrata):
             [sg.Radio('Notificação', "RD1", key='5', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Finalizar o Sistema', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')]
         ]
-        self.__window = sg.Window('Clima CO', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Clima CO', layout, element_justification='c')
 
     def close(self):
         self.__window.close()

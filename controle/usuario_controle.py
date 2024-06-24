@@ -58,11 +58,16 @@ class UsuarioControle:
         self.__sistema.abre_tela()
 
     def abre_tela(self):
-        lista_opcoes = {1: self.inclui_usuario,
-                        2: self.alterar_nome_usuario,
-                        3: self.listar_usuarios,
-                        4: self.remove_usuario,
-                        0: self.retornar}
+        lista_opcoes = {
+            1: self.inclui_usuario,
+            2: self.alterar_nome_usuario,
+            3: self.listar_usuarios,
+            4: self.remove_usuario,
+            0: self.retornar
+        }
 
         while True:
-            lista_opcoes[self.__tela_usuario.tela_opcoes()]()
+            opcao = self.__tela_usuario.tela_opcoes()
+            if opcao == 0:
+                break
+            lista_opcoes[opcao]()

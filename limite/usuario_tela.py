@@ -3,67 +3,111 @@ import PySimpleGUI as sg
 
 
 class UsuarioTela(TelaAbstrata):
-    def __init(self):
+    def __init__(self):
         self.__window = None
-        self.init_opcoes()
 
     def tela_opcoes(self):
         self.init_opcoes()
-        button, values = self.open()
         opcao = 0
-        if values['1']:
-            opcao = 1
-        if values['2']:
-            opcao = 2
-        if values['3']:
-            opcao = 3
-        if values['4']:
-            opcao = 4
-        # cobre os casos de Retornar, fechar janela, ou clicar cancelar
-        # Isso faz com que retornemos a tela do sistema caso qualquer uma dessas coisas aconteca
-        if values['0'] or button in (None, 'Cancelar'):
-            opcao = 0
+        while True:
+            button, values = self.open()
+            if button is None or values is None:  # Handle window close or None events
+                break
+            if values['1']:
+                opcao = 1
+                break
+            if values['2']:
+                opcao = 2
+                break
+            if values['3']:
+                opcao = 3
+                break
+            if values['4']:
+                opcao = 4
+                break
+            if values['0']:
+                opcao = 0
+                break
         self.close()
         return opcao
 
     def init_opcoes(self):
-        sg.ChangeLookAndFeel('LightBlue')
+        sg.theme('LightBlue2')
         layout = [
-            [sg.Text('------ Usuário ------', font=("Helvica", 25))],
-            [sg.Text('Escolha sua opção:', font=("Helvica", 15))],
-            [sg.Radio('Incluir usuário', "RD1", key='1')],
-            [sg.Radio('Alterar usuário', "RD1", key='2')],
-            [sg.Radio('Listar usuários', "RD1", key='3')],
-            [sg.Radio('Excluir usuário', "RD1", key='4')],
-            [sg.Radio('Retornar', "RD1", key='0')],
-            [sg.Button('Confirmar'), sg.Cancel('Cancelar')]
+            [sg.Text('Usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Escolha sua opção:', font=("Helvetica", 15), pad=(10, 10), text_color='darkblue')],
+            [sg.Radio('Incluir usuário', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Alterar usuário', "RD1", key='2', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Listar usuários', "RD1", key='3', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Excluir usuário', "RD1", key='4', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')]
         ]
-        self.__window = sg.Window('Clima CO.').Layout(layout)
+        self.__window = sg.Window('Clima CO', layout, element_justification='c', finalize=True)
 
     def pega_dados_usuario(self):
-        print("-=-=-=-=- DADOS USUARIO -=-=-=-=-")
-        nome = self.le_e_valida_nome("Nome de Usuário: ")
-        cpf = self.le_e_valida_cpf("CPF: ")
-        return {"cpf": cpf, "nome": nome}
+        sg.theme('LightBlue2')
+        layout = [
+            [sg.Text('Digite os dados do usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Nome:', font=("Helvetica", 14)), sg.InputText(key='nome')],
+            [sg.Text('CPF:', font=("Helvetica", 14)), sg.InputText(key='cpf')],
+            [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
+             sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c', finalize=True)
+        button, values = self.open()
+        dados_usuario = None
+        if button == 'Confirmar':
+            dados_usuario = {"nome": values['nome'], "cpf": values['cpf']}
+        self.close()
+        return dados_usuario
 
     def pega_nome_usuario(self):
-        print("-=-=-=-=- NOVO NOME -=-=-=-=-")
-        nome = self.le_e_valida_nome("Nome de Usuário: ")
-        return {"nome": nome}
+        sg.theme('LightBlue2')
+        layout = [
+            [sg.Text('Digite o novo nome do usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Nome:', font=("Helvetica", 14)), sg.InputText(key='nome')],
+            [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
+             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Novo Nome', layout, element_justification='c', finalize=True)
+        button, values = self.open()
+        nome = None
+        if button == 'Confirmar':
+            nome = {"nome": values['nome']}
+        self.close()
+        return nome
 
-    @staticmethod
-    def mostra_usuario(dados_usuario):
-        print("NOME DO USUÁRIO:", dados_usuario["nome"])
-        print("CPF:", dados_usuario["cpf"])
-        print("\n")
+    def mostra_usuario(self, dados_usuario):
+        sg.theme('LightBlue2')
+        layout = [
+            [sg.Text('Dados do Usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text(f"Nome: {dados_usuario['nome']}", font=("Helvetica", 14))],
+            [sg.Text(f"CPF: {dados_usuario['cpf']}", font=("Helvetica", 14))],
+            [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c', finalize=True)
+        self.__window.read()
+        self.close()
 
     def seleciona_usuario(self):
-        cpf = self.le_e_valida_cpf("Digite o CPF do usuario: ")
+        sg.theme('LightBlue2')
+        layout = [
+            [sg.Text('Selecione o usuário pelo CPF', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('CPF:', font=("Helvetica", 14)), sg.InputText(key='cpf')],
+            [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
+             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Selecionar Usuário', layout, element_justification='c', finalize=True)
+        button, values = self.open()
+        cpf = None
+        if button == 'Confirmar':
+            cpf = values['cpf']
+        self.close()
         return cpf
 
     def open(self):
-        button, values = self.__window.Read()
+        button, values = self.__window.read()
         return button, values
 
     def close(self):
-        self.__window.Close()
+        self.__window.close()
