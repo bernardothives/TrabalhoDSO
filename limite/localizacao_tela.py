@@ -92,7 +92,7 @@ class LocalizacaoTela(TelaAbstrata):
             [sg.Text('Selecione a cidade', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
             [sg.Column([[sg.Radio(cidade, "CIDADES", key=cidade)] for cidade in lista_cidades])],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
-             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+             sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
         self.__window = sg.Window('Selecionar Cidade', layout, element_justification='c', finalize=True)
         button, values = self.open()

@@ -10,7 +10,7 @@ class NotificacaoControle:
 
     def inclui_notificacao(self):
         dados_notificacao = self.__tela_notificacao.pega_dados_especifico()
-        if dados_notificacao["status"] is not None and dados_notificacao["tipo_notificacao"] is not None:
+        if dados_notificacao["status"] and dados_notificacao["tipo_notificacao"]:
             if self.__sistema.controlador_usuario.validar_cpf(dados_notificacao["cpf"]):
                 nova_notificacao = Notificacao(dados_notificacao["tipo_notificacao"],
                                                dados_notificacao["status"],
