@@ -11,21 +11,21 @@ class UsuarioTela(TelaAbstrata):
         opcao = 0
         while True:
             button, values = self.open()
-            if button is None or values is None:  # Handle window close or None events
+            if button is None or values is None:
                 break
-            if values['1']:
+            if values.get('1'):
                 opcao = 1
                 break
-            if values['2']:
+            if values.get('2'):
                 opcao = 2
                 break
-            if values['3']:
+            if values.get('3'):
                 opcao = 3
                 break
-            if values['4']:
+            if values.get('4'):
                 opcao = 4
                 break
-            if values['0']:
+            if values.get('0'):
                 opcao = 0
                 break
         self.close()
@@ -47,9 +47,10 @@ class UsuarioTela(TelaAbstrata):
     def pega_dados_usuario(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Digite os dados do usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
-            [sg.Text('Nome:', font=("Helvetica", 14)), sg.InputText(key='nome')],
-            [sg.Text('CPF:', font=("Helvetica", 14)), sg.InputText(key='cpf')],
+            [sg.Text('Digite os dados do usuário', font=("Helvetica", 25), justification='center', pad=(10, 20),
+                     text_color='navy')],
+            [sg.Text('Nome:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='nome')],
+            [sg.Text('CPF:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='cpf')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
@@ -57,9 +58,16 @@ class UsuarioTela(TelaAbstrata):
         button, values = self.open()
         dados_usuario = None
         if button == 'Confirmar':
-            dados_usuario = {"nome": values['nome'], "cpf": values['cpf']}
-        else:
-            self.close()
+            cpf = values['cpf']
+            nome = values['nome']
+            try:
+                if not cpf or not nome:
+                    raise ValueError("Nome e CPF não podem estar vazios.")
+                cpf_valido = self.le_e_valida_cpf(cpf)
+                nome_valido = self.le_e_valida_nome(nome)
+                dados_usuario = {"nome": nome_valido, "cpf": cpf_valido}
+            except ValueError as e:
+                sg.popup(str(e), title='Erro')
         self.close()
         return dados_usuario
 
@@ -75,9 +83,14 @@ class UsuarioTela(TelaAbstrata):
         button, values = self.open()
         nome = None
         if button == 'Confirmar':
-            nome = {"nome": values['nome']}
-        else:
-            self.close()
+            nome = values['nome']
+            try:
+                if not nome:
+                    raise ValueError("O nome não pode estar vazio.")
+                nome_valido = self.le_e_valida_nome(nome)
+                return {"nome": nome_valido}
+            except ValueError as e:
+                sg.popup(str(e), title='Erro')
         self.close()
         return nome
 
@@ -106,8 +119,13 @@ class UsuarioTela(TelaAbstrata):
         cpf = None
         if button == 'Confirmar':
             cpf = values['cpf']
-        else:
-            self.close()
+            try:
+                if not cpf:
+                    raise ValueError("O CPF não pode estar vazio.")
+                self.le_e_valida_cpf(cpf)
+            except ValueError as e:
+                sg.popup(str(e), title='Erro')
+                cpf = None
         self.close()
         return cpf
 

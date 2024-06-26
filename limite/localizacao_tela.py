@@ -1,6 +1,7 @@
 from limite.tela_abstrata import TelaAbstrata
 import PySimpleGUI as sg
 
+
 class LocalizacaoTela(TelaAbstrata):
     def __init__(self):
         self.__window = None
@@ -10,21 +11,21 @@ class LocalizacaoTela(TelaAbstrata):
         opcao = 0
         while True:
             button, values = self.open()
-            if button is None or values is None:  # Handle window close or None events
+            if button is None or values is None:
                 break
-            if values['1']:
+            if values.get('1'):
                 opcao = 1
                 break
-            if values['2']:
+            if values.get('2'):
                 opcao = 2
                 break
-            if values['3']:
+            if values.get('3'):
                 opcao = 3
                 break
-            if values['4']:
+            if values.get('4'):
                 opcao = 4
                 break
-            if values['0']:
+            if values.get('0'):
                 opcao = 0
                 break
         self.close()
@@ -47,19 +48,28 @@ class LocalizacaoTela(TelaAbstrata):
         sg.theme('LightBlue3')
         layout = [
             [sg.Text('Digite os dados da localização', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
-            [sg.Text('Cidade:', font=("Helvetica", 14)), sg.InputText(key='cidade')],
-            [sg.Text('Estado:', font=("Helvetica", 14)), sg.InputText(key='estado')],
-            [sg.Text('País:', font=("Helvetica", 14)), sg.InputText(key='pais')],
+            [sg.Text('Cidade:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='cidade')],
+            [sg.Text('Estado:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='estado')],
+            [sg.Text('País:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='pais')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
-             sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
         self.__window = sg.Window('Dados da Localização', layout, element_justification='c', finalize=True)
         button, values = self.open()
         dados_localizacao = None
         if button == 'Confirmar':
-            dados_localizacao = {"cidade": values['cidade'], "estado": values['estado'], "pais": values['pais']}
-        else:
-            self.close()
+            try:
+                cidade = values['cidade']
+                estado = values['estado']
+                pais = values['pais']
+                if not cidade or not estado or not pais:
+                    raise ValueError("Cidade, Estado e País não podem estar vazios.")
+                cidade_valida = self.le_e_valida_nome(cidade)
+                estado_valido = self.le_e_valida_nome(estado)
+                pais_valido = self.le_e_valida_nome(pais)
+                dados_localizacao = {"cidade": cidade_valida, "estado": estado_valido, "pais": pais_valido}
+            except ValueError as e:
+                sg.popup(str(e), title='Erro')
         self.close()
         return dados_localizacao
 
