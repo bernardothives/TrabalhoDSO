@@ -81,6 +81,42 @@ class NotificacaoTela(TelaAbstrata):
         self.close()
         return tipo
 
+    def pega_dados_notificacao(self):
+        sg.theme('LightBlue3')
+        layout = [
+            [sg.Text('Dados da Notificação', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Tipo de Notificação:', font=("Helvetica", 14), size=(22, 1)), sg.Combo(['banner', 'central', 'tela de bloqueio'], key='tipo_notificacao')],
+            [sg.Text('Status:', font=("Helvetica", 14), size=(22, 1)), sg.Combo(['Sim', 'Não'], key='status')],
+            [sg.Text('CPF do Usuário Notificado:', font=("Helvetica", 14), size=(22, 1)), sg.InputText(key='cpf')],
+            [sg.Text('Nome do Usuário Notificado:', font=("Helvetica", 14), size=(22, 1)), sg.InputText(key='nome_usuario')],
+            [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
+             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Dados da Notificação', layout, element_justification='left', finalize=True)
+        button, values = self.open()
+        dados_notificacao = None
+        if button == 'Confirmar':
+            tipo = values['tipo_notificacao']
+            status = values['status']
+            cpf = values['cpf']
+            nome_usuario = values['nome_usuario']
+            try:
+                if not tipo or not status or not cpf or not nome_usuario:
+                    raise ValueError("Todos os campos são obrigatórios.")
+                tipo_valido = self.le_e_valida_nome(tipo)
+                status_valido = status == 'Sim'
+                cpf_valido = self.le_e_valida_cpf(cpf)
+                dados_notificacao = {
+                    "tipo_notificacao": tipo_valido,
+                    "status": status_valido,
+                    "cpf": cpf_valido,
+                    "nome_usuario": nome_usuario
+                }
+            except ValueError as e:
+                sg.popup(str(e), title='Erro')
+        self.close()
+        return dados_notificacao
+
     def pega_dados_especifico(self):
         sg.theme('LightBlue3')
         layout = [

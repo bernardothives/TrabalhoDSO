@@ -32,8 +32,8 @@ class UsuarioControle:
                     self.__tela_usuario.mostra_msg("Nome ja cadastrado \n")
                     break
             usuario.nome = novo_nome_usuario["nome"]
-        else:
-            self.__tela_usuario.mostra_msg("Ocorreu um erro, selecione um usuario existente. \n")
+        #else:
+        #    self.__tela_usuario.mostra_msg("Ocorreu um erro, selecione um usuario existente. \n")
 
     def remove_usuario(self):
         self.listar_usuarios()

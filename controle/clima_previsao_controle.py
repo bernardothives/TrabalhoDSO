@@ -22,26 +22,27 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
         self.__sistema.controlador_usuario.listar_usuarios()
         self.__sistema.controlador_localizacao.listar_localizacoes()
         dados = self.__clima_previsao_tela.pega_dados_ver_clima()
-        usuario = self.__sistema.controlador_usuario.procurar_usuario_por_cpf(dados["cpf"])
-        localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(dados["cidade"])
-        if usuario and localizacao:
-            clima = self.procura_clima_previsao_por_localizacao(localizacao)
-            if clima is None:
-                clima = ClimaPrevisao(usuario, localizacao)
-                self.__previsoes_clima.append(clima)
-            clima.data = datetime.strptime(clima.data, '%d/%m/%Y')
-            data_previsao = clima.data + timedelta(days=1)
-            data_formatada = data_previsao.strftime('%d/%m/%Y')
-            self.adiciona_log(dados["cpf"], dados["cidade"])
-            self.__clima_previsao_tela.mostra_clima({"temperatura": clima.temperatura,
-                                                     "humidade": clima.humidade,
-                                                     "velocidade_vento": clima.velocidade_vento,
-                                                     "volume_chuva": clima.volume_chuva,
-                                                     "visibilidade": clima.visibilidade,
-                                                     "sensacao_termica": clima.sensacao_termica,
-                                                     "data": data_formatada})
-        else:
-            self.__clima_previsao_tela.mostra_msg("Dados Invalidos")
+        if dados:
+            usuario = self.__sistema.controlador_usuario.procurar_usuario_por_cpf(dados["cpf"])
+            localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(dados["cidade"])
+            if usuario and localizacao:
+                clima = self.procura_clima_previsao_por_localizacao(localizacao)
+                if clima is None:
+                    clima = ClimaPrevisao(usuario, localizacao)
+                    self.__previsoes_clima.append(clima)
+                clima.data = datetime.strptime(clima.data, '%d/%m/%Y')
+                data_previsao = clima.data + timedelta(days=1)
+                data_formatada = data_previsao.strftime('%d/%m/%Y')
+                self.adiciona_log(dados["cpf"], dados["cidade"])
+                self.__clima_previsao_tela.mostra_clima({"temperatura": clima.temperatura,
+                                                         "humidade": clima.humidade,
+                                                         "velocidade_vento": clima.velocidade_vento,
+                                                         "volume_chuva": clima.volume_chuva,
+                                                         "visibilidade": clima.visibilidade,
+                                                         "sensacao_termica": clima.sensacao_termica,
+                                                         "data": data_formatada})
+            else:
+                self.__clima_previsao_tela.mostra_msg("Dados Invalidos")
 
     '''
     #quando apagar o log apagar do lista climas tambem

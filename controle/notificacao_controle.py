@@ -10,25 +10,26 @@ class NotificacaoControle:
 
     def inclui_notificacao(self):
         dados_notificacao = self.__tela_notificacao.pega_dados_especifico()
-        if dados_notificacao["status"] and dados_notificacao["tipo_notificacao"]:
-            if self.__sistema.controlador_usuario.validar_cpf(dados_notificacao["cpf"]):
-                nova_notificacao = Notificacao(dados_notificacao["tipo_notificacao"],
-                                               dados_notificacao["status"],
-                                               self.__sistema.controlador_usuario.procurar_usuario_por_cpf(
-                                                           dados_notificacao["cpf"]))
-                if self.__notificacoes:
-                    for notificacao in self.__notificacoes:
-                        if notificacao.tipo_notificacao == dados_notificacao["tipo_notificacao"]:
-                            self.__tela_notificacao.mostra_msg("Tipo de notificacao já cadastrado, adicione outro tipo")
-                            break
+        if dados_notificacao:
+            if dados_notificacao["status"] and dados_notificacao["tipo_notificacao"]:
+                if self.__sistema.controlador_usuario.validar_cpf(dados_notificacao["cpf"]):
+                    nova_notificacao = Notificacao(dados_notificacao["tipo_notificacao"],
+                                                   dados_notificacao["status"],
+                                                   self.__sistema.controlador_usuario.procurar_usuario_por_cpf(
+                                                               dados_notificacao["cpf"]))
+                    if self.__notificacoes:
+                        for notificacao in self.__notificacoes:
+                            if notificacao.tipo_notificacao == dados_notificacao["tipo_notificacao"]:
+                                self.__tela_notificacao.mostra_msg("Tipo de notificacao já cadastrado, adicione outro tipo")
+                                break
+                        else:
+                            self.__notificacoes.append(nova_notificacao)
                     else:
                         self.__notificacoes.append(nova_notificacao)
                 else:
-                    self.__notificacoes.append(nova_notificacao)
+                    self.__tela_notificacao.mostra_msg("CPF inválido, tente novamente")
             else:
-                self.__tela_notificacao.mostra_msg("CPF inválido, tente novamente")
-        else:
-            self.__tela_notificacao.mostra_msg("Ocorreu um erro ao adicionar uma notificacao, tente novamente")
+                self.__tela_notificacao.mostra_msg("Ocorreu um erro ao adicionar uma notificacao, tente novamente")
 
     def remove_notificacao(self):
         self.listar_notificacoes()
@@ -42,7 +43,7 @@ class NotificacaoControle:
         self.listar_notificacoes()
         tipo_notificacao = self.__tela_notificacao.seleciona_notificacao()
         notificacao = self.procura_notificacao_por_tipo(tipo_notificacao)
-        if notificacao is not None:
+        if notificacao:
             novos_dados_notificacao = self.__tela_notificacao.pega_dados_notificacao()
             if self.__sistema.controlador_usuario.validar_cpf(novos_dados_notificacao["cpf"]):
                 notificacao.tipo_notificacao = novos_dados_notificacao["tipo_notificacao"]

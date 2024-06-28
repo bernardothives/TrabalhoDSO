@@ -68,6 +68,8 @@ class UsuarioTela(TelaAbstrata):
                 dados_usuario = {"nome": nome_valido, "cpf": cpf_valido}
             except ValueError as e:
                 sg.popup(str(e), title='Erro')
+        else:
+            self.close()
         self.close()
         return dados_usuario
 
@@ -91,6 +93,8 @@ class UsuarioTela(TelaAbstrata):
                 return {"nome": nome_valido}
             except ValueError as e:
                 sg.popup(str(e), title='Erro')
+        else:
+            self.close()
         self.close()
         return nome
 
@@ -126,6 +130,8 @@ class UsuarioTela(TelaAbstrata):
             except ValueError as e:
                 sg.popup(str(e), title='Erro')
                 cpf = None
+        else:
+            self.close()
         self.close()
         return cpf
 

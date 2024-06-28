@@ -89,21 +89,23 @@ class ClimaAtualControle(ClimaControleAbstrato):
 
     def temperatura_mais_baixa(self):
         min_temperatura = 56
-        for clima_atual in self.__climas_atuais:
-            temperatura = clima_atual.temperatura
-            if temperatura <= min_temperatura:
-                min_temperatura = temperatura
-                cidade_temperatura_mais_baixa = clima_atual.localizacao.cidade
-        self.__clima_atual_tela.mostra_temperatura_mais_baixa(min_temperatura, cidade_temperatura_mais_baixa)
+        if self.__climas_atuais:
+            for clima_atual in self.__climas_atuais:
+                temperatura = clima_atual.temperatura
+                if temperatura <= min_temperatura:
+                    min_temperatura = temperatura
+                    cidade_temperatura_mais_baixa = clima_atual.localizacao.cidade
+            self.__clima_atual_tela.mostra_temperatura_mais_baixa(min_temperatura, cidade_temperatura_mais_baixa)
 
     def temperatura_mais_alta(self):
         max_temperatura = -67
-        for clima_atual in self.__climas_atuais:
-            temperatura = clima_atual.temperatura
-            if temperatura >= max_temperatura:
-                max_temperatura = temperatura
-                cidade_temperatura_mais_alta = clima_atual.localizacao.cidade
-        self.__clima_atual_tela.mostra_temperatura_mais_alta(max_temperatura, cidade_temperatura_mais_alta)
+        if self.__climas_atuais:
+            for clima_atual in self.__climas_atuais:
+                temperatura = clima_atual.temperatura
+                if temperatura >= max_temperatura:
+                    max_temperatura = temperatura
+                    cidade_temperatura_mais_alta = clima_atual.localizacao.cidade
+            self.__clima_atual_tela.mostra_temperatura_mais_alta(max_temperatura, cidade_temperatura_mais_alta)
 
     def abre_tela(self):
         lista_opcoes = {1: self.ver_dados_climaticos, 2: self.lista_log,
