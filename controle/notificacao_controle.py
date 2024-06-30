@@ -27,6 +27,7 @@ class NotificacaoControle:
         except UsuarioDuplicado as e:
             self.__tela_notificacao.mostra_msg(str(e))
 
+
     def remove_notificacao(self):
         self.listar_notificacoes()
         tipo = self.__tela_notificacao.seleciona_notificacao()
