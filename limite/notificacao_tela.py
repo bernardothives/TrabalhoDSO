@@ -34,13 +34,19 @@ class NotificacaoTela(TelaAbstrata):
     def init_opcoes(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Notificação', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='White')],
+            [sg.Text('Notificação', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='White')],
             [sg.Text('Escolha sua opção:', font=("Helvetica", 15), pad=(10, 10), text_color='darkblue')],
-            [sg.Radio('Ver Notificações', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Incluir Notificação', "RD1", key='2', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Alterar Status', "RD1", key='3', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Remover Notificação', "RD1", key='4', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')]
+            [sg.Radio('Ver Notificações', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5),
+                      enable_events=True, text_color='black')],
+            [sg.Radio('Incluir Notificação', "RD1", key='2', font=("Helvetica", 14), pad=(10, 5),
+                      enable_events=True, text_color='black')],
+            [sg.Radio('Alterar Status', "RD1", key='3', font=("Helvetica", 14), pad=(10, 5),
+                      enable_events=True, text_color='black')],
+            [sg.Radio('Remover Notificação', "RD1", key='4', font=("Helvetica", 14), pad=(10, 5),
+                      enable_events=True, text_color='black')],
+            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5),
+                      enable_events=True, text_color='black')]
         ]
         self.__window = sg.Window('Notificações', layout, element_justification='c', finalize=True)
 
@@ -48,7 +54,8 @@ class NotificacaoTela(TelaAbstrata):
         sg.theme('LightBlue3')
         status_text = 'ATIVO' if dados_notificacao["status"] else 'INATIVO'
         layout = [
-            [sg.Text('Dados da Notificação', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Dados da Notificação', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
             [sg.Text(f"TIPO: {dados_notificacao['tipo_notificacao']}", font=("Helvetica", 14))],
             [sg.Text(f"USUÁRIO: {dados_notificacao['nome_usuario']}", font=("Helvetica", 14))],
             [sg.Text(f"CPF: {dados_notificacao['cpf']}", font=("Helvetica", 14))],
@@ -62,8 +69,10 @@ class NotificacaoTela(TelaAbstrata):
     def seleciona_notificacao(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Selecione Notificação', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
-            [sg.Text('Tipo de Notificação:', font=("Helvetica", 14)), sg.Combo(['banner', 'central', 'tela de bloqueio'], key='tipo_notificacao')],
+            [sg.Text('Selecione Notificação', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
+            [sg.Text('Tipo de Notificação:', font=("Helvetica", 14)),
+             sg.Combo(['banner', 'central', 'tela de bloqueio'], key='tipo_notificacao')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
@@ -84,11 +93,16 @@ class NotificacaoTela(TelaAbstrata):
     def pega_dados_notificacao(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Dados da Notificação', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
-            [sg.Text('Tipo de Notificação:', font=("Helvetica", 14), size=(22, 1)), sg.Combo(['banner', 'central', 'tela de bloqueio'], key='tipo_notificacao')],
-            [sg.Text('Status:', font=("Helvetica", 14), size=(22, 1)), sg.Combo(['Sim', 'Não'], key='status')],
-            [sg.Text('CPF do Usuário Notificado:', font=("Helvetica", 14), size=(22, 1)), sg.InputText(key='cpf')],
-            [sg.Text('Nome do Usuário Notificado:', font=("Helvetica", 14), size=(22, 1)), sg.InputText(key='nome_usuario')],
+            [sg.Text('Dados da Notificação', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
+            [sg.Text('Tipo de Notificação:', font=("Helvetica", 14), size=(22, 1)),
+             sg.Combo(['banner', 'central', 'tela de bloqueio'], key='tipo_notificacao')],
+            [sg.Text('Status:', font=("Helvetica", 14), size=(22, 1)),
+             sg.Combo(['Sim', 'Não'], key='status')],
+            [sg.Text('CPF do Usuário Notificado:', font=("Helvetica", 14), size=(22, 1)),
+             sg.InputText(key='cpf')],
+            [sg.Text('Nome do Usuário Notificado:', font=("Helvetica", 14), size=(22, 1)),
+             sg.InputText(key='nome_usuario')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
@@ -120,14 +134,19 @@ class NotificacaoTela(TelaAbstrata):
     def pega_dados_especifico(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Dados da Notificação Específica', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
-            [sg.Text('Tipo de Notificação:', font=("Helvetica", 14), size=(22, 1)), sg.Combo(['banner', 'central', 'tela de bloqueio'], key='tipo_notificacao')],
-            [sg.Text('Status:', font=("Helvetica", 14), size=(22, 1)), sg.Combo(['Sim', 'Não'], key='status')],
-            [sg.Text('CPF do Usuário Notificado:', font=("Helvetica", 14), size=(22, 1)), sg.InputText(key='cpf')],
+            [sg.Text('Dados da Notificação Específica', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
+            [sg.Text('Tipo de Notificação:', font=("Helvetica", 14), size=(22, 1)),
+             sg.Combo(['banner', 'central', 'tela de bloqueio'], key='tipo_notificacao')],
+            [sg.Text('Status:', font=("Helvetica", 14), size=(22, 1)),
+             sg.Combo(['Sim', 'Não'], key='status')],
+            [sg.Text('CPF do Usuário Notificado:', font=("Helvetica", 14), size=(22, 1)),
+             sg.InputText(key='cpf')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados da Notificação Específica', layout, element_justification='left', finalize=True)
+        self.__window = sg.Window('Dados da Notificação Específica', layout, element_justification='left',
+                                  finalize=True)
         button, values = self.open()
         dados_notificacao = None
         if button == 'Confirmar':
