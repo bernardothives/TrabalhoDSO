@@ -14,10 +14,8 @@ class LocalizacaoDAO(DAO):
         if localizacao is not None and isinstance(localizacao, Localizacao) and localizacao.cidade is not None:
             super().update(localizacao.cidade, localizacao)
 
-    def get(self, key: int):
-        if isinstance(key, int):
-            return super().get(key)
+    def get(self, key):
+        return super().get(key)
 
-    def remove(self, key: int):
-        if isinstance(key, int):
-            return super().remove(key)
+    def remove(self, key):
+        return super().remove(key)

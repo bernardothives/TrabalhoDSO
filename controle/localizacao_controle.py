@@ -1,32 +1,34 @@
 from entidade.localizacao import Localizacao
 from limite.localizacao_tela import LocalizacaoTela
+from DAOs.localizacao_dao import LocalizacaoDAO
+from exceptions.usuario_duplicado_exception import UsuarioDuplicado
 
 
 class LocalizacaoControle:
     def __init__(self, sistema):
         self.__sistema = sistema
         self.__tela_localizacao = LocalizacaoTela()
-        self.__localizacoes = []
+        self.__localizacao_DAO = LocalizacaoDAO()
 
     def procura_localizacao_por_cidade(self, cidade):
-        for localizacao in self.__localizacoes:
-            if localizacao.cidade == cidade:
-                return localizacao
+        return self.__localizacao_DAO.get(cidade)
 
     def inclui_localizacao(self):
-        dados_localizacao = self.__tela_localizacao.pega_dados_localizacao()
-        if dados_localizacao:
-            nova_localizacao = Localizacao(dados_localizacao["cidade"], dados_localizacao["estado"],
-                                           dados_localizacao["pais"])
-            if self.__localizacoes:
-                for localizacao in self.__localizacoes:
-                    if localizacao.cidade == dados_localizacao["cidade"]:
-                        self.__tela_localizacao.mostra_msg("Localizacao ja cadastrada \n")
-                        break
+        try:
+            dados_localizacao = self.__tela_localizacao.pega_dados_localizacao()
+            if dados_localizacao:
+                cidade = dados_localizacao['cidade']
+                localizacao = self.procura_localizacao_por_cidade(cidade)
+                if localizacao:
+                    # implementar loc duplicada
+                    raise UsuarioDuplicado()
                 else:
-                    self.__localizacoes.append(nova_localizacao)
-            else:
-                self.__localizacoes.append(nova_localizacao)
+                    localizacao = Localizacao(dados_localizacao['cidade'], dados_localizacao['estado'], dados_localizacao['pais'])
+                    self.__localizacao_DAO.add(localizacao)
+                    return localizacao
+        except UsuarioDuplicado as e:
+            self.__tela_localizacao.mostra_msg(str(e))
+
 
     def altera_localizacao(self):
         self.listar_localizacoes()
@@ -45,21 +47,22 @@ class LocalizacaoControle:
 
     def remove_localizacao(self):
         self.listar_localizacoes()
-        lista_cidades = [localizacao.cidade for localizacao in self.__localizacoes]
-        cidade = self.__tela_localizacao.seleciona_cidade(lista_cidades)
+        cidade = self.__tela_localizacao.seleciona_cidade()
         localizacao = self.procura_localizacao_por_cidade(cidade)
-        if localizacao in self.__localizacoes:
-            self.__localizacoes.remove(localizacao)
-            self.listar_localizacoes()
+        if localizacao is not None:
+            self.__localizacao_DAO.remove(cidade)
+            self.__tela_localizacao.mostra_msg("Localização excluida com sucesso")
 
     def listar_localizacoes(self):
-        if self.__localizacoes:
-            for localizacao in self.__localizacoes:
-                self.__tela_localizacao.mostra_dados_localizacao({"cidade": localizacao.cidade,
-                                                                  "estado": localizacao.estado,
-                                                                  "pais": localizacao.pais})
+        localizacoes = self.__localizacao_DAO.get_all()
+        if not localizacoes:
+            self.__tela_localizacao.mostra_msg("Nenhuma localização cadastrada")
         else:
-            self.__tela_localizacao.mostra_msg("A lista de localizacoes está vazia :( \n")
+            dados_localizacoes = []
+            for loc in localizacoes:
+                dados_loc = {"cidade": loc.cidade, "estado": loc.estado, "pais": loc.pais}
+                dados_localizacoes.append(dados_loc)
+                self.__tela_localizacao.mostra_dados_localizacao(dados_loc)
 
     def retornar(self):
         self.__sistema.abre_tela()
