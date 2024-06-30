@@ -86,22 +86,19 @@ class LocalizacaoTela(TelaAbstrata):
         self.__window.read()
         self.close()
 
-    def seleciona_cidade(self, lista_cidades):
+    def seleciona_cidade(self):
         sg.theme('LightBlue3')
         layout = [
             [sg.Text('Selecione a cidade', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
-            [sg.Column([[sg.Radio(cidade, "CIDADES", key=cidade)] for cidade in lista_cidades])],
+            [sg.Text('Cidade:', font=("Helvetica", 14)), sg.InputText(key='cidade')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
-             sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
         self.__window = sg.Window('Selecionar Cidade', layout, element_justification='c', finalize=True)
         button, values = self.open()
         cidade = None
         if button == 'Confirmar':
-            for key, value in values.items():
-                if value:
-                    cidade = key
-                    break
+            cidade = values['cidade']
         self.close()
         return cidade
 
