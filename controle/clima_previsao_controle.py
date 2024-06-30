@@ -4,13 +4,15 @@ from controle.clima_controle_abstrato import ClimaControleAbstrato
 from controle.alerta_controle import AlertaControle
 from entidade.localizacao import Localizacao
 from datetime import datetime, timedelta
+from DAOs.clima_previsao_dao import ClimaPrevisaoDAO
+from entidade.usuario import Usuario
 
 
 class ClimaPrevisaoControle(ClimaControleAbstrato):
     def __init__(self, sistema):
         self.__sistema = sistema
         self.__log = []
-        self.__previsoes_clima = []
+        self.__previsoes_DAO = ClimaPrevisaoDAO()
         self.__clima_previsao_tela = ClimaPrevisaoTela()
         self.__controlador_alerta = AlertaControle(self)
 
@@ -26,10 +28,11 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
             usuario = self.__sistema.controlador_usuario.procurar_usuario_por_cpf(dados["cpf"])
             localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(dados["cidade"])
             if usuario and localizacao:
-                clima = self.procura_clima_previsao_por_localizacao(localizacao)
+                clima_id = self.procura_id_clima_previsao_por_usuario_e_localizacao(usuario, localizacao)
+                clima = self.procura_clima_previsao_por_id(clima_id)
                 if clima is None:
                     clima = ClimaPrevisao(usuario, localizacao)
-                    self.__previsoes_clima.append(clima)
+                    self.__previsoes_DAO.add(clima)
                 clima.data = datetime.strptime(clima.data, '%d/%m/%Y')
                 data_previsao = clima.data + timedelta(days=1)
                 data_formatada = data_previsao.strftime('%d/%m/%Y')
@@ -44,19 +47,14 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
             else:
                 self.__clima_previsao_tela.mostra_msg("Dados Invalidos")
 
-    '''
-    #quando apagar o log apagar do lista climas tambem
-    def remove_clima_previsao(self, clima_previsao: ClimaPrevisao):
-        if clima_previsao in self.__previsoes_clima:
-            self.__previsoes_clima.remove(clima_previsao)
-    '''
+    def procura_id_clima_previsao_por_usuario_e_localizacao(self, usuario: Usuario, localizacao: Localizacao):
+        for clima_previsao in self.__previsoes_DAO.get_all():
+            if clima_previsao.usuario == usuario and clima_previsao.localizacao == localizacao:
+                return clima_previsao.id
+        return None
 
-    def procura_clima_previsao_por_localizacao(self, localizacao: Localizacao):
-        if isinstance(localizacao, Localizacao):
-            for previsao in self.__previsoes_clima:
-                if previsao.localizacao == localizacao:
-                    return previsao
-            return None
+    def procura_clima_previsao_por_id(self, id):
+        return self.__previsoes_DAO.get(id)
 
     def procura_log_por_cpf(self, cpf: str):
         logs_do_cpf = []
@@ -79,6 +77,15 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
                                                    "hora": log[2]})
 
     def apaga_log(self):
+        for log in self.__log:
+            cpf = log[0]
+            cidade = log[1]
+            usuario = self.__sistema.controlador_usuario.procurar_usuario_por_cpf(cpf)
+            localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(cidade)
+            if usuario and localizacao:
+                clima_id = self.procura_id_clima_previsao_por_usuario_e_localizacao(usuario, localizacao)
+                if clima_id:
+                    self.__previsoes_DAO.remove(clima_id)
         self.__log.clear()
 
     def apaga_log_especifico(self):
@@ -88,9 +95,16 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
         if logs is not None:
             for log in logs:
                 self.__log.remove(log)
+                cidade = log[1]
+                usuario = self.__sistema.controlador_usuario.procurar_usuario_por_cpf(cpf)
+                localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(cidade)
+                if usuario and localizacao:
+                    clima_id = self.procura_id_clima_previsao_por_usuario_e_localizacao(usuario, localizacao)
+                    if clima_id:
+                        self.__previsoes_DAO.remove(clima_id)
             self.lista_log()
         else:
-            self.__clima_previsao_tela.mostra_msg("ATENÇAO: Este cpf nao possui logs")
+            self.__clima_previsao_tela.mostra_msg("ATENÇÃO: Este cpf não possui logs")
 
     def retornar(self):
         self.__sistema.abre_tela()
