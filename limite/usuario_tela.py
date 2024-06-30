@@ -73,7 +73,7 @@ class UsuarioTela(TelaAbstrata):
                 nome_valido = self.le_e_valida_nome(nome)
                 dados_usuario = {"nome": nome_valido, "cpf": cpf_valido}
             except (CpfDigitosIguais, CpfDigitosVerificadores, CpfNaoEhNumero,
-                    CpfTamanhoErrado, NomeApenasLetras, NomeVazio) as e:
+                    CpfTamanhoErrado, NomeApenasLetras, NomeVazio, ValueError) as e:
                 sg.popup(str(e), title='Erro')
         else:
             self.close()
@@ -98,23 +98,31 @@ class UsuarioTela(TelaAbstrata):
                     raise ValueError("O nome não pode estar vazio.")
                 nome_valido = self.le_e_valida_nome(nome)
                 return {"nome": nome_valido}
-            except (NomeApenasLetras, NomeVazio) as e:
+            except (NomeApenasLetras, NomeVazio, ValueError) as e:
                 sg.popup(str(e), title='Erro')
         else:
             self.close()
         self.close()
         return nome
 
-    def mostra_usuario(self, dados_usuario):
+    def mostra_usuario(self, dados_usuarios):
         sg.theme('LightBlue3')
+        usuarios_texto = []
+        for dados_usuario in dados_usuarios:
+            for nome, cpf in dados_usuario.items():
+                usuarios_texto.append([sg.Text(f"Nome: {nome}", font=("Helvetica", 14))])
+                usuarios_texto.append([sg.Text(f"CPF: {cpf}", font=("Helvetica", 14))])
+                usuarios_texto.append([sg.Text('')])
+
         layout = [
-            [sg.Text("-=-=-=-Usuário-=-=-=-")],
-            [sg.Text(f"Nome de Usuário: {dados_usuario['nome']}")],
-            [sg.Text(f"CPF:{dados_usuario['cpf']}")],
-            [sg.Ok()]
-        ]
-        self.__window = sg.Window('Lista', layout)
-        button, values = self.open()
+                     [sg.Text('Lista de Usuários', font=("Helvetica", 25), justification='center', pad=(10, 20),
+                              text_color='navy')],
+                 ] + usuarios_texto + [
+                     [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
+                 ]
+
+        self.__window = sg.Window('Lista de Usuários', layout, element_justification='c', finalize=True)
+        self.__window.read()
         self.close()
 
     def seleciona_usuario(self):
@@ -133,9 +141,9 @@ class UsuarioTela(TelaAbstrata):
             try:
                 if not cpf:
                     raise ValueError("O CPF não pode estar vazio.")
-                self.le_e_valida_cpf(cpf)
+                cpf = self.le_e_valida_cpf(cpf)
             except (CpfDigitosIguais, CpfDigitosVerificadores, CpfNaoEhNumero,
-                    CpfTamanhoErrado) as e:
+                    CpfTamanhoErrado, ValueError) as e:
                 sg.popup(str(e), title='Erro')
                 cpf = None
         else:

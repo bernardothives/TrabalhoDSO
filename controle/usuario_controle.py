@@ -11,47 +11,54 @@ class UsuarioControle:
         self.__tela_usuario = UsuarioTela()
 
     def inclui_usuario(self):
-        dados_usuario = self.__tela_usuario.pega_dados_usuario()
-        if dados_usuario:
-            usuario = self.procurar_usuario_por_cpf(dados_usuario['cpf'])
-            if usuario:
-                raise UsuarioDuplicado()
-            else:
-                usuario = Usuario(dados_usuario["nome"], dados_usuario["cpf"])
-                self.__usuario_DAO.add(usuario)
+        try:
+            dados_usuario = self.__tela_usuario.pega_dados_usuario()
+            if dados_usuario:
+                cpf = int(dados_usuario['cpf'])
+                usuario = self.procurar_usuario_por_cpf(cpf)
+                if usuario:
+                    raise UsuarioDuplicado()
+                else:
+                    usuario = Usuario(dados_usuario["nome"], cpf)
+                    self.__usuario_DAO.add(usuario)
+                    return usuario
+        except UsuarioDuplicado as e:
+            self.__tela_usuario.mostra_msg(str(e))
 
     def alterar_nome_usuario(self):
         self.listar_usuarios()
-        cpf_usuario = self.__tela_usuario.seleciona_usuario()
+        cpf_usuario = int(self.__tela_usuario.seleciona_usuario())
         usuario = self.procurar_usuario_por_cpf(cpf_usuario)
         if usuario:
             novo_nome_usuario = self.__tela_usuario.pega_nome_usuario()
             for user in self.__usuario_DAO.get_all():
                 if user.nome == novo_nome_usuario["nome"]:
-                    self.__tela_usuario.mostra_msg("Nome ja cadastrado \n")
+                    self.__tela_usuario.mostra_msg("Nome já cadastrado \n")
                     break
             usuario.nome = novo_nome_usuario["nome"]
-        #else:
-        #    self.__tela_usuario.mostra_msg("Ocorreu um erro, selecione um usuario existente. \n")
+            self.__usuario_DAO.update(usuario)
 
     def remove_usuario(self):
         self.listar_usuarios()
-        cpf_usuario = self.__tela_usuario.seleciona_usuario()
+        cpf_usuario = int(self.__tela_usuario.seleciona_usuario())
         usuario = self.procurar_usuario_por_cpf(cpf_usuario)
         if usuario is not None:
-            self.__usuarios.remove(usuario)
+            self.__usuario_DAO.remove(cpf_usuario)
             self.__tela_usuario.mostra_msg("Usuario excluido com sucesso!")
 
-    def procurar_usuario_por_cpf(self, cpf):
-        return self.__usuario_DAO.get(cpf)
+    def procurar_usuario_por_cpf(self, cpf_usuario):
+        return self.__usuario_DAO.get(cpf_usuario)
 
     def listar_usuarios(self):
-        self.__tela_usuario.mostra_msg("--- Lista de Usuários: ---")
         usuarios = self.__usuario_DAO.get_all()
-        for usuario in usuarios:
-            dados_usuario = {usuario.nome: usuario.cpf}
-            self.__tela_usuario.mostra_usuario(dados_usuario)
-
+        if not usuarios:
+            self.__tela_usuario.mostra_msg("Nenhum usuário cadastrado")
+        else:
+            dados_usuarios = []
+            for usuario in usuarios:
+                dados_usuario = {usuario.nome: usuario.cpf}
+                dados_usuarios.append(dados_usuario)
+                self.__tela_usuario.mostra_usuario(dados_usuario)
 
     def retornar(self):
         self.__sistema.abre_tela()
