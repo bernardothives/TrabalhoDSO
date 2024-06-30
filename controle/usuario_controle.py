@@ -16,6 +16,9 @@ class UsuarioControle:
             usuario = self.procurar_usuario_por_cpf(dados_usuario['cpf'])
             if usuario:
                 raise UsuarioDuplicado()
+            else:
+                usuario = Usuario(dados_usuario["nome"], dados_usuario["cpf"])
+                self.__usuario_DAO.add(usuario)
 
     def alterar_nome_usuario(self):
         self.listar_usuarios()
@@ -23,7 +26,7 @@ class UsuarioControle:
         usuario = self.procurar_usuario_por_cpf(cpf_usuario)
         if usuario:
             novo_nome_usuario = self.__tela_usuario.pega_nome_usuario()
-            for user in self.__usuarios:
+            for user in self.__usuario_DAO.get_all():
                 if user.nome == novo_nome_usuario["nome"]:
                     self.__tela_usuario.mostra_msg("Nome ja cadastrado \n")
                     break
@@ -43,11 +46,12 @@ class UsuarioControle:
         return self.__usuario_DAO.get(cpf)
 
     def listar_usuarios(self):
-        if self.__usuarios:
-            for usuario in self.__usuarios:
-                self.__tela_usuario.mostra_usuario({"nome": usuario.nome, "cpf": usuario.cpf})
-        else:
-            self.__tela_usuario.mostra_msg("A lista de usuarios está vazia :(")
+        self.__tela_usuario.mostra_msg("--- Lista de Usuários: ---")
+        usuarios = self.__usuario_DAO.get_all()
+        for usuario in usuarios:
+            dados_usuario = {usuario.nome: usuario.cpf}
+            self.__tela_usuario.mostra_usuario(dados_usuario)
+
 
     def retornar(self):
         self.__sistema.abre_tela()

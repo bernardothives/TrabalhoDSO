@@ -108,13 +108,13 @@ class UsuarioTela(TelaAbstrata):
     def mostra_usuario(self, dados_usuario):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Dados do Usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
-            [sg.Text(f"Nome: {dados_usuario['nome']}", font=("Helvetica", 14))],
-            [sg.Text(f"CPF: {dados_usuario['cpf']}", font=("Helvetica", 14))],
-            [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
+            [sg.Text("-=-=-=-Usuário-=-=-=-")],
+            [sg.Text(f"Nome de Usuário: {dados_usuario['nome']}")],
+            [sg.Text(f"CPF:{dados_usuario['cpf']}")],
+            [sg.Ok()]
         ]
-        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c', finalize=True)
-        self.__window.read()
+        self.__window = sg.Window('Lista', layout)
+        button, values = self.open()
         self.close()
 
     def seleciona_usuario(self):
