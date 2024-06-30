@@ -83,7 +83,8 @@ class UsuarioTela(TelaAbstrata):
     def pega_nome_usuario(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Digite o novo nome do usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Digite o novo nome do usuário', font=("Helvetica", 25), justification='center', pad=(10, 20),
+                     text_color='navy')],
             [sg.Text('Nome:', font=("Helvetica", 14)), sg.InputText(key='nome')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
@@ -97,11 +98,10 @@ class UsuarioTela(TelaAbstrata):
                 if not nome:
                     raise ValueError("O nome não pode estar vazio.")
                 nome_valido = self.le_e_valida_nome(nome)
+                self.close()
                 return {"nome": nome_valido}
             except (NomeApenasLetras, NomeVazio, ValueError) as e:
                 sg.popup(str(e), title='Erro')
-        else:
-            self.close()
         self.close()
         return nome
 

@@ -31,12 +31,14 @@ class UsuarioControle:
         usuario = self.procurar_usuario_por_cpf(cpf_usuario)
         if usuario:
             novo_nome_usuario = self.__tela_usuario.pega_nome_usuario()
-            for user in self.__usuario_DAO.get_all():
-                if user.nome == novo_nome_usuario["nome"]:
-                    self.__tela_usuario.mostra_msg("Nome já cadastrado \n")
-                    break
-            usuario.nome = novo_nome_usuario["nome"]
-            self.__usuario_DAO.update(usuario)
+            if novo_nome_usuario:
+                for user in self.__usuario_DAO.get_all():
+                    if user.nome == novo_nome_usuario["nome"]:
+                        self.__tela_usuario.mostra_msg("Nome já cadastrado \n")
+                        break
+                else:
+                    usuario.nome = novo_nome_usuario["nome"]
+                    self.__usuario_DAO.update(usuario)
 
     def remove_usuario(self):
         self.listar_usuarios()

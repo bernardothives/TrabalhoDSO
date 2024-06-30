@@ -3,11 +3,13 @@ from entidade.dados_climaticos import DadosClimaticos
 from entidade.usuario import Usuario
 from entidade.localizacao import Localizacao
 from datetime import datetime
+import uuid
 
 
 class ClimaAbstrato(ABC):
     @abstractmethod
     def __init__(self, usuario: Usuario, localizacao: Localizacao):
+        self.__id = uuid.uuid4()
         if isinstance(usuario, Usuario):
             self.__usuario = usuario
         if isinstance(localizacao, Localizacao):
@@ -20,6 +22,10 @@ class ClimaAbstrato(ABC):
         self.__visibilidade = self.dados_climaticos.pega_visibilidade()
         self.__sensacao_termica = self.dados_climaticos.pega_sensacao_termica()
         self.__data = datetime.now().strftime('%d/%m/%Y')
+
+    @property
+    def id(self):
+        return self.__id
 
     @property
     def usuario(self):
