@@ -1,5 +1,11 @@
 from limite.tela_abstrata import TelaAbstrata
 import PySimpleGUI as sg
+from exceptions.cpf_nao_eh_numero_exception import CpfNaoEhNumero
+from exceptions.cpf_tamanho_errado_exception import CpfTamanhoErrado
+from exceptions.cpf_digitos_iguais_exception import CpfDigitosIguais
+from exceptions.cpf_digitos_verificadores_exception import CpfDigitosVerificadores
+from exceptions.nome_vazio_exception import NomeVazio
+from exceptions.nome_apenas_letras_exception import NomeApenasLetras
 
 
 class UsuarioTela(TelaAbstrata):
@@ -66,7 +72,8 @@ class UsuarioTela(TelaAbstrata):
                 cpf_valido = self.le_e_valida_cpf(cpf)
                 nome_valido = self.le_e_valida_nome(nome)
                 dados_usuario = {"nome": nome_valido, "cpf": cpf_valido}
-            except ValueError as e:
+            except (CpfDigitosIguais, CpfDigitosVerificadores, CpfNaoEhNumero,
+                    CpfTamanhoErrado, NomeApenasLetras, NomeVazio) as e:
                 sg.popup(str(e), title='Erro')
         else:
             self.close()
@@ -91,7 +98,7 @@ class UsuarioTela(TelaAbstrata):
                     raise ValueError("O nome não pode estar vazio.")
                 nome_valido = self.le_e_valida_nome(nome)
                 return {"nome": nome_valido}
-            except ValueError as e:
+            except (NomeApenasLetras, NomeVazio) as e:
                 sg.popup(str(e), title='Erro')
         else:
             self.close()
@@ -127,7 +134,8 @@ class UsuarioTela(TelaAbstrata):
                 if not cpf:
                     raise ValueError("O CPF não pode estar vazio.")
                 self.le_e_valida_cpf(cpf)
-            except ValueError as e:
+            except (CpfDigitosIguais, CpfDigitosVerificadores, CpfNaoEhNumero,
+                    CpfTamanhoErrado) as e:
                 sg.popup(str(e), title='Erro')
                 cpf = None
         else:

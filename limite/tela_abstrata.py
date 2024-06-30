@@ -1,6 +1,11 @@
 from abc import abstractmethod, ABC
 import PySimpleGUI as sg
-
+from exceptions.cpf_nao_eh_numero_exception import CpfNaoEhNumero
+from exceptions.cpf_tamanho_errado_exception import CpfTamanhoErrado
+from exceptions.cpf_digitos_iguais_exception import CpfDigitosIguais
+from exceptions.cpf_digitos_verificadores_exception import CpfDigitosVerificadores
+from exceptions.nome_vazio_exception import NomeVazio
+from exceptions.nome_apenas_letras_exception import NomeApenasLetras
 
 class TelaAbstrata(ABC):
     @abstractmethod
@@ -10,11 +15,11 @@ class TelaAbstrata(ABC):
     @staticmethod
     def le_e_valida_cpf(cpf):
         if not cpf.isdigit():
-            raise ValueError("CPF deve ser composto apenas por números.")
+            raise CpfNaoEhNumero()
         if len(cpf) != 11:
-            raise ValueError("CPF deve conter 11 dígitos.")
+            raise CpfTamanhoErrado()
         if cpf == cpf[0] * len(cpf):
-            raise ValueError("CPF inválido: Todos os dígitos são iguais.")
+            raise CpfDigitosIguais()
         soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
         digito1 = 11 - soma % 11
         digito1 = digito1 if digito1 < 10 else 0
@@ -22,16 +27,16 @@ class TelaAbstrata(ABC):
         digito2 = 11 - soma % 11
         digito2 = digito2 if digito2 < 10 else 0
         if cpf[-2:] != f"{digito1}{digito2}":
-            raise ValueError("CPF incorreto: Dígitos verificadores inválidos.")
+            raise CpfDigitosVerificadores()
         return cpf
 
     @staticmethod
     def le_e_valida_nome(nome):
         nome = nome.strip()
         if not nome:
-            raise ValueError("Nome não pode estar vazio.")
+            raise NomeVazio()
         if not nome.replace(" ", "").isalpha():
-            raise ValueError("Nome deve conter apenas letras.")
+            raise NomeApenasLetras()
         return nome.lower()
 
     @staticmethod

@@ -1,25 +1,21 @@
 from entidade.usuario import Usuario
 from limite.usuario_tela import UsuarioTela
+from DAOs.usuario_dao import UsuarioDAO
+from exceptions.usuario_duplicado_exception import UsuarioDuplicado
 
 
 class UsuarioControle:
     def __init__(self, sistema):
         self.__sistema = sistema
-        self.__usuarios = []
+        self.__usuario_DAO = UsuarioDAO()
         self.__tela_usuario = UsuarioTela()
 
     def inclui_usuario(self):
         dados_usuario = self.__tela_usuario.pega_dados_usuario()
         if dados_usuario:
-            novo_usuario = Usuario(dados_usuario["nome"], dados_usuario["cpf"])
-            if self.__usuarios:
-                for usuario in self.__usuarios:
-                    if str(usuario.cpf) == dados_usuario["cpf"]:
-                        self.__tela_usuario.mostra_msg("Usuário já cadastrado \n")
-                else:
-                    self.__usuarios.append(novo_usuario)
-            else:
-                self.__usuarios.append(novo_usuario)
+            usuario = self.procurar_usuario_por_cpf(dados_usuario['cpf'])
+            if usuario:
+                raise UsuarioDuplicado()
 
     def alterar_nome_usuario(self):
         self.listar_usuarios()
@@ -44,9 +40,7 @@ class UsuarioControle:
             self.__tela_usuario.mostra_msg("Usuario excluido com sucesso!")
 
     def procurar_usuario_por_cpf(self, cpf):
-        for usuario in self.__usuarios:
-            if usuario.cpf == cpf:
-                return usuario
+        return self.__usuario_DAO.get(cpf)
 
     def listar_usuarios(self):
         if self.__usuarios:
