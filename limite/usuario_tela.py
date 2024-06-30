@@ -105,23 +105,16 @@ class UsuarioTela(TelaAbstrata):
         self.close()
         return nome
 
-    def mostra_usuario(self, dados_usuarios):
+    def mostra_usuario(self, dados_usuario):
         sg.theme('LightBlue3')
-        usuarios_texto = []
-        for dados_usuario in dados_usuarios:
-            for nome, cpf in dados_usuario.items():
-                usuarios_texto.append([sg.Text(f"Nome: {nome}", font=("Helvetica", 14))])
-                usuarios_texto.append([sg.Text(f"CPF: {cpf}", font=("Helvetica", 14))])
-                usuarios_texto.append([sg.Text('')])
-
         layout = [
-                     [sg.Text('Lista de Usuários', font=("Helvetica", 25), justification='center', pad=(10, 20),
-                              text_color='navy')],
-                 ] + usuarios_texto + [
-                     [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
-                 ]
-
-        self.__window = sg.Window('Lista de Usuários', layout, element_justification='c', finalize=True)
+            [sg.Text('Dados do Usuário', font=("Helvetica", 25), justification='center', pad=(10, 20),
+                     text_color='navy')],
+            [sg.Text(f"Nome: {dados_usuario['nome']}", font=("Helvetica", 14))],
+            [sg.Text(f"CPF: {dados_usuario['cpf']}", font=("Helvetica", 14))],
+            [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c', finalize=True)
         self.__window.read()
         self.close()
 

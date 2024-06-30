@@ -56,7 +56,7 @@ class UsuarioControle:
         else:
             dados_usuarios = []
             for usuario in usuarios:
-                dados_usuario = {usuario.nome: usuario.cpf}
+                dados_usuario = {"nome": usuario.nome, "cpf": usuario.cpf}
                 dados_usuarios.append(dados_usuario)
                 self.__tela_usuario.mostra_usuario(dados_usuario)
 
