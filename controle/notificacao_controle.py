@@ -14,10 +14,9 @@ class NotificacaoControle:
         try:
             dados_notificacao = self.__tela_notificacao.pega_dados_especifico()
             if dados_notificacao:
-                tipo = dados_notificacao['tipo_notificacao']
-                notificacao = self.procura_notificacao_por_tipo(tipo)
+                notificacao = self.procura_notificacao_por_tipo(dados_notificacao['tipo_notificacao'])
                 if notificacao:
-                    raise UsuarioDuplicado()
+                    raise UsuarioDuplicado() #criar a excecao certa
                 else:
                     notificacao = Notificacao(dados_notificacao["tipo_notificacao"],
                                               dados_notificacao["status"],
@@ -41,13 +40,11 @@ class NotificacaoControle:
         notificacao = self.procura_notificacao_por_tipo(tipo_notificacao)
         if notificacao:
             novos_dados_notificacao = self.__tela_notificacao.pega_dados_notificacao()
-            if self.__sistema.controlador_usuario.validar_cpf(novos_dados_notificacao["cpf"]):
+            if novos_dados_notificacao:
                 notificacao.tipo_notificacao = novos_dados_notificacao["tipo_notificacao"]
                 notificacao.status = novos_dados_notificacao["status"]
                 notificacao.usuario.cpf = novos_dados_notificacao["cpf"]
                 notificacao.usuario.nome = novos_dados_notificacao["nome_usuario"]
-            else:
-                self.__tela_notificacao.mostra_msg("Cpf inválido, tente novamente")
         else:
             self.__tela_notificacao.mostra_msg("Ocorreu um erro ao alterar a notificacao, tente novamente")
 
@@ -55,34 +52,21 @@ class NotificacaoControle:
         return self.__notificacao_DAO.get(tipo)
 
     def listar_notificacoes(self):
-        notificacoes = self.__notificacao_DAO.get_all()
-        if not notificacoes:
-            self.__tela_notificacao.mostra_msg("Nenhuma notificação cadastrada")
-        else:
-            dados_notificacacoes = []
+        self.__sistema.controlador_usuario.listar_usuarios()
+        cpf_selecionado = self.__tela_notificacao.pega_dados_usuario()
+        if cpf_selecionado:
+            notificacoes = self.__notificacao_DAO.get_all()
+            dados_notificacoes = []
             for notificacao in notificacoes:
-                dados_usuario = self.__tela_notificacao.pega_dados_usuario()
-                dados_notificacao = {"tipo_notificacao": notificacao.tipo_notificacao, "status": notificacao.status,
-                                     "cpf": dados_usuario}
-                dados_notificacacoes.append(dados_notificacao)
-                self.__tela_notificacao.mostra_notificacao(dados_notificacao)
-
-    def validar_cpf(cpf):
-        if not cpf.isdigit():
-            raise ValueError("CPF deve ser composto apenas por números.")
-        if len(cpf) != 11:
-            raise ValueError("CPF deve conter 11 dígitos.")
-        if cpf == cpf[0] * len(cpf):
-            raise ValueError("CPF inválido: Todos os dígitos são iguais.")
-        soma = sum(int(cpf[i]) * (10 - i) for i in range(9))
-        digito1 = 11 - soma % 11
-        digito1 = digito1 if digito1 < 10 else 0
-        soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
-        digito2 = 11 - soma % 11
-        digito2 = digito2 if digito2 < 10 else 0
-        if cpf[-2:] != f"{digito1}{digito2}":
-            raise ValueError("CPF incorreto: Dígitos verificadores inválidos.")
-        return cpf
+                if notificacao.usuario.cpf == cpf_selecionado:
+                    dados_notificacao = {
+                        "tipo_notificacao": notificacao.tipo_notificacao,
+                        "status": notificacao.status,
+                        "cpf": notificacao.usuario.cpf,
+                        "nome_usuario": notificacao.usuario.nome
+                    }
+                    dados_notificacoes.append(dados_notificacao)
+            self.__tela_notificacao.mostra_notificacoes(dados_notificacoes)
 
     def retornar(self):
         self.__sistema.abre_tela()

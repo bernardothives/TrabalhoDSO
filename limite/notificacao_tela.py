@@ -57,17 +57,19 @@ class NotificacaoTela(TelaAbstrata):
         ]
         self.__window = sg.Window('Notificações', layout, element_justification='c', finalize=True)
 
-    def mostra_notificacao(self, dados_notificacao):
+    def mostra_notificacoes(self, dados_notificacoes):
         sg.theme('LightBlue3')
-        status_text = 'ATIVO' if dados_notificacao["status"] else 'INATIVO'
         layout = [
-            [sg.Text('Dados da Notificação', font=("Helvetica", 25), justification='center',
-                     pad=(10, 20), text_color='navy')],
-            [sg.Text(f"TIPO: {dados_notificacao['tipo_notificacao']}", font=("Helvetica", 14))],
-            [sg.Text(f"CPF: {dados_notificacao['cpf']}", font=("Helvetica", 14))],
-            [sg.Text(f"STATUS: {status_text}", font=("Helvetica", 14))],
-            [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
+            [sg.Text('Notificações', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')]
         ]
+        for dados_notificacao in dados_notificacoes:
+            status_text = 'ATIVO' if dados_notificacao["status"] else 'INATIVO'
+            layout.extend([
+                [sg.Text(f"TIPO: {dados_notificacao['tipo_notificacao']}", font=("Helvetica", 14))],
+                [sg.Text(f"STATUS: {status_text}", font=("Helvetica", 14))],
+                [sg.Text('-' * 30, font=("Helvetica", 14))]
+            ])
+        layout.append([sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))])
         self.__window = sg.Window('Dados da Notificação', layout, element_justification='c', finalize=True)
         self.__window.read()
         self.close()
@@ -199,6 +201,7 @@ class NotificacaoTela(TelaAbstrata):
             self.close()
         self.close()
         return cpf
+
 
     def open(self):
         button, values = self.__window.read()
