@@ -1,42 +1,39 @@
 from entidade.notificacao import Notificacao
 from limite.notificacao_tela import NotificacaoTela
+from DAOs.notificacao_dao import NotificacaoDAO
+from exceptions.usuario_duplicado_exception import UsuarioDuplicado
 
 
 class NotificacaoControle:
     def __init__(self, sistema):
         self.__sistema = sistema
         self.__tela_notificacao = NotificacaoTela()
-        self.__notificacoes = []
+        self.__notificacao_DAO = NotificacaoDAO()
 
     def inclui_notificacao(self):
-        dados_notificacao = self.__tela_notificacao.pega_dados_especifico()
-        if dados_notificacao:
-            if dados_notificacao["status"] and dados_notificacao["tipo_notificacao"]:
-                nova_notificacao = Notificacao(dados_notificacao["tipo_notificacao"],
-                                                dados_notificacao["status"],
-                                                self.__sistema.controlador_usuario.procurar_usuario_por_cpf(
-                                                            dados_notificacao["cpf"]))
-                if self.__notificacoes:
-                    for notificacao in self.__notificacoes:
-                        if notificacao.tipo_notificacao == dados_notificacao["tipo_notificacao"]:
-                            self.__tela_notificacao.mostra_msg("Tipo de notificacao já cadastrado, adicione outro tipo")
-                            break
-                    else:
-                        self.__notificacoes.append(nova_notificacao)
+        try:
+            dados_notificacao = self.__tela_notificacao.pega_dados_especifico()
+            if dados_notificacao:
+                tipo = dados_notificacao['tipo_notificacao']
+                notificacao = self.procura_notificacao_por_tipo(tipo)
+                if notificacao:
+                    raise UsuarioDuplicado()
                 else:
-                    self.__notificacoes.append(nova_notificacao)
-            else:
-                self.__tela_notificacao.mostra_msg("CPF inválido, tente novamente")
-        else:
-            self.__tela_notificacao.mostra_msg("Ocorreu um erro ao adicionar uma notificacao, tente novamente")
+                    notificacao = Notificacao(dados_notificacao["tipo_notificacao"],
+                                              dados_notificacao["status"],
+                                              self.__sistema.controlador_usuario.procurar_usuario_por_cpf(dados_notificacao["cpf"]))
+                    self.__notificacao_DAO.add(notificacao)
+                    return notificacao
+        except UsuarioDuplicado as e:
+            self.__tela_notificacao.mostra_msg(str(e))
 
     def remove_notificacao(self):
         self.listar_notificacoes()
         tipo = self.__tela_notificacao.seleciona_notificacao()
         notificacao = self.procura_notificacao_por_tipo(tipo)
         if notificacao is not None:
-            self.__notificacoes.remove(notificacao)
-            self.listar_notificacoes()
+            self.__notificacao_DAO.remove(tipo)
+            self.__tela_notificacao.mostra_msg("Notificação excluida com sucesso")
 
     def altera_notificacao(self):
         self.listar_notificacoes()
@@ -55,19 +52,20 @@ class NotificacaoControle:
             self.__tela_notificacao.mostra_msg("Ocorreu um erro ao alterar a notificacao, tente novamente")
 
     def procura_notificacao_por_tipo(self, tipo):
-        for notificacao in self.__notificacoes:
-            if notificacao.tipo_notificacao == tipo:
-                return notificacao
+        return self.__notificacao_DAO.get(tipo)
 
     def listar_notificacoes(self):
-        if self.__notificacoes:
-            for notificacao in self.__notificacoes:
-                self.__tela_notificacao.mostra_notificacao({"tipo_notificacao": notificacao.tipo_notificacao,
-                                                            "status": notificacao.status,
-                                                            "nome_usuario": notificacao.usuario.nome,
-                                                            "cpf": notificacao.usuario.cpf})
+        notificacoes = self.__notificacao_DAO.get_all()
+        if not notificacoes:
+            self.__tela_notificacao.mostra_msg("Nenhuma notificação cadastrada")
         else:
-            self.__tela_notificacao.mostra_msg("A lista de notificacoes está vazia :(")
+            dados_notificacacoes = []
+            for notificacao in notificacoes:
+                dados_usuario = self.__tela_notificacao.pega_dados_usuario()
+                dados_notificacao = {"tipo_notificacao": notificacao.tipo_notificacao, "status": notificacao.status,
+                                     "cpf": dados_usuario}
+                dados_notificacacoes.append(dados_notificacao)
+                self.__tela_notificacao.mostra_notificacao(dados_notificacao)
 
     def validar_cpf(cpf):
         if not cpf.isdigit():

@@ -14,10 +14,8 @@ class NotificacaoDAO(DAO):
         if notificacao is not None and isinstance(notificacao, Notificacao) and notificacao.tipo_notificacao is not None:
             super().update(notificacao.tipo_notificacao, notificacao)
 
-    def get(self, key: int):
-        if isinstance(key, int):
-            return super().get(key)
+    def get(self, key):
+        return super().get(key)
 
-    def remove(self, key: int):
-        if isinstance(key, int):
-            return super().remove(key)
+    def remove(self, key):
+        return super().remove(key)

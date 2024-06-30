@@ -1,5 +1,12 @@
+import exceptions.cpf_digitos_iguais_exception
 from limite.tela_abstrata import TelaAbstrata
 import PySimpleGUI as sg
+from exceptions.cpf_nao_eh_numero_exception import CpfNaoEhNumero
+from exceptions.cpf_tamanho_errado_exception import CpfTamanhoErrado
+from exceptions.cpf_digitos_iguais_exception import CpfDigitosIguais
+from exceptions.cpf_digitos_verificadores_exception import CpfDigitosVerificadores
+from exceptions.nome_vazio_exception import NomeVazio
+from exceptions.nome_apenas_letras_exception import NomeApenasLetras
 
 
 class NotificacaoTela(TelaAbstrata):
@@ -50,7 +57,6 @@ class NotificacaoTela(TelaAbstrata):
         layout = [
             [sg.Text('Dados da Notificação', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
             [sg.Text(f"TIPO: {dados_notificacao['tipo_notificacao']}", font=("Helvetica", 14))],
-            [sg.Text(f"USUÁRIO: {dados_notificacao['nome_usuario']}", font=("Helvetica", 14))],
             [sg.Text(f"CPF: {dados_notificacao['cpf']}", font=("Helvetica", 14))],
             [sg.Text(f"STATUS: {status_text}", font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
@@ -149,6 +155,31 @@ class NotificacaoTela(TelaAbstrata):
                 sg.popup(str(e), title='Erro')
         self.close()
         return dados_notificacao
+
+    def pega_dados_usuario(self):
+        sg.theme('LightBlue3')
+        layout = [
+            [sg.Text("Digite o Cpf:", font=("Helvetica", 14), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('CPF:', font=("Helvica", 14)), sg.InputText(key='cpf')],
+            [sg.Button('Confirmar', font=("Helvica", 14), button_color=('white', 'green'), pad=(10, 5)),
+             sg.Button('Cancelar', font=("Helvica", 14), button_color=('white', 'red'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Verificar Cpf', layout, element_justification='c', finalize=True)
+        button, values = self.open()
+        cpf = None
+        if button == 'Confirmar':
+            cpf = values['cpf']
+            try:
+                if not cpf:
+                    raise ValueError("O cpf não pode ser vazio")
+                cpf = self.le_e_valida_cpf(cpf)
+            except (CpfDigitosIguais, CpfDigitosVerificadores, CpfNaoEhNumero, CpfTamanhoErrado, ValueError) as e:
+                sg.popup(str(e), title='Erro')
+                cpf = None
+        else:
+            self.close()
+        self.close()
+        return cpf
 
     def open(self):
         button, values = self.__window.read()

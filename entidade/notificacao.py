@@ -5,8 +5,7 @@ class Notificacao:
     def __init__(self, tipo_notificacao: str, status: bool, usuario: Usuario):
         self.__tipo_notificacao = tipo_notificacao
         self.__status = status
-        if isinstance(usuario, Usuario):
-            self.__usuario = usuario
+        self.__usuario = usuario
 
     @property
     def tipo_notificacao(self):
