@@ -7,15 +7,18 @@ class LocalizacaoDAO(DAO):
         super().__init__('localizacao.pkl')
 
     def add(self, localizacao: Localizacao):
-        if localizacao is not None and isinstance(localizacao, Localizacao) and localizacao.cidade is not None:
+        if localizacao is not None and isinstance(localizacao, Localizacao) and isinstance(localizacao.cidade, str):
             super().add(localizacao.cidade, localizacao)
 
     def update(self, localizacao: Localizacao):
-        if localizacao is not None and isinstance(localizacao, Localizacao) and localizacao.cidade is not None:
+        if localizacao is not None and isinstance(localizacao, Localizacao) and isinstance(localizacao.cidade, str):
             super().update(localizacao.cidade, localizacao)
 
-    def get(self, key):
-        return super().get(key)
+    def get(self, key: str):
+        if isinstance(key, str):
+            return super().get(key)
 
-    def remove(self, key):
-        return super().remove(key)
+    def remove(self, key: str):
+        if isinstance(key, str):
+            return super().remove(key)
+

@@ -40,13 +40,6 @@ class ClimaAtualControle(ClimaControleAbstrato):
             else:
                 self.__clima_atual_tela.mostra_msg("Dados Invalidos")
 
-    '''
-    #quando apagar o log apagar do lista climas tambem
-    def remove_clima_atual(self, clima_atual: ClimaAtual):
-        if clima_atual in self.__climas_atuais:
-            self.__climas_atuais.remove(clima_atual)
-    '''
-
     def procura_id_clima_atual_por_usuario_e_localizacao(self, usuario: Usuario, localizacao: Localizacao):
         for clima_atual in self.__clima_atual_DAO.get_all():
             if clima_atual.usuario == usuario and clima_atual.localizacao == localizacao:

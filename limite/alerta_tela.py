@@ -27,15 +27,18 @@ class AlertaTela(TelaAbstrata):
         layout = [
             [sg.Text('Alertas', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='White')],
             [sg.Text('Escolha sua opção:', font=("Helvetica", 15), pad=(10, 10), text_color='darkblue')],
-            [sg.Radio('Ver Alerta', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')]
+            [sg.Radio('Ver Alerta', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5),
+                      enable_events=True, text_color='black')],
+            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5),
+                      enable_events=True, text_color='black')]
         ]
         self.__window = sg.Window('Alertas', layout, element_justification='c', finalize=True)
 
     def seleciona_cidade(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Verificar Alerta', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Verificar Alerta', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
             [sg.Text('Cidade:', font=("Helvetica", 14), size=(15, 1)), sg.InputText(key='cidade')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]

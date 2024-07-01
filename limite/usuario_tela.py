@@ -42,11 +42,16 @@ class UsuarioTela(TelaAbstrata):
         layout = [
             [sg.Text('Usuário', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='White')],
             [sg.Text('Escolha sua opção:', font=("Helvetica", 15), pad=(10, 10), text_color='darkblue')],
-            [sg.Radio('Incluir usuário', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Alterar usuário', "RD1", key='2', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Listar usuários', "RD1", key='3', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Excluir usuário', "RD1", key='4', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')]
+            [sg.Radio('Incluir usuário', "RD1", key='1', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Alterar usuário', "RD1", key='2', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Listar usuários', "RD1", key='3', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Excluir usuário', "RD1", key='4', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')]
         ]
         self.__window = sg.Window('Clima CO', layout, element_justification='c', finalize=True)
 
@@ -121,7 +126,8 @@ class UsuarioTela(TelaAbstrata):
     def seleciona_usuario(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Selecione o usuário pelo CPF', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Selecione o usuário pelo CPF', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
             [sg.Text('CPF:', font=("Helvetica", 14)), sg.InputText(key='cpf')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]

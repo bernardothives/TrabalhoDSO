@@ -7,12 +7,12 @@ class ClimaAtualDAO(DAO):
         super().__init__('clima_atual.pkl')
 
     def add(self, clima_atual: ClimaAtual):
-        if clima_atual is not None and isinstance(clima_atual, ClimaAtual) and clima_atual.horario is not None:
-            super().add(clima_atual.horario, clima_atual)
+        if clima_atual is not None and isinstance(clima_atual, ClimaAtual) and isinstance(clima_atual.id, int):
+            super().add(clima_atual.id, clima_atual)
 
     def update(self, clima_atual: ClimaAtual):
-        if clima_atual is not None and isinstance(clima_atual, ClimaAtual) and clima_atual.horario is not None:
-            super().update(clima_atual.horario, ClimaAtual)
+        if clima_atual is not None and isinstance(clima_atual, ClimaAtual) and isinstance(clima_atual.id, int):
+            super().update(clima_atual.id, ClimaAtual)
 
     def get(self, key: int):
         if isinstance(key, int):

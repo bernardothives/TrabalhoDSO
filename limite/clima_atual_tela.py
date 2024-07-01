@@ -40,15 +40,23 @@ class ClimaAtualTela(TelaAbstrata):
     def init_opcoes(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Clima Atual', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='White')],
+            [sg.Text('Clima Atual', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='White')],
             [sg.Text('Escolha sua opção:', font=("Helvetica", 15), pad=(10, 10), text_color='darkblue')],
-            [sg.Radio('Ver Dados Climáticos', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Ver Histórico de Registro de Climas', "RD1", key='2', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Apagar Todo o Histórico de Registro', "RD1", key='3', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Apagar Registro de Clima Específico', "RD1", key='4', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Qual Temperatura mais alta?', "RD1", key='5', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Qual Temperatura mais baixa?', "RD1", key='6', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')]
+            [sg.Radio('Ver Dados Climáticos', "RD1", key='1', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Ver Histórico de Registro de Climas', "RD1", key='2', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Apagar Todo o Histórico de Registro', "RD1", key='3', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Apagar Registro de Clima Específico', "RD1", key='4', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Qual Temperatura mais alta?', "RD1", key='5', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Qual Temperatura mais baixa?', "RD1", key='6', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')]
         ]
         self.__window = sg.Window('Clima Atual', layout, element_justification='c', finalize=True)
 
@@ -62,13 +70,15 @@ class ClimaAtualTela(TelaAbstrata):
     def pega_dados_ver_clima(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Digite os dados para ver o clima atual', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Digite os dados para ver o clima atual', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
             [sg.Text('CPF:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='cpf')],
             [sg.Text('Cidade:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='cidade')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados para Ver o Clima Atual', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Dados para Ver o Clima Atual', layout, element_justification='c',
+                                  finalize=True)
         button, values = self.open()
         dados_clima = None
         if button == 'Confirmar':
@@ -93,7 +103,8 @@ class ClimaAtualTela(TelaAbstrata):
             [sg.Text('Velocidade do Vento: {} km/h'.format(dados_clima['velocidade_vento']), font=("Helvetica", 14))],
             [sg.Text('Volume de Chuva: {} mm'.format(dados_clima['volume_chuva']), font=("Helvetica", 14))],
             [sg.Text('Visibilidade: {}%'.format(dados_clima['visibilidade']), font=("Helvetica", 14))],
-            [sg.Text('Sensação Térmica: {} graus Celsius'.format(dados_clima['sensacao_termica']), font=("Helvetica", 14))],
+            [sg.Text('Sensação Térmica: {} graus Celsius'.format(dados_clima['sensacao_termica']),
+                     font=("Helvetica", 14))],
             [sg.Text('Data: {}'.format(dados_clima['data']), font=("Helvetica", 14))],
             [sg.Text('Horário: {}'.format(dados_clima['horario']), font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
@@ -140,7 +151,8 @@ class ClimaAtualTela(TelaAbstrata):
     def mostra_temperatura_mais_alta(self, temperatura, cidade):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('{} é a cidade mais quente, com {} graus Celsius'.format(cidade, temperatura), font=("Helvetica", 14))],
+            [sg.Text('{} é a cidade mais quente, com {} graus Celsius'.format(cidade, temperatura),
+                     font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
         self.__window = sg.Window('Temperatura Mais Alta', layout, element_justification='c', finalize=True)
@@ -150,7 +162,8 @@ class ClimaAtualTela(TelaAbstrata):
     def mostra_temperatura_mais_baixa(self, temperatura, cidade):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('{} é a cidade mais fria, com {} graus Celsius'.format(cidade, temperatura), font=("Helvetica", 14))],
+            [sg.Text('{} é a cidade mais fria, com {} graus Celsius'.format(cidade, temperatura),
+                     font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
         self.__window = sg.Window('Temperatura Mais Baixa', layout, element_justification='c', finalize=True)

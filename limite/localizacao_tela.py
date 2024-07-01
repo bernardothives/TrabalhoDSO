@@ -34,20 +34,27 @@ class LocalizacaoTela(TelaAbstrata):
     def init_opcoes(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Localização', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='White')],
+            [sg.Text('Localização', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='White')],
             [sg.Text('Escolha sua opção:', font=("Helvetica", 15), pad=(10, 10), text_color='darkblue')],
-            [sg.Radio('Incluir Localização', "RD1", key='1', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Alterar Localização', "RD1", key='2', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Listar Localizações', "RD1", key='3', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Remover Localização', "RD1", key='4', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')]
+            [sg.Radio('Incluir Localização', "RD1", key='1', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Alterar Localização', "RD1", key='2', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Listar Localizações', "RD1", key='3', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Remover Localização', "RD1", key='4', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')]
         ]
         self.__window = sg.Window('Clima CO', layout, element_justification='c', finalize=True)
 
     def pega_dados_localizacao(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Digite os dados da localização', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Digite os dados da localização', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
             [sg.Text('Cidade:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='cidade')],
             [sg.Text('Estado:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='estado')],
             [sg.Text('País:', font=("Helvetica", 14), size=(10, 1)), sg.InputText(key='pais')],
@@ -76,7 +83,8 @@ class LocalizacaoTela(TelaAbstrata):
     def mostra_dados_localizacao(self, dados_localizacao):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Dados da Localização', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Dados da Localização', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
             [sg.Text(f"Cidade: {dados_localizacao['cidade']}", font=("Helvetica", 14))],
             [sg.Text(f"Estado: {dados_localizacao['estado']}", font=("Helvetica", 14))],
             [sg.Text(f"País: {dados_localizacao['pais']}", font=("Helvetica", 14))],
@@ -89,7 +97,8 @@ class LocalizacaoTela(TelaAbstrata):
     def seleciona_cidade(self):
         sg.theme('LightBlue3')
         layout = [
-            [sg.Text('Selecione a cidade', font=("Helvetica", 25), justification='center', pad=(10, 20), text_color='navy')],
+            [sg.Text('Selecione a cidade', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
             [sg.Text('Cidade:', font=("Helvetica", 14)), sg.InputText(key='cidade')],
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
