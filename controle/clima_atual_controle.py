@@ -27,7 +27,11 @@ class ClimaAtualControle(ClimaControleAbstrato):
                 if clima is None:
                     clima = ClimaAtual(usuario, localizacao)
                     self.__clima_atual_DAO.add(clima)
-                clima.data = datetime.strptime(clima.data, "%d/%m/%Y")
+                if isinstance(clima.data, datetime):
+                    data_str = clima.data.strftime('%d/%m/%Y')
+                else:
+                    data_str = clima.data
+                clima.data = datetime.strptime(data_str, '%d/%m/%Y')
                 self.adiciona_log(dados["cpf"], dados["cidade"])
                 self.__clima_atual_tela.mostra_clima({"temperatura": clima.temperatura,
                                                       "humidade": clima.humidade,

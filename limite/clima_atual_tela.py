@@ -1,5 +1,11 @@
 import PySimpleGUI as sg
 from limite.tela_abstrata import TelaAbstrata
+from exceptions.cpf_nao_eh_numero_exception import CpfNaoEhNumero
+from exceptions.cpf_tamanho_errado_exception import CpfTamanhoErrado
+from exceptions.cpf_digitos_iguais_exception import CpfDigitosIguais
+from exceptions.cpf_digitos_verificadores_exception import CpfDigitosVerificadores
+from exceptions.nome_vazio_exception import NomeVazio
+from exceptions.nome_apenas_letras_exception import NomeApenasLetras
 
 
 class ClimaAtualTela(TelaAbstrata):
@@ -89,7 +95,8 @@ class ClimaAtualTela(TelaAbstrata):
                 cpf_valido = self.le_e_valida_cpf(cpf)
                 cidade_valida = self.le_e_valida_nome(cidade)
                 dados_clima = {"cpf": cpf_valido, "cidade": cidade_valida}
-            except ValueError as e:
+            except (CpfDigitosIguais, CpfDigitosVerificadores, CpfNaoEhNumero,
+                    CpfTamanhoErrado, NomeApenasLetras, NomeVazio, ValueError) as e:
                 sg.popup(str(e), title='Erro')
         self.close()
         return dados_clima
@@ -130,7 +137,8 @@ class ClimaAtualTela(TelaAbstrata):
                 cpf_valido = self.le_e_valida_cpf(cpf)
                 self.close()
                 return cpf_valido
-            except ValueError as e:
+            except (CpfDigitosIguais, CpfDigitosVerificadores, CpfNaoEhNumero,
+                    CpfTamanhoErrado, ValueError) as e:
                 sg.popup(str(e), title='Erro')
                 cpf = None
         self.close()

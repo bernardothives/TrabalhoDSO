@@ -8,6 +8,7 @@ from DAOs.clima_previsao_dao import ClimaPrevisaoDAO
 from entidade.usuario import Usuario
 
 
+
 class ClimaPrevisaoControle(ClimaControleAbstrato):
     def __init__(self, sistema):
         self.__sistema = sistema
@@ -33,7 +34,11 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
                 if clima is None:
                     clima = ClimaPrevisao(usuario, localizacao)
                     self.__previsoes_DAO.add(clima)
-                clima.data = datetime.strptime(clima.data, '%d/%m/%Y')
+                if isinstance(clima.data, datetime):
+                    data_str = clima.data.strftime('%d/%m/%Y')
+                else:
+                    data_str = clima.data
+                clima.data = datetime.strptime(data_str, '%d/%m/%Y')
                 data_previsao = clima.data + timedelta(days=1)
                 data_formatada = data_previsao.strftime('%d/%m/%Y')
                 self.adiciona_log(dados["cpf"], dados["cidade"])
