@@ -1,7 +1,7 @@
 from entidade.localizacao import Localizacao
 from limite.localizacao_tela import LocalizacaoTela
 from DAOs.localizacao_dao import LocalizacaoDAO
-from exceptions.usuario_duplicado_exception import UsuarioDuplicado
+from exceptions.localizacao_duplicada_exception import LocalizacaoDuplicada
 
 
 class LocalizacaoControle:
@@ -21,14 +21,13 @@ class LocalizacaoControle:
                 localizacao = self.procura_localizacao_por_cidade(cidade)
                 if localizacao:
                     # implementar loc duplicada
-                    raise UsuarioDuplicado()
+                    raise LocalizacaoDuplicada()
                 else:
                     localizacao = Localizacao(dados_localizacao['cidade'], dados_localizacao['estado'], dados_localizacao['pais'])
                     self.__localizacao_DAO.add(localizacao)
                     return localizacao
-        except UsuarioDuplicado as e:
+        except LocalizacaoDuplicada as e:
             self.__tela_localizacao.mostra_msg(str(e))
-
 
     def altera_localizacao(self):
         self.listar_localizacoes()
