@@ -3,7 +3,6 @@ from controle.clima_atual_controle import ClimaAtualControle
 from controle.clima_previsao_controle import ClimaPrevisaoControle
 from controle.localizacao_controle import LocalizacaoControle
 from controle.usuario_controle import UsuarioControle
-from controle.notificacao_controle import NotificacaoControle
 
 
 class Sistema:
@@ -12,7 +11,6 @@ class Sistema:
         self.__controlador_clima_previsao = ClimaPrevisaoControle(self)
         self.__controlador_localizacao = LocalizacaoControle(self)
         self.__controlador_usuario = UsuarioControle(self)
-        self.__controlador_notificacao = NotificacaoControle(self)
         self.__sistema_tela = SistemaTela()
 
     @property
@@ -38,16 +36,13 @@ class Sistema:
     def opcoes_clima_previsao(self):
         self.__controlador_clima_previsao.abre_tela()
 
-    def opcoes_notificacao(self):
-        self.__controlador_notificacao.abre_tela()
-
     @staticmethod
     def encerra_sistema():
         exit(0)
 
     def abre_tela(self):
         lista_opcoes = {1: self.opcoes_usuario, 2: self.opcoes_localizacao, 3: self.opcoes_clima_atual,
-                        4: self.opcoes_clima_previsao, 5: self.opcoes_notificacao, 0: self.encerra_sistema}
+                        4: self.opcoes_clima_previsao, 0: self.encerra_sistema}
 
         while True:
             opcao_escolhida = self.__sistema_tela.tela_opcoes()

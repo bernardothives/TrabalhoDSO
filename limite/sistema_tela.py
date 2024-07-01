@@ -27,9 +27,6 @@ class SistemaTela(TelaAbstrata):
             if values['4']:
                 opcao = 4
                 break
-            if values['5']:
-                opcao = 5
-                break
             if values['0']:
                 opcao = 0
                 break
@@ -45,7 +42,6 @@ class SistemaTela(TelaAbstrata):
             [sg.Radio('Localização', "RD1", key='2', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Clima Atual', "RD1", key='3', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Previsão do Clima', "RD1", key='4', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
-            [sg.Radio('Notificação', "RD1", key='5', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Finalizar o Sistema', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')]
         ]
         self.__window = sg.Window('Clima CO', layout, element_justification='c')
