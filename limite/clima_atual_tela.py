@@ -37,6 +37,9 @@ class ClimaAtualTela(TelaAbstrata):
             if values.get('6'):
                 opcao = 6
                 break
+            if values.get('7'):
+                opcao = 7
+                break
             if values.get('0'):
                 opcao = 0
                 break
@@ -60,6 +63,8 @@ class ClimaAtualTela(TelaAbstrata):
             [sg.Radio('Qual Temperatura mais alta?', "RD1", key='5', font=("Helvetica", 14),
                       pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Qual Temperatura mais baixa?', "RD1", key='6', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Remover dados climáticos', "RD1", key='7', font=("Helvetica", 14),
                       pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14),
                       pad=(10, 5), enable_events=True, text_color='black')]
@@ -166,6 +171,23 @@ class ClimaAtualTela(TelaAbstrata):
         self.__window = sg.Window('Temperatura Mais Alta', layout, element_justification='c')
         self.__window.read()
         self.close()
+
+    def seleciona_cidade(self):
+        sg.theme('LightBlue3')
+        layout = [
+            [sg.Text('Selecione a cidade', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
+            [sg.Text('Cidade:', font=("Helvetica", 14)), sg.InputText(key='cidade')],
+            [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
+             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Selecionar Cidade', layout, element_justification='c')
+        button, values = self.open()
+        cidade = None
+        if button == 'Confirmar':
+            cidade = values['cidade']
+        self.close()
+        return cidade
 
     def mostra_temperatura_mais_baixa(self, temperatura, cidade):
         sg.theme('LightBlue3')
