@@ -14,7 +14,7 @@ class UsuarioControle:
         try:
             dados_usuario = self.__tela_usuario.pega_dados_usuario()
             if dados_usuario:
-                cpf = int(dados_usuario['cpf'])
+                cpf = dados_usuario['cpf']
                 usuario = self.procurar_usuario_por_cpf(cpf)
                 if usuario:
                     raise UsuarioDuplicado()
@@ -27,7 +27,7 @@ class UsuarioControle:
 
     def alterar_nome_usuario(self):
         self.listar_usuarios()
-        cpf_usuario = int(self.__tela_usuario.seleciona_usuario())
+        cpf_usuario = self.__tela_usuario.seleciona_usuario()
         usuario = self.procurar_usuario_por_cpf(cpf_usuario)
         if usuario:
             novo_nome_usuario = self.__tela_usuario.pega_nome_usuario()
@@ -42,7 +42,7 @@ class UsuarioControle:
 
     def remove_usuario(self):
         self.listar_usuarios()
-        cpf_usuario = int(self.__tela_usuario.seleciona_usuario())
+        cpf_usuario = self.__tela_usuario.seleciona_usuario()
         usuario = self.procurar_usuario_por_cpf(cpf_usuario)
         if usuario is not None:
             self.__usuario_DAO.remove(cpf_usuario)

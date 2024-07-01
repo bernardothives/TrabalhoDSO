@@ -7,17 +7,17 @@ class UsuarioDAO(DAO):
         super().__init__('usuarios.pkl')
 
     def add(self, usuario: Usuario):
-        if usuario is not None and isinstance(usuario, Usuario) and isinstance(usuario.cpf, int):
+        if usuario is not None and isinstance(usuario, Usuario) and isinstance(usuario.cpf, str):
             super().add(usuario.cpf, usuario)
 
     def update(self, usuario: Usuario):
-        if usuario is not None and isinstance(usuario, Usuario) and isinstance(usuario.cpf, int):
+        if usuario is not None and isinstance(usuario, Usuario) and isinstance(usuario.cpf, str):
             super().update(usuario.cpf, usuario)
 
-    def get(self, cpf: int):
-        if isinstance(cpf, int):
+    def get(self, cpf: str):
+        if isinstance(cpf, str):
             return super().get(cpf)
 
-    def remove(self, cpf: int):
-        if isinstance(cpf, int):
+    def remove(self, cpf: str):
+        if isinstance(cpf, str):
             return super().remove(cpf)
