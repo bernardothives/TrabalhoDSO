@@ -5,26 +5,20 @@ class DadosClimaticos:
     def __init__(self):
         pass
 
-    @staticmethod
-    def pega_temperatura():
+    def pega_temperatura(self):
         return randint(-67, 56)
 
-    @staticmethod
-    def pega_humidade():
+    def pega_humidade(self):
         return randint(0, 100)
 
-    @staticmethod
-    def pega_velocidade_vento():
+    def pega_velocidade_vento(self):
         return randint(0, 408)
 
-    @staticmethod
-    def pega_volume_chuva():
+    def pega_volume_chuva(self):
         return randint(0, 1825)
 
-    @staticmethod
-    def pega_visibilidade():
+    def pega_visibilidade(self):
         return randint(0, 100)
 
-    @staticmethod
-    def pega_sensacao_termica():
+    def pega_sensacao_termica(self):
         return randint(-67, 56)

@@ -48,7 +48,7 @@ class LocalizacaoTela(TelaAbstrata):
             [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14),
                       pad=(10, 5), enable_events=True, text_color='black')]
         ]
-        self.__window = sg.Window('Clima CO', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Clima CO', layout, element_justification='c')
 
     def pega_dados_localizacao(self):
         sg.theme('LightBlue3')
@@ -61,7 +61,7 @@ class LocalizacaoTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados da Localização', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Dados da Localização', layout, element_justification='c')
         button, values = self.open()
         dados_localizacao = None
         if button == 'Confirmar':
@@ -90,7 +90,7 @@ class LocalizacaoTela(TelaAbstrata):
             [sg.Text(f"País: {dados_localizacao['pais']}", font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados da Localização', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Dados da Localização', layout, element_justification='c')
         self.__window.read()
         self.close()
 
@@ -103,7 +103,7 @@ class LocalizacaoTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Selecionar Cidade', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Selecionar Cidade', layout, element_justification='c')
         button, values = self.open()
         cidade = None
         if button == 'Confirmar':

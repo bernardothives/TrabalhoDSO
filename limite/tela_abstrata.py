@@ -12,8 +12,7 @@ class TelaAbstrata(ABC):
     def tela_opcoes(self):
         pass
 
-    @staticmethod
-    def le_e_valida_cpf(cpf):
+    def le_e_valida_cpf(self, cpf):
         if not cpf.isdigit():
             raise CpfNaoEhNumero()
         if len(cpf) != 11:
@@ -30,8 +29,7 @@ class TelaAbstrata(ABC):
             raise CpfDigitosVerificadores()
         return cpf
 
-    @staticmethod
-    def le_e_valida_nome(nome):
+    def le_e_valida_nome(self, nome):
         nome = nome.strip()
         if not nome:
             raise NomeVazio()
@@ -39,6 +37,5 @@ class TelaAbstrata(ABC):
             raise NomeApenasLetras()
         return nome.lower()
 
-    @staticmethod
-    def mostra_msg(mensagem):
+    def mostra_msg(self, mensagem):
         sg.popup(mensagem, title='Mensagem')

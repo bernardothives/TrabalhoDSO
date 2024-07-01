@@ -53,7 +53,7 @@ class UsuarioTela(TelaAbstrata):
             [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14),
                       pad=(10, 5), enable_events=True, text_color='black')]
         ]
-        self.__window = sg.Window('Clima CO', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Clima CO', layout, element_justification='c')
 
     def pega_dados_usuario(self):
         sg.theme('LightBlue3')
@@ -65,7 +65,7 @@ class UsuarioTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c')
         button, values = self.open()
         dados_usuario = None
         if button == 'Confirmar':
@@ -94,7 +94,7 @@ class UsuarioTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Novo Nome', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Novo Nome', layout, element_justification='c')
         button, values = self.open()
         nome = None
         if button == 'Confirmar':
@@ -119,7 +119,7 @@ class UsuarioTela(TelaAbstrata):
             [sg.Text(f"CPF: {dados_usuario['cpf']}", font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c')
         self.__window.read()
         self.close()
 
@@ -132,7 +132,7 @@ class UsuarioTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Selecionar Usuário', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Selecionar Usuário', layout, element_justification='c')
         button, values = self.open()
         cpf = None
         if button == 'Confirmar':

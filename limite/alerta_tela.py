@@ -32,7 +32,7 @@ class AlertaTela(TelaAbstrata):
             [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14), pad=(10, 5),
                       enable_events=True, text_color='black')]
         ]
-        self.__window = sg.Window('Alertas', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Alertas', layout, element_justification='c')
 
     def seleciona_cidade(self):
         sg.theme('LightBlue3')
@@ -43,7 +43,7 @@ class AlertaTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Verificar Alerta', layout, element_justification='left', finalize=True)
+        self.__window = sg.Window('Verificar Alerta', layout, element_justification='left')
         button, values = self.open()
         cidade = None
         if button == 'Confirmar':

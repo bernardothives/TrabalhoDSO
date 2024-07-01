@@ -58,7 +58,7 @@ class ClimaAtualTela(TelaAbstrata):
             [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14),
                       pad=(10, 5), enable_events=True, text_color='black')]
         ]
-        self.__window = sg.Window('Clima Atual', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Clima Atual', layout, element_justification='c')
 
     def open(self):
         button, values = self.__window.read()
@@ -77,8 +77,7 @@ class ClimaAtualTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados para Ver o Clima Atual', layout, element_justification='c',
-                                  finalize=True)
+        self.__window = sg.Window('Dados para Ver o Clima Atual', layout, element_justification='c')
         button, values = self.open()
         dados_clima = None
         if button == 'Confirmar':
@@ -109,7 +108,7 @@ class ClimaAtualTela(TelaAbstrata):
             [sg.Text('Horário: {}'.format(dados_clima['horario']), font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados do Clima', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Dados do Clima', layout, element_justification='c')
         self.__window.read()
         self.close()
 
@@ -120,7 +119,7 @@ class ClimaAtualTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Cancel('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Selecionar CPF', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Selecionar CPF', layout, element_justification='c')
         button, values = self.open()
         cpf = None
         if button == 'Confirmar':
@@ -144,7 +143,7 @@ class ClimaAtualTela(TelaAbstrata):
             [sg.Text('Hora: {}'.format(dados_log["hora"]), font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Registro de Clima', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Registro de Clima', layout, element_justification='c')
         self.__window.read()
         self.close()
 
@@ -155,7 +154,7 @@ class ClimaAtualTela(TelaAbstrata):
                      font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Temperatura Mais Alta', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Temperatura Mais Alta', layout, element_justification='c')
         self.__window.read()
         self.close()
 
@@ -166,6 +165,6 @@ class ClimaAtualTela(TelaAbstrata):
                      font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Temperatura Mais Baixa', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Temperatura Mais Baixa', layout, element_justification='c')
         self.__window.read()
         self.close()

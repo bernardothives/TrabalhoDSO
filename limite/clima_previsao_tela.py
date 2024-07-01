@@ -53,7 +53,7 @@ class ClimaPrevisaoTela(TelaAbstrata):
             [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14),
                       pad=(10, 5), enable_events=True, text_color='black')]
         ]
-        self.__window = sg.Window('Previsão do Clima', layout, element_justification='c', finalize=True)
+        self.__window = sg.Window('Previsão do Clima', layout, element_justification='c')
 
     def pega_dados_ver_clima(self):
         sg.theme('LightBlue3')
@@ -65,7 +65,7 @@ class ClimaPrevisaoTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados para Ver a Previsão', layout, element_justification='left', finalize=True)
+        self.__window = sg.Window('Dados para Ver a Previsão', layout, element_justification='left')
         button, values = self.open()
         dados_ver_clima = None
         if button == 'Confirmar':
@@ -97,7 +97,7 @@ class ClimaPrevisaoTela(TelaAbstrata):
             [sg.Text(f"Data: {dados_clima['data']}", font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Dados Climáticos', layout, element_justification='center', finalize=True)
+        self.__window = sg.Window('Dados Climáticos', layout, element_justification='center')
         self.__window.read()
         self.close()
 
@@ -110,8 +110,7 @@ class ClimaPrevisaoTela(TelaAbstrata):
             [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
              sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Apagar Registro de Previsão', layout, element_justification='left',
-                                  finalize=True)
+        self.__window = sg.Window('Apagar Registro de Previsão', layout, element_justification='left')
         button, values = self.open()
         cpf = None
         if button == 'Confirmar':
@@ -134,7 +133,7 @@ class ClimaPrevisaoTela(TelaAbstrata):
             [sg.Text(f"Hora: {dados_log['hora']}", font=("Helvetica", 14))],
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
-        self.__window = sg.Window('Histórico de Registro', layout, element_justification='center', finalize=True)
+        self.__window = sg.Window('Histórico de Registro', layout, element_justification='center')
         self.__window.read()
         self.close()
 

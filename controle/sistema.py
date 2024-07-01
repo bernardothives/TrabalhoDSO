@@ -6,12 +6,19 @@ from controle.usuario_controle import UsuarioControle
 
 
 class Sistema:
+    __instance = None
+
     def __init__(self):
         self.__controlador_clima_atual = ClimaAtualControle(self)
         self.__controlador_clima_previsao = ClimaPrevisaoControle(self)
         self.__controlador_localizacao = LocalizacaoControle(self)
         self.__controlador_usuario = UsuarioControle(self)
         self.__sistema_tela = SistemaTela()
+
+    def __new__(cls):
+        if Sistema.__instance is None:
+            Sistema.__instance = object.__new__(cls)
+        return Sistema.__instance
 
     @property
     def controlador_usuario(self):
@@ -36,13 +43,17 @@ class Sistema:
     def opcoes_clima_previsao(self):
         self.__controlador_clima_previsao.abre_tela()
 
-    @staticmethod
-    def encerra_sistema():
+    def encerra_sistema(self):
         exit(0)
 
     def abre_tela(self):
-        lista_opcoes = {1: self.opcoes_usuario, 2: self.opcoes_localizacao, 3: self.opcoes_clima_atual,
-                        4: self.opcoes_clima_previsao, 0: self.encerra_sistema}
+        lista_opcoes = {
+            1: self.opcoes_usuario,
+            2: self.opcoes_localizacao,
+            3: self.opcoes_clima_atual,
+            4: self.opcoes_clima_previsao,
+            0: self.encerra_sistema
+        }
 
         while True:
             opcao_escolhida = self.__sistema_tela.tela_opcoes()
