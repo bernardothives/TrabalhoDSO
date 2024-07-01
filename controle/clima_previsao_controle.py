@@ -53,6 +53,12 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
                 return clima_previsao.id
         return None
 
+    def procura_id_clima_previsao_por_localizacao(self, localizacao: Localizacao):
+        for clima_previsao in self.__previsoes_DAO.get_all():
+            if clima_previsao.localizacao == localizacao:
+                return clima_previsao.id
+        return None
+
     def procura_clima_previsao_por_id(self, id):
         return self.__previsoes_DAO.get(id)
 

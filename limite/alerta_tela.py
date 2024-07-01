@@ -52,6 +52,7 @@ class AlertaTela(TelaAbstrata):
                 if not cidade:
                     raise ValueError("O campo Cidade não pode estar vazio.")
                 cidade_valida = self.le_e_valida_nome(cidade)
+                self.close()
                 return cidade_valida
             except ValueError as e:
                 sg.popup(str(e), title='Erro')

@@ -128,6 +128,7 @@ class ClimaAtualTela(TelaAbstrata):
                 if not cpf:
                     raise ValueError("O CPF não pode estar vazio.")
                 cpf_valido = self.le_e_valida_cpf(cpf)
+                self.close()
                 return cpf_valido
             except ValueError as e:
                 sg.popup(str(e), title='Erro')

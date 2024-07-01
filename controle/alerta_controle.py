@@ -11,8 +11,11 @@ class AlertaControle:
         self.__controlador_previsao.sistema.controlador_localizacao.listar_localizacoes()
         cidade = self.__alerta_tela.seleciona_cidade()
         localizacao = self.__controlador_previsao.sistema.controlador_localizacao.procura_localizacao_por_cidade(cidade)
-        clima = self.__controlador_previsao.procura_clima_previsao_por_localizacao(localizacao)
+        clima_id = self.__controlador_previsao.procura_id_clima_previsao_por_localizacao(localizacao)
+        clima = self.__controlador_previsao.procura_clima_previsao_por_id(clima_id)
+        print("haha")
         if clima:
+            print("haha")
             if clima.velocidade_vento > 80:
                 self.__alerta_tela.mostra_msg("CUIDADO: O vento nesta localizacao esta muito forte!")
             if clima.volume_chuva > 50:
