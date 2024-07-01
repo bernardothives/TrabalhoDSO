@@ -3,13 +3,13 @@ from entidade.dados_climaticos import DadosClimaticos
 from entidade.usuario import Usuario
 from entidade.localizacao import Localizacao
 from datetime import datetime
-import uuid
+import random
 
 
 class ClimaAbstrato(ABC):
     @abstractmethod
     def __init__(self, usuario: Usuario, localizacao: Localizacao):
-        self.__id = uuid.uuid4()
+        self.__id = random.randint(100000, 999999)
         if isinstance(usuario, Usuario):
             self.__usuario = usuario
         if isinstance(localizacao, Localizacao):
