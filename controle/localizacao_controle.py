@@ -32,18 +32,20 @@ class LocalizacaoControle:
 
     def altera_localizacao(self):
         self.listar_localizacoes()
-        lista_cidades = [localizacao.cidade for localizacao in self.__localizacoes]
-        cidade = self.__tela_localizacao.seleciona_cidade(lista_cidades)
+        cidade = self.__tela_localizacao.seleciona_cidade()
         localizacao = self.procura_localizacao_por_cidade(cidade)
         if localizacao:
             novos_dados_localizacao = self.__tela_localizacao.pega_dados_localizacao()
-            for loc in self.__localizacoes:
-                if loc.cidade == novos_dados_localizacao["cidade"] and loc != localizacao:
-                    self.__tela_localizacao.mostra_msg("Cidade ja cadastrada \n")
-                    break
-            localizacao.cidade = novos_dados_localizacao["cidade"]
-            localizacao.estado = novos_dados_localizacao["estado"]
-            localizacao.pais = novos_dados_localizacao["pais"]
+            if novos_dados_localizacao:
+                for localizacao in self.__localizacao_DAO.get_all():
+                    if localizacao.cidade == novos_dados_localizacao["cidade"]:
+                        self.__tela_localizacao.mostra_msg("Cidade já cadastrada")
+                        break
+                else:
+                    localizacao.cidade = novos_dados_localizacao["cidade"]
+                    localizacao.estado = novos_dados_localizacao["estado"]
+                    localizacao.pais = novos_dados_localizacao["pais"]
+                    self.__localizacao_DAO.update(localizacao)
 
     def remove_localizacao(self):
         self.listar_localizacoes()
