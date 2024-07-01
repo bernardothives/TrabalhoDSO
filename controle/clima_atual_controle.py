@@ -74,10 +74,13 @@ class ClimaAtualControle(ClimaControleAbstrato):
         self.__log.append([cpf, cidade, hora])
 
     def lista_log(self):
-        for log in self.__log:
-            self.__clima_atual_tela.mostra_log({"cpf": log[0],
-                                                "cidade": log[1],
-                                                "hora": log[2]})
+        if self.__log:
+            for log in self.__log:
+                self.__clima_atual_tela.mostra_log({"cpf": log[0],
+                                                    "cidade": log[1],
+                                                    "hora": log[2]})
+        else:
+            self.__clima_atual_tela.mostra_msg("Nenhum registro de atividade foi encontrado")
 
     def apaga_log(self):
         for log in self.__log:
