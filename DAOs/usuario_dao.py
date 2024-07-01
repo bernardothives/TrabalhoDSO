@@ -14,10 +14,10 @@ class UsuarioDAO(DAO):
         if usuario is not None and isinstance(usuario, Usuario) and isinstance(usuario.cpf, str):
             super().update(usuario.cpf, usuario)
 
-    def get(self, cpf: str):
-        if isinstance(cpf, str):
-            return super().get(cpf)
+    def get(self, key: str):
+        if isinstance(key, str):
+            return super().get(key)
 
-    def remove(self, cpf: str):
-        if isinstance(cpf, str):
-            return super().remove(cpf)
+    def remove(self, key: str):
+        if isinstance(key, str):
+            return super().remove(key)

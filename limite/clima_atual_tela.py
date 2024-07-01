@@ -199,3 +199,34 @@ class ClimaAtualTela(TelaAbstrata):
         self.__window = sg.Window('Temperatura Mais Baixa', layout, element_justification='c')
         self.__window.read()
         self.close()
+
+    def mostra_dados_clima(self, dado_clima_atual):
+        sg.theme('LightBlue3')
+        layout = [
+            [sg.Text('Climas Atuais', font=("Helvetica", 25), justification='center', pad=(10, 20),
+                     text_color='navy')],
+            [sg.Text(f"CPF: {dado_clima_atual['cpf']}", font=("Helvetica", 14))],
+            [sg.Text(f"Cidade: {dado_clima_atual['cidade']}", font=("Helvetica", 14))],
+            [sg.Text(f"Id: {dado_clima_atual['id']}", font=("Helvetica", 14))],
+            [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c')
+        self.__window.read()
+        self.close()
+
+    def seleciona_id(self):
+        sg.theme('LightBlue3')
+        layout = [
+            [sg.Text('Selecione o id do clima', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
+            [sg.Text('id:', font=("Helvetica", 14)), sg.InputText(key='id')],
+            [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
+             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Selecionar Id', layout, element_justification='c')
+        button, values = self.open()
+        id_clima = None
+        if button == 'Confirmar':
+            id_clima = values['id']
+        self.close()
+        return id_clima

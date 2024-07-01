@@ -122,10 +122,31 @@ class ClimaPrevisaoControle(ClimaControleAbstrato):
     def retornar(self):
         self.__sistema.abre_tela()
 
+    def remove_clima_previsao(self):
+        self.listar_climas_previsao()
+        clima_id = self.__clima_previsao_tela.seleciona_id()
+        if clima_id is not None:
+            self.__previsoes_DAO.remove(clima_id)
+            self.__clima_previsao_tela.mostra_msg("removido com sucesso!")
+
+    def listar_climas_previsao(self):
+        climas_previsoes = self.__previsoes_DAO.get_all()
+        if not climas_previsoes:
+            self.__clima_previsao_tela.mostra_msg("Nenhum clima cadastrado")
+        else:
+            for clima_previsao in climas_previsoes:
+                dado_clima_previsao = {
+                    'cpf': clima_previsao.usuario.cpf,
+                    'cidade': clima_previsao.localizacao.cidade,
+                    'id': clima_previsao.id
+                }
+                self.__clima_previsao_tela.mostra_dados_clima(dado_clima_previsao)
+
     def abre_tela(self):
         lista_opcoes = {1: self.ver_dados_climaticos, 2: self.lista_log,
                         3: self.apaga_log, 4: self.apaga_log_especifico,
-                        5: self.opcoes_alerta, 0: self.retornar}
+                        5: self.opcoes_alerta, 6: self.remove_clima_previsao,
+                        0: self.retornar}
 
         while True:
             opcao_escolhida = self.__clima_previsao_tela.tela_opcoes()

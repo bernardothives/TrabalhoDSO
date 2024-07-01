@@ -9,7 +9,7 @@ import random
 class ClimaAbstrato(ABC):
     @abstractmethod
     def __init__(self, usuario: Usuario, localizacao: Localizacao):
-        self.__id = random.randint(100000, 999999)
+        self.__id = str(random.randint(100000, 999999))
         if isinstance(usuario, Usuario):
             self.__usuario = usuario
         if isinstance(localizacao, Localizacao):

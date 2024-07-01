@@ -34,6 +34,9 @@ class ClimaPrevisaoTela(TelaAbstrata):
             if values.get('5'):
                 opcao = 5
                 break
+            if values.get('6'):
+                opcao = 6
+                break
             if values.get('0'):
                 opcao = 0
                 break
@@ -55,6 +58,8 @@ class ClimaPrevisaoTela(TelaAbstrata):
             [sg.Radio('Apagar Registro de Previsão Específico', "RD1", key='4',
                       font=("Helvetica", 14), pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Alertas', "RD1", key='5', font=("Helvetica", 14),
+                      pad=(10, 5), enable_events=True, text_color='black')],
+            [sg.Radio('Remover Previsões de Clima', "RD1", key='6', font=("Helvetica", 14),
                       pad=(10, 5), enable_events=True, text_color='black')],
             [sg.Radio('Retornar', "RD1", key='0', font=("Helvetica", 14),
                       pad=(10, 5), enable_events=True, text_color='black')]
@@ -142,6 +147,37 @@ class ClimaPrevisaoTela(TelaAbstrata):
             [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
         ]
         self.__window = sg.Window('Histórico de Registro', layout, element_justification='center')
+        self.__window.read()
+        self.close()
+
+    def seleciona_id(self):
+        sg.theme('LightBlue3')
+        layout = [
+            [sg.Text('Selecione o id do clima', font=("Helvetica", 25), justification='center',
+                     pad=(10, 20), text_color='navy')],
+            [sg.Text('id:', font=("Helvetica", 14)), sg.InputText(key='id')],
+            [sg.Button('Confirmar', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5)),
+             sg.Button('Cancelar', font=("Helvetica", 14), button_color=('white', 'red'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Selecionar Id', layout, element_justification='c')
+        button, values = self.open()
+        id_clima = None
+        if button == 'Confirmar':
+            id_clima = values['id']
+        self.close()
+        return id_clima
+
+    def mostra_dados_clima(self, dado_clima_previsao):
+        sg.theme('LightBlue3')
+        layout = [
+            [sg.Text('Previsões de Clima', font=("Helvetica", 25), justification='center', pad=(10, 20),
+                     text_color='navy')],
+            [sg.Text(f"CPF: {dado_clima_previsao['cpf']}", font=("Helvetica", 14))],
+            [sg.Text(f"Cidade: {dado_clima_previsao['cidade']}", font=("Helvetica", 14))],
+            [sg.Text(f"Id: {dado_clima_previsao['id']}", font=("Helvetica", 14))],
+            [sg.Button('Ok', font=("Helvetica", 14), button_color=('white', 'green'), pad=(10, 5))]
+        ]
+        self.__window = sg.Window('Dados do Usuário', layout, element_justification='c')
         self.__window.read()
         self.close()
 

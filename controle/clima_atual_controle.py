@@ -49,8 +49,8 @@ class ClimaAtualControle(ClimaControleAbstrato):
             if clima_atual.usuario == usuario and clima_atual.localizacao == localizacao:
                 return clima_atual.id
 
-    def procura_clima_atual_por_id(self, id):
-        return self.__clima_atual_DAO.get(id)
+    def procura_clima_atual_por_id(self, clima_id):
+        return self.__clima_atual_DAO.get(clima_id)
 
     def procura_clima_atual_por_localizacao(self, localizacao: Localizacao):
         if isinstance(localizacao, Localizacao):
@@ -115,21 +115,25 @@ class ClimaAtualControle(ClimaControleAbstrato):
     def retornar(self):
         self.__sistema.abre_tela()
 
-    def remove(self):
-        cpf = self.__clima_atual_tela.seleciona_cpf()
-        usuario = self.__sistema.controlador_usuario.procurar_usuario_por_cpf(cpf)
-        log = self.procura_log_por_cpf(cpf)
-        cidade = self.__clima_atual_tela.seleciona_cidade()
-        localizacao = self.__sistema.controlador_localizacao.procura_localizacao_por_cidade(cidade)
-        if usuario is not None and localizacao is not None:
-            clima_id = self.procura_id_clima_atual_por_usuario_e_localizacao(usuario, localizacao)
-            if clima_id is not None:
-                self.__clima_atual_DAO.remove(clima_id)
-                print("removido com sucesso")
-            else:
-                print("id none")
+    def remove_clima_atual(self):
+        self.listar_climas_atual()
+        clima_id = self.__clima_atual_tela.seleciona_id()
+        if clima_id is not None:
+            self.__clima_atual_DAO.remove(clima_id)
+            self.__clima_atual_tela.mostra_msg("removido com sucesso!")
+
+    def listar_climas_atual(self):
+        climas_atuais = self.__clima_atual_DAO.get_all()
+        if not climas_atuais:
+            self.__clima_atual_tela.mostra_msg("Nenhum clima cadastrado")
         else:
-            print("usr or loc none")
+            for clima_atual in climas_atuais:
+                dado_clima_atual = {
+                    'cpf': clima_atual.usuario.cpf,
+                    'cidade': clima_atual.localizacao.cidade,
+                    'id': clima_atual.id
+                }
+                self.__clima_atual_tela.mostra_dados_clima(dado_clima_atual)
 
     def temperatura_mais_baixa(self):
         min_temperatura = 56
@@ -153,7 +157,7 @@ class ClimaAtualControle(ClimaControleAbstrato):
         lista_opcoes = {1: self.ver_dados_climaticos, 2: self.lista_log,
                         3: self.apaga_log, 4: self.apaga_log_especifico,
                         5: self.temperatura_mais_alta, 6: self.temperatura_mais_baixa,
-                        7: self.remove, 0: self.retornar}
+                        7: self.remove_clima_atual, 0: self.retornar}
 
         while True:
             opcao_escolhida = self.__clima_atual_tela.tela_opcoes()
